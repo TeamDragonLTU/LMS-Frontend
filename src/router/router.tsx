@@ -1,13 +1,23 @@
 import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router';
-import { Login } from '../features/auth';
 import { App } from '../features/app';
-import { Companies } from '../features/companies';
+import { Login } from '../features/auth/components';
+import { requireAuthLoader } from '../features/auth/loaders';
+import { Companies, Company } from '../features/companies/components';
+import { companiesLoader, companyLoader } from '../features/companies/loaders';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<App />}>
-        <Route index element={<Companies />} />
+      {/* requireAuthLoader is a route guard that protects the App and its child routes. */}
+      <Route element={<App />} loader={requireAuthLoader} path="/">
+        <Route element={<Companies />} index loader={companiesLoader} />
+        <Route
+          element={<Company />}
+          loader={({ params }) => {
+            return companyLoader(params.id);
+          }}
+          path="companies/:id"
+        />
       </Route>
       <Route element={<Login />} path="/login" />
     </>

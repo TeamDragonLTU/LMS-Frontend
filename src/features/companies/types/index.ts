@@ -6,3 +6,10 @@ export interface ICompany {
   address: string;
   employees: any[];
 }
+
+export interface ICompaniesLoader {
+  companies: Promise<ICompany[]>;
+}
+export interface ICompanyLoader {
+  company: Promise<ICompany>;
+}

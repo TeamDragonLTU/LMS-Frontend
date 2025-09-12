@@ -1,10 +1,11 @@
 import { FormEventHandler, ReactElement, useState } from 'react';
-import { useAuthContext } from '../auth.hooks';
-import { useNavigate } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 export function Login(): ReactElement {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [searchParams] = useSearchParams();
   const { login } = useAuthContext();
   const navigate = useNavigate();
 
@@ -13,7 +14,8 @@ export function Login(): ReactElement {
 
     await login(username, password);
 
-    navigate('/');
+    const redirectTo = searchParams.get('redirectTo') || '/';
+    navigate(redirectTo, { replace: true });
   };
 
   return (

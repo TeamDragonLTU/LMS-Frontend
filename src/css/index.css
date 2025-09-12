@@ -1,3 +1,5 @@
 @import url('./base.css');
 @import url('./global.css');
-@import url('../features/auth/css/auth.css');
+@import url('../features/auth/css/styles.css');
+@import url('../features/companies/css/styles.css');
+@import url('../features/shared/css/styles.css');

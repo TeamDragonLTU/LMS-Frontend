@@ -1,14 +1,14 @@
 #login-page {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
 
-  .login-form {
-    fieldset {
-      align-items: flex-start;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-  }
+  padding-block: 2rem;
+}
+
+#login-page .login-form fieldset {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  flex-direction: column;
 }

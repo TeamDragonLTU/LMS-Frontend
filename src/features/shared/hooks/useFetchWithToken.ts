@@ -1,18 +1,10 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
-import {
-  addTokenToRequestInit,
-  AuthContext,
-  hasTokenExpired,
-  ITokens,
-  refreshTokens,
-  TOKENS,
-} from '.';
-import { CustomError } from '../shared';
-
-export function useAuthContext() {
-  return useContext(AuthContext);
-}
+import { CustomError } from '../classes';
+import { refreshTokens } from '../../auth/api';
+import { TOKENS } from '../../auth/constants';
+import { ITokens } from '../../auth/types';
+import { addTokenToRequestInit, hasTokenExpired } from '../../auth/utilities';
 
 interface IUseFetchReturn<T> {
   data: T | null;

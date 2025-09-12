@@ -1,5 +1,6 @@
-import { ITokens } from '.';
-import { BASE_URL, CustomError } from '../shared';
+import { CustomError } from '../../shared/classes';
+import { BASE_URL } from '../../shared/constants';
+import { ITokens } from '../types';
 
 export async function loginReq(username: string, password: string): Promise<ITokens> {
   const url = `${BASE_URL}/auth/login`;
