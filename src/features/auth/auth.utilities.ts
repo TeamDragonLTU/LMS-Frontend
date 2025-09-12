@@ -1,4 +1,4 @@
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from 'jwt-decode';
 
 export function addTokenToRequestInit(accessToken?: string, options?: RequestInit): RequestInit {
   const requestObject: RequestInit = { ...options };

@@ -1,14 +1,15 @@
-import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
-import { Companies, RequireAuth } from "../components";
-import { LoginPage, StartPage } from "../pages";
+import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router';
+import { Login } from '../features/auth';
+import { App } from '../features/app';
+import { Companies } from '../features/companies';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route element={<RequireAuth children={<StartPage />} />}>
-        <Route element={<Companies />} index />
+      <Route path="/" element={<App />}>
+        <Route index element={<Companies />} />
       </Route>
-      <Route element={<LoginPage />} path="/login" />
+      <Route element={<Login />} path="/login" />
     </>
   )
 );

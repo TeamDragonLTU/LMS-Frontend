@@ -1,6 +1,9 @@
-import { ReactElement, useEffect } from "react";
-import { useFetchWithToken } from "../hooks";
-import { BASE_URL, ICompany } from "../utils";
+/* eslint-disable react-hooks/exhaustive-deps */
+
+import { ReactElement, useEffect } from 'react';
+import { ICompany } from '.';
+import { BASE_URL } from '../shared';
+import { useFetchWithToken } from '../auth';
 
 export function Companies(): ReactElement {
   const {
@@ -19,6 +22,7 @@ export function Companies(): ReactElement {
 
   return (
     <section className="companies">
+      <h2>List of Companies</h2>
       {companies ? (
         companies.map((c) => (
           <div key={c.id}>

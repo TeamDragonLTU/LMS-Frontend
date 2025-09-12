@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { useAuthContext } from "../hooks";
+import { ReactElement } from 'react';
+import { useAuthContext } from '..';
 
 export function LoginStatusChip(): ReactElement {
   const { isLoggedIn, logout } = useAuthContext();

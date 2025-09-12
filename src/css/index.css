@@ -1,15 +1,3 @@
-@import url("./LoginPage.css");
-@import url("./LoginStatusChip.css");
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-}
-
-body {
-  padding-top: 2rem;
-}
-
-.g-container {
-  padding-inline: 4rem;
-}
+@import url('./base.css');
+@import url('./global.css');
+@import url('../features/auth/css/auth.css');

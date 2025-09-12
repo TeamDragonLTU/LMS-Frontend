@@ -1,12 +1,11 @@
-import { createContext, ReactElement, ReactNode, useEffect, useState } from "react";
-import { CustomError, IAuthContext, ITokens, loginReq, TOKENS } from "../utils";
-import { useLocalStorage } from "usehooks-ts";
+import { ReactElement, ReactNode, useEffect, useState } from 'react';
+import { useLocalStorage } from 'usehooks-ts';
+import { AuthContext, IAuthContext, ITokens, loginReq, TOKENS } from '..';
+import { CustomError } from '../../shared';
 
 interface IAuthProviderProps {
   children: ReactNode;
 }
-
-export const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 export function AuthProvider({ children }: IAuthProviderProps): ReactElement {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);

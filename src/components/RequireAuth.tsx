@@ -1,6 +1,6 @@
-import { Navigate } from "react-router-dom";
-import { ReactElement } from "react";
-import { useAuthContext } from "../hooks";
+import { ReactElement } from 'react';
+import { Navigate } from 'react-router';
+import { useAuthContext } from '../features/auth';
 
 interface IProtectedRoute {
   children: ReactElement;

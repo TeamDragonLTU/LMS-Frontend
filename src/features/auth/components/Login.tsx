@@ -1,23 +1,19 @@
-import { FormEventHandler, ReactElement, useState } from "react";
-import { useAuthContext } from "../hooks";
-import { Navigate, useNavigate } from "react-router-dom";
-import { CustomError } from "../utils";
+import { FormEventHandler, ReactElement, useState } from 'react';
+import { useAuthContext } from '../auth.hooks';
+import { useNavigate } from 'react-router';
 
-export function LoginPage(): ReactElement {
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const { isLoggedIn, login } = useAuthContext();
+export function Login(): ReactElement {
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const { login } = useAuthContext();
   const navigate = useNavigate();
-
-  if (isLoggedIn) {
-    return <Navigate to="/" replace />;
-  }
 
   const handleOnSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
     await login(username, password);
-    navigate("/");
+
+    navigate('/');
   };
 
   return (
