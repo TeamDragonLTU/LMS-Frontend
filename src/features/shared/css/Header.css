@@ -1,11 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
-
 #header {
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   padding-block: 1rem;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.25);
 }
 
 h1 {
@@ -18,7 +17,8 @@ h1 {
 
 .book-icon {
   color: rgba(0, 47, 255, 0.75);
-  font-size: 32px;
+  width: 32px;
+  height: 32px;
 }
 
 .left-header-container,
@@ -51,11 +51,10 @@ h1 {
   gap: 0rem;
 }
 
-.logout-container > span,
+.logout-container > p,
 .display-role-container > p {
   padding-inline-start: 5px;
 }
-
 
 .logout-container {
   cursor: pointer;
