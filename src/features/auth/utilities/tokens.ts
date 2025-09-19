@@ -9,3 +9,7 @@ export function getTokens(): ITokens | null {
 export function setTokens(newTokens: ITokens) {
   localStorage.setItem(TOKENS, JSON.stringify(newTokens));
 }
+
+export function clearTokens() {
+  localStorage.removeItem(TOKENS);
+}

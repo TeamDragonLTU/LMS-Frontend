@@ -1,5 +1,5 @@
 import { refreshTokens } from '../../auth/api';
-import { getTokens, hasTokenExpired, setTokens, addTokenToRequestInit } from '../../auth/utilities';
+import { getTokens, hasTokenExpired, setTokens, addTokenToRequestInit, clearTokens } from '../../auth/utilities';
 import { CustomError } from '../classes';
 import { fetchJson } from './fetchJson';
 
@@ -30,4 +30,20 @@ export async function fetchWithToken<T>(input: RequestInfo | URL, options?: Requ
   });
 
   return fetchJson<T>(input, reqInit);
+    try {
+      // ...existing fetch logic...
+    } catch (error: any) {
+      // Om token-refresh misslyckas, logga ut och redirecta
+      const status = error?.status || error?.response?.status;
+      const message = typeof error?.message === 'string' ? error.message.toLowerCase() : '';
+      if (
+        status === 401 ||
+        status === 403 ||
+        message.includes('token')
+      ) {
+            clearTokens(); // Rensa tokens
+        window.location.href = '/login'; // Redirect till login
+      }
+      throw error;
+    }
 }
