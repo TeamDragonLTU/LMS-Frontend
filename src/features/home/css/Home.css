@@ -1,0 +1,7 @@
+div.home-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: flex-start;
+  margin-left: 2rem;
+}
