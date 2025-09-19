@@ -1,12 +1,14 @@
-import { FormEventHandler, ReactElement, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router';
-import { useAuthContext } from '../hooks/useAuthContext';
+import { FormEventHandler, ReactElement, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router";
+import { useAuthContext } from "../hooks/useAuthContext";
+import { BookOpenIcon, LogInIcon } from "lucide-react";
 
 export function Login(): ReactElement {
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [searchParams] = useSearchParams();
   const { login } = useAuthContext();
+
   const navigate = useNavigate();
 
   const handleOnSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
@@ -14,32 +16,39 @@ export function Login(): ReactElement {
 
     await login(username, password);
 
-    const redirectTo = searchParams.get('redirectTo') || '/';
+    const redirectTo = searchParams.get("redirectTo") || "/";
     navigate(redirectTo, { replace: true });
   };
 
   return (
-    <main id="login-page" className="g-container">
-      <form className="login-form" onSubmit={handleOnSubmit}>
-        <fieldset>
-          <legend>Login</legend>
-          <label htmlFor="username">Username</label>
+    <main id="login-page" className="loginPage">
+      <fieldset className="loginfieldset">
+        <div className="icon">
+          <BookOpenIcon />
+        </div>
+        <h1 className="header">Lexicon LMS</h1>
+        <form className="login-form" onSubmit={handleOnSubmit}>
+          <label htmlFor="username">E-postadress</label>
           <input
-            id="username"
+            className="input"
             onChange={(e) => setUsername(e.target.value)}
             type="text"
             value={username}
           />
-          <label htmlFor="password">Password</label>
+          <br />
+          <label htmlFor="password">Lösenord</label>
           <input
-            id="password"
+            className="input"
             onChange={(e) => setPassword(e.target.value)}
-            type="password"
+            type="text"
             value={password}
           />
-          <button type="submit">Submit</button>
-        </fieldset>
-      </form>
+          <button type="submit" className="button">
+            <LogInIcon />
+            Submit
+          </button>
+        </form>
+      </fieldset>
     </main>
   );
 }

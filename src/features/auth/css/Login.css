@@ -1,14 +1,81 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f9f9f9;
+}
+
+fieldset {
+  max-width: 500px;
+  width: 75%;
+  padding: 20px;
+  margin: 0 20px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+}
+
 #login-page {
+  position: center;
   display: flex;
   align-items: center;
   flex-direction: column;
-
-  padding-block: 2rem;
+  min-height: 100vh;
+  justify-content: center;
+  background-color: #f7fafc;
 }
 
-#login-page .login-form fieldset {
+#login-page {
   display: flex;
+  position: center;
   align-items: flex-start;
   gap: 0.5rem;
   flex-direction: column;
+  max-width: 28rem;
+  width: 100%;
+  padding: 2rem 1.5rem;
+  background-color: #ffffff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-radius: 0.5rem;
+}
+
+.icon {
+  height: 3rem;
+  width: 3rem;
+  color: #2563eb;
+  margin: 0 auto 2rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  color: #1f2937;
+  margin-bottom: 2rem;
+}
+
+button {
+  width: 100%;
+  background-color: #2563eb;
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+input {
+  padding: 0.5rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
 }
