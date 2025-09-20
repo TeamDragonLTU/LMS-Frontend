@@ -45,7 +45,7 @@ export function Login(): ReactElement {
           />
           <button type="submit" className="button">
             <LogInIcon />
-            Submit
+            Logga in
           </button>
         </form>
       </fieldset>
