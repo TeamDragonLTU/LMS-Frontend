@@ -32,7 +32,7 @@ export function Login(): ReactElement {
           <input
             className="input"
             onChange={(e) => setUsername(e.target.value)}
-            type="text"
+            type="email"
             value={username}
           />
           <br />
@@ -40,7 +40,7 @@ export function Login(): ReactElement {
           <input
             className="input"
             onChange={(e) => setPassword(e.target.value)}
-            type="text"
+            type="password"
             value={password}
           />
           <button type="submit" className="button">
