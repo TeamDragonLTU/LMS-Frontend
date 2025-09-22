@@ -4,12 +4,21 @@ import { Login } from '../features/auth/components';
 import { requireAuthLoader } from '../features/auth/loaders';
 import { Companies, Company } from '../features/companies/components';
 import { companiesLoader, companyLoader } from '../features/companies/loaders';
+import DashboardPage from '../features/dashboard';
+import CoursePage from '../features/course';
+import UsersPage from '../features/usersboard';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       {/* requireAuthLoader is a route guard that protects the App and its child routes. */}
       <Route element={<App />} loader={requireAuthLoader} path="/">
+       {/* Default route for "/" */}
+        <Route index element={<DashboardPage />} />
+        {/* Menu routes */}
+        <Route path="dashboard" element={<DashboardPage />} />
+        <Route path="course" element={<CoursePage />} />
+        <Route path="users" element={<UsersPage />} />
         <Route element={<Companies />} index loader={companiesLoader} />
         <Route
           element={<Company />}
