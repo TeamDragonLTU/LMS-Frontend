@@ -1,7 +1,8 @@
 import { ReactElement } from "react";
-import { useAuthContext } from "../../auth/hooks";
+import { useAuthContext } from "../../../../auth/hooks";
 import { useNavigate } from "react-router";
 import { BookOpen, UserCircle, LogOut } from "lucide-react";
+import  "../css/Header.css";
 
 export function Header(): ReactElement {
   const { isLoggedIn, logout } = useAuthContext();
