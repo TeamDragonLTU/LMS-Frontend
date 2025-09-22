@@ -4,9 +4,8 @@ import { Login } from '../features/auth/components';
 import { requireAuthLoader } from '../features/auth/loaders';
 import { Companies, Company } from '../features/companies/components';
 import { companiesLoader, companyLoader } from '../features/companies/loaders';
-import DashboardPage from '../features/dashboard';
-import CoursePage from '../features/course';
-import UsersPage from '../features/usersboard';
+import DashboardPage from '../features/dashboard/component/index';
+import UsersPage from '../features/usersboard/component/index';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import "./Menu.css";
+import "../css/Menu.css";
 import { BookOpenCheck, LibraryBig, UserRoundCheck } from "lucide-react";
 
 export default function Menu() {
