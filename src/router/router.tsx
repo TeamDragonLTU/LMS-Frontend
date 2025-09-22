@@ -17,7 +17,7 @@ export const router = createBrowserRouter(
         <Route index element={<DashboardPage />} />
         {/* Menu routes */}
         <Route path="dashboard" element={<DashboardPage />} />
-        <Route path="course" element={<CoursePage />} />
+  
         <Route path="users" element={<UsersPage />} />
         <Route element={<Companies />} index loader={companiesLoader} />
         <Route

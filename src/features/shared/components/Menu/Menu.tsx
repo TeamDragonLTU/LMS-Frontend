@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./Menu.css";
+import { BookOpenCheck, LibraryBig, UserRoundCheck } from "lucide-react";
 
 export default function Menu() {
   const [open, setOpen] = useState(false);
@@ -26,7 +27,7 @@ export default function Menu() {
             className={({ isActive }) => "nav__link" + (isActive ? " is-active" : "")}
             onClick={closeOnNav}
           >
-            Dashboard
+            <LibraryBig />Dashboard
           </NavLink>
 
           <NavLink
@@ -34,7 +35,7 @@ export default function Menu() {
             className={({ isActive }) => "nav__link" + (isActive ? " is-active" : "")}
             onClick={closeOnNav}
           >
-            Min kurs
+            <BookOpenCheck /> Min kurs
           </NavLink>
 
           <NavLink
@@ -42,7 +43,7 @@ export default function Menu() {
             className={({ isActive }) => "nav__link" + (isActive ? " is-active" : "")}
             onClick={closeOnNav}
           >
-            Kursdeltagare
+            <UserRoundCheck />Kursdeltagare
           </NavLink>
         </nav>
       </aside>

@@ -1,12 +1,11 @@
-/* Sidebar container */
+
 .sidebar {
   position: fixed;
   top: 0;
   left: 0;
   width: 230px;
   height: 100%;
-  background: #ffffff;          /* white */
-  border-right: 1px solid #e5e7eb; /* subtle border */
+  border-right: 1px solid #e5e7eb; 
   padding: 1rem 0;
   display: flex;
   flex-direction: column;
@@ -21,7 +20,7 @@
   transform: translateX(0);
 }
 
-/* Navigation */
+
 .nav {
   display: flex;
   flex-direction: column;
@@ -36,32 +35,25 @@
   padding: .625rem 1rem;
   border-radius: .5rem;
   text-decoration: none;
-  color: #374151;            /* gray-700 */
+  color: #00295b;            
   font-size: 0.95rem;
   font-weight: 500;
 }
 
 .nav__link:hover {
-  background: #f3f4f6;       /* gray-100 */
+  background: #f3f4f6;       
   color: #111827;
 }
 
-/* Active link filled background */
 .nav__link.is-active {
-  background: #e0e7ff;       /* indigo-100 */
-  color: #1e40af;            /* indigo-800 */
-  font-weight: 600;
+  background: #b1d0ff;     
+  color: #00295b;
+  border-right: 6px solid #00295b;           
+ 
 }
 
-/* Optional: icons (you can replace with svg or font icons) */
-.nav__link::before {
-  content: "📊";             /* default emoji icon */
-  font-size: 1rem;
-}
-.nav__link[href*="course"]::before { content: "📚"; }
-.nav__link[href*="users"]::before { content: "👥"; }
 
-/* Hamburger button (mobile only) */
+
 .hamburger-btn {
   position: fixed;
   top: 1rem;
@@ -83,7 +75,7 @@
   z-index: 900;
 }
 
-/* Desktop ≥ 768px: sidebar always visible, hamburger/backdrop hidden */
+
 @media (min-width: 768px) {
   .sidebar {
     position: static;
