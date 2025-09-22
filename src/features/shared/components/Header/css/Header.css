@@ -1,0 +1,61 @@
+#header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding-block: 1rem;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: rgb(31 41 55 / var(1, 1));
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
+}
+
+.book-icon {
+  color: rgba(0, 47, 255, 0.75);
+  width: 32px;
+  height: 32px;
+}
+
+.left-header-container,
+.right-header-container,
+.logout-container,
+.display-role-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.account-circle-icon-background {
+  width: 2rem;
+  height: 2rem;
+  background-color: #e5e7eb;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-header-container {
+  color: gray;
+  font-size: 1rem;
+  color: #666;
+}
+
+.logout-container,
+.display-role-container {
+  gap: 0rem;
+}
+
+.logout-container > p,
+.display-role-container > p {
+  padding-inline-start: 5px;
+}
+
+.logout-container {
+  cursor: pointer;
+}
