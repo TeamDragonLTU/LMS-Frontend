@@ -64,6 +64,7 @@
   color: #111827;
   cursor: pointer;
   z-index: 1100;
+  width: 44px;
 }
 
 .backdrop {
