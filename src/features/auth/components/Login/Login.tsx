@@ -21,34 +21,37 @@ export function Login(): ReactElement {
   };
 
   return (
-    <main id="login-page" className="loginPage">
-      <fieldset className="loginfieldset">
-        <div className="icon">
-          <BookOpenIcon />
-        </div>
-        <h1 className="header">Lexicon LMS</h1>
-        <form className="login-form" onSubmit={handleOnSubmit}>
-          <label htmlFor="username">E-postadress</label>
-          <input
-            className="input"
-            onChange={(e) => setUsername(e.target.value)}
-            type="email"
-            value={username}
-          />
-          <br />
-          <label htmlFor="password">Lösenord</label>
-          <input
-            className="input"
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-            value={password}
-          />
-          <button type="submit" className="button">
-            <LogInIcon />
-            Logga in
-          </button>
-        </form>
-      </fieldset>
-    </main>
+    <div className="LoginContainer">
+      <main id="login-page" className="loginPage">
+        <fieldset className="loginfieldset">
+          <div className="icon">
+            <BookOpenIcon />
+          </div>
+          <h1 className="header">Lexicon LMS</h1>
+          <form className="login-form" onSubmit={handleOnSubmit}>
+            <label htmlFor="username">E-postadress</label>
+            <input
+              className="input"
+              onChange={(e) => setUsername(e.target.value)}
+              type="email"
+              value={username}
+            />
+            <br />
+            <label htmlFor="password">Lösenord</label>
+            <br />
+            <input
+              className="input"
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              value={password}
+            />
+            <button type="submit" className="button">
+              <LogInIcon />
+              Logga in
+            </button>
+          </form>
+        </fieldset>
+      </main>
+    </div>
   );
 }
