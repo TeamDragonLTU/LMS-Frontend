@@ -1,19 +1,23 @@
-import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router';
-import { App } from '../features/app';
-import { Login } from '../features/auth/components';
-import { requireAuthLoader } from '../features/auth/loaders';
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+} from "react-router";
+import { App } from "../features/app";
+import { Login } from "../features/auth/components/Login";
+import { requireAuthLoader } from "../features/auth/loaders";
 
 // From dev-skapa-meny
-import { Companies, Company } from '../features/companies/components';
-import { companiesLoader, companyLoader } from '../features/companies/loaders';
-import DashboardPage from '../features/dashboard/component/index';
-import UsersPage from '../features/usersboard/component/index';
+import { Companies, Company } from "../features/companies/components";
+import { companiesLoader, companyLoader } from "../features/companies/loaders";
+import DashboardPage from "../features/dashboard/component/index";
+import UsersPage from "../features/usersboard/component/index";
 
 // From dev
-import { Home } from '../features/home/Home';
-import { homeLoader } from '../features/home/homeLoader';
-import { Course } from '../features/courses/components/Course';
-import { courseLoader } from '../features/courses/loaders/courseLoader';
+import { Home } from "../features/home/Home";
+import { homeLoader } from "../features/home/homeLoader";
+import { Course } from "../features/courses/components/Course";
+import { courseLoader } from "../features/courses/loaders/courseLoader";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,11 +40,7 @@ export const router = createBrowserRouter(
         />
 
         {/* Courses */}
-        <Route
-          element={<Course />}
-          loader={courseLoader}
-          path="course"
-        />
+        <Route element={<Course />} loader={courseLoader} path="course" />
       </Route>
       <Route element={<Login />} path="/login" />
     </>
