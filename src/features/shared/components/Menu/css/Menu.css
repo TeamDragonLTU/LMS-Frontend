@@ -3,12 +3,13 @@
   top: 0;
   left: 0;
   width: 230px;
-  height: 100%;
+  height: 100vh;
   border-right: 1px solid #e5e7eb; 
   padding: 1rem 0;
   display: flex;
   flex-direction: column;
   z-index: 1000;
+
 
   background: #ffffff; /* ✅ white background */
 
@@ -78,7 +79,7 @@
   .sidebar {
     position: static;
     transform: translateX(0);
-    height: auto;
+     height: 100vh;
     background: rgb(255, 255, 255);
   }
   .hamburger-btn, .backdrop {
