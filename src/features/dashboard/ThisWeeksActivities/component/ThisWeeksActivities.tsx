@@ -6,6 +6,7 @@ export const ThisWeeksActivities = (): ReactElement => {
   /* Hårdkodade värden */
   const activities = [
     {
+      id: "1",
       type: "Föreläsning",
       tagClass: "lecture",
       title: "Introduktion till React",
@@ -13,6 +14,7 @@ export const ThisWeeksActivities = (): ReactElement => {
       time: "09:00-12:00",
     },
     {
+      id: "2",
       type: "Övning",
       tagClass: "exercise",
       title: "React komponenter",
@@ -20,6 +22,7 @@ export const ThisWeeksActivities = (): ReactElement => {
       time: "09:00-12:00",
     },
     {
+      id: "3",
       type: "E-learning",
       tagClass: "elearning",
       title: "React Hooks",
@@ -27,6 +30,7 @@ export const ThisWeeksActivities = (): ReactElement => {
       time: "09:00-12:00",
     },
     {
+      id: "4",
       type: "Inlämning",
       tagClass: "submission",
       title: "React applikation",
@@ -36,7 +40,7 @@ export const ThisWeeksActivities = (): ReactElement => {
   ];
 
   return (
-    <section className="twa-activities-container">
+    <section className="twa-section-container">
       {/* Header */}
       <div className="twa-header-container">
         <h2 className="twa-header-title">Veckans aktiviteter</h2>
@@ -49,26 +53,25 @@ export const ThisWeeksActivities = (): ReactElement => {
       {/* Module */}
       <div className="twa-module-container">
         <div className="twa-module-header">
-          <BookOpen size={16} />
-          <h4>Modul: Javascript</h4>
+          <BookOpen size={16} color="#1e40af" />
+          <h4 className="twa-module-name">Modul: Javascript</h4>
         </div>
 
         {/* Activities */}
-        {activities.map((activity, i) => (
-          <div key={i} className="twa-activity-container">
-            <div className={`twa-tag twa-tag-${activity.tagClass}`}>
-              {activity.type}
+        {activities.map((a) => (
+          <div key={a.id} className="twa-activity-container">
+            <div className="twa-activity-top">
+              <div className="twa-tag">{a.type}</div>
+              <h3 className="twa-activity-title">{a.title}</h3>
             </div>
-            <div className="twa-activity-content">
-              <p className="twa-activity-title">{activity.title}</p>
-              <div className="twa-activity-meta">
-                <span>
-                  <Calendar size={14} /> {activity.date}
-                </span>
-                <span>
-                  <Clock size={14} /> {activity.time}
-                </span>
-              </div>
+
+            <div className="twa-activity-bottom">
+              <span className="twa-datetime">
+                <Calendar size={16} /> {a.date}
+              </span>
+              <span className="twa-datetime">
+                <Clock size={16} /> {a.time}
+              </span>
             </div>
           </div>
         ))}
