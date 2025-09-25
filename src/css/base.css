@@ -2,3 +2,36 @@
   box-sizing: border-box;
   margin: 0;
 }
+.main-layout {
+  display: flex;
+  min-height: calc(100vh - 60px);
+}
+
+.main-layout > .menu {
+  width: 220px; /* or your preferred width */
+  flex-shrink: 0;
+}
+
+.main-layout > .outlet-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+
+@media (max-width: 767px) {
+  .main-layout {
+    flex-direction: column;
+  }
+  .main-layout > .menu {
+    width: 100%;
+  }
+  .main-layout > .outlet-container {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+  }
+}

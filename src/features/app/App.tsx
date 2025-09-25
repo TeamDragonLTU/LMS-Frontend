@@ -6,8 +6,14 @@ export function App() {
   return (
     <>
       <Header />
-      <Menu/>
-      <Outlet />
+      <main className="main-layout">
+        <div className="menu">
+          <Menu />
+        </div>
+        <div className="outlet-container">
+          <Outlet />
+        </div>  
+      </main>
     </>
   );
 }
