@@ -1,5 +1,5 @@
-body {
-  /*display: flex;*/
+.LoginContainer {
+  display: flex;
   justify-content: center;
   align-items: center;
   background: #f9f9f9;
@@ -16,25 +16,17 @@ fieldset {
 }
 
 #login-page {
-  position: center;
   display: flex;
+  position: center;
   align-items: center;
-  flex-direction: column;
-  min-height: 100vh;
-  justify-content: center;
-  background-color: #f7fafc;
-}
-
-#login-page {
-  display: flex;
-  position: center;
-  align-items: flex-start;
   gap: 0.5rem;
   flex-direction: column;
   max-width: 28rem;
   width: 100%;
   padding: 2rem 1.5rem;
-  background-color: #ffffff;
+  background-color: #f7fafc;
+  justify-content: center;
+  min-height: 100vh;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
   border-radius: 0.5rem;
