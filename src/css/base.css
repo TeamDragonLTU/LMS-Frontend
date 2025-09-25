@@ -8,16 +8,16 @@
 }
 
 .main-layout > .menu {
-  width: 220px; /* or your preferred width */
+  width: 220px; 
   flex-shrink: 0;
 }
 
 .main-layout > .outlet-container {
   flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   padding: 2rem;
+  display: block; 
+  width: 100%;
+  height: 100%;
 }
 
 
@@ -29,9 +29,9 @@
     width: 100%;
   }
   .main-layout > .outlet-container {
-    justify-content: center;
-    align-items: center;
     width: 100%;
     padding: 1rem;
+    height: 100%;
+    display: block; 
   }
 }
