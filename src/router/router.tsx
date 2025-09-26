@@ -10,12 +10,12 @@ import { requireAuthLoader } from "../features/auth/loaders";
 // From dev-skapa-meny
 import { Companies, Company } from "../features/companies/components";
 import { companiesLoader, companyLoader } from "../features/companies/loaders";
-import DashboardPage from "../features/dashboard/component/index";
+
 import UsersPage from "../features/usersboard/component/index";
 
 // From dev
-import { Home } from "../features/home/Home";
-import { homeLoader } from "../features/home/homeLoader";
+import { Home } from "../features/dashboard/Home";
+import { homeLoader } from "../features/dashboard/homeLoader";
 import { Course } from "../features/courses/components/Course";
 import { courseLoader } from "../features/courses/loaders/courseLoader";
 
@@ -28,7 +28,7 @@ export const router = createBrowserRouter(
         <Route index element={<Home />} loader={homeLoader} />
 
         {/* Dashboard + Users */}
-        <Route path="dashboard" element={<DashboardPage />} />
+        <Route path="dashboard" element={<Home />} loader={homeLoader} />
         <Route path="users" element={<UsersPage />} />
 
         {/* Companies */}
