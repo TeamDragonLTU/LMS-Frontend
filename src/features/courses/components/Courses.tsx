@@ -30,5 +30,7 @@ export function Courses(): ReactElement {
         ))}
       </ul>
     </section>
+
+   
   );
 }
