@@ -9,5 +9,5 @@ export interface ICoursesLoader {
   courses: Promise<ICourse[]>;
 }
 export interface ICourseLoader {
-  course: Promise<ICourse>;
+  course: ICourse;
 }
