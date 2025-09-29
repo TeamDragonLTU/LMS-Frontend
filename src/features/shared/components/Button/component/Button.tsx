@@ -1,7 +1,7 @@
 import { ReactElement, ReactNode } from "react";
 
 interface buttonProps {
-  children: ReactNode;
+  children?: ReactNode;
   className: string;
   type?: "button" | "submit" | "reset";
   onClick?: () => void;
@@ -13,6 +13,7 @@ const Button = ({
   type,
   onClick,
 }: buttonProps): ReactElement => {
+  
   return (
     <button type={type} className={className} onClick={onClick}>
       {children}
