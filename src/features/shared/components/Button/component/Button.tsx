@@ -1,15 +1,21 @@
-import { ReactElement } from "react";
+import { ReactElement, ReactNode } from "react";
 
 interface buttonProps {
-  text: string;
+  children: ReactNode;
   className: string;
+  type?: "button" | "submit" | "reset";
   onClick?: () => void;
 }
 
-const Button = ({ text, className, onClick }: buttonProps): ReactElement => {
+const Button = ({
+  children,
+  className,
+  type,
+  onClick,
+}: buttonProps): ReactElement => {
   return (
-    <button className={className} onClick={onClick}>
-      {text}
+    <button type={type} className={className} onClick={onClick}>
+      {children}
     </button>
   );
 };
