@@ -1,0 +1,78 @@
+.module-container {
+  padding: 20px;
+  background: #f9fafb;
+  border-radius: 8px;
+  max-width: 700px;
+}
+
+.course-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 4px;
+  color: #1f2937;
+}
+
+.course-desc {
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 16px 0 8px;
+  color: #374151;
+}
+
+.module-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  transition: background 0.2s ease;
+  cursor: pointer;
+}
+
+.module-card:hover {
+  background: #f3f4f6;
+}
+
+.module-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.module-icon {
+  font-size: 20px;
+  color: #3b82f6;
+}
+
+.module-title {
+  font-weight: 600;
+  color: #111827;
+}
+
+.module-dates {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.module-arrow {
+  font-size: 18px;
+  color: #3b82f6;
+}
+
+.loading {
+  color: #6b7280;
+}
+
+.error {
+  color: #dc2626;
+  font-weight: bold;
+}

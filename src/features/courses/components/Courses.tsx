@@ -25,5 +25,7 @@ export function Courses(): ReactElement {
         </div>
       ))}
     </section>
+
+   
   );
 }

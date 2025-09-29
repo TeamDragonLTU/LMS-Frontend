@@ -1,6 +1,7 @@
 import { ReactElement, ReactNode, Suspense } from 'react';
 import { Await, useLoaderData, useParams } from 'react-router';
 import { ICourse, ICourseLoader } from '../types';
+import ModuleStudent from '../ModuleStudent/component/ModuleStudent';
 
 export function Course(): ReactElement {
   const { course } = useLoaderData<ICourseLoader>();
@@ -20,6 +21,7 @@ export function Course(): ReactElement {
       <Suspense fallback={<p>Loading...</p>}>
         <Await children={(course) => renderCourse(course)} resolve={course} />
       </Suspense>
+      <ModuleStudent/>
     </main>
   );
 }
