@@ -28,7 +28,6 @@ export function ModuleCard({ module }: ModuleCardProps): ReactElement {
       </div>
         <button
         className="module-arrow-btn"
-        onClick={() => onClick?.(module)}
         aria-label={`Open ${module.name}`}
       >
         <ChevronRight />

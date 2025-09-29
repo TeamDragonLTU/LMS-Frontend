@@ -63,11 +63,12 @@
 
 .module-arrow-btn {
   background: none;
+  color: #1d4ed8;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: end;
   padding: 0.5rem;
   transition: transform 0.2s;
 }
