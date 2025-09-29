@@ -1,7 +1,9 @@
+
 import { ReactElement, useEffect, useState } from "react";
 import ModuleCard from "./ModuleCard";
 import { ModuleProps } from "./type";
 import "../css/style.css";
+import { fetchWithToken } from "../../../shared/utilities";
 
 export function ModuleStudent(): ReactElement {
   const [modules, setModules] = useState<ModuleProps[]>([]);
@@ -11,12 +13,12 @@ export function ModuleStudent(): ReactElement {
   useEffect(() => {
     const fetchModules = async () => {
       try {
-        const res = await fetch("https://localhost:7213/api/module");
-        if (!res.ok) throw new Error("Module cannot be found");
-        const data: ModuleProps[] = await res.json();
+        const data = await fetchWithToken<ModuleProps[]>(
+          "https://localhost:7213/api/module"
+        );
 
         const today = new Date();
-        const withStatus = data.map((m) => {
+  const withStatus = data.map((m: ModuleProps) => {
           const start = new Date(m.startDate);
           const end = new Date(m.endDate);
 
