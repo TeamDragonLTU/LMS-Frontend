@@ -11,13 +11,14 @@ import { requireAuthLoader } from "../features/auth/loaders";
 import { Companies, Company } from "../features/companies/components";
 import { companiesLoader, companyLoader } from "../features/companies/loaders";
 
-import UsersPage from "../features/usersboard/component/index";
+import Userboard from "../features/usersboard/component/Userboard";
 
 // From dev
 import { Home } from "../features/dashboard/Home";
 import { homeLoader } from "../features/dashboard/homeLoader";
 import { Course } from "../features/courses/components/Course";
-import { courseLoader } from "../features/courses/loaders/courseLoader";
+import { Courses } from "../features/courses/components/Courses";
+import { courseLoader, coursesLoader } from "../features/courses/loaders/courseLoader";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,7 +30,7 @@ export const router = createBrowserRouter(
 
         {/* Dashboard + Users */}
         <Route path="dashboard" element={<Home />} loader={homeLoader} />
-        <Route path="users" element={<UsersPage />} />
+  <Route path="users" element={<Userboard />} />
 
         {/* Companies */}
         <Route element={<Companies />} index loader={companiesLoader} />
@@ -39,8 +40,9 @@ export const router = createBrowserRouter(
           path="companies/:id"
         />
 
-        {/* Courses */}
-        <Route element={<Course />} loader={courseLoader} path="course" />
+  {/* Courses */}
+  <Route element={<Courses />} loader={coursesLoader} path="course" />
+  <Route element={<Course />} loader={courseLoader} path="course/:id" />
       </Route>
       <Route element={<Login />} path="/login" />
     </>

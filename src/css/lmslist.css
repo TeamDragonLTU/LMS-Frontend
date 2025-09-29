@@ -1,0 +1,121 @@
+/*
+ * Global list styles for user/course lists (formerly usersboard)
+ */
+
+.lmslist-section-header {
+  background: #f6f8fa;
+  color: #2563eb;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 0.7rem 0.5rem 0.5rem 0.5rem;
+  border-bottom: 2px solid #e3eaf4;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  margin-top: 1.2rem;
+  margin-bottom: 0.2rem;
+}
+
+.lmslist-container {
+  margin: 2rem auto;
+  max-width: 800px;
+  background: #fafbfc;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(60,72,88,0.04);
+  padding: 2.5rem 2rem 2rem 2rem;
+}
+
+.lmslist-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+  color: #222b45;
+}
+
+.lmslist-subtitle {
+  color: #6b7280;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.lmslist-card {
+  background: #f6fafd;
+  border-radius: 10px 10px 0 0;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  color: #1a237e;
+  border-bottom: 1px solid #e3eaf4;
+}
+
+.lmslist-card .lmslist-icon {
+  margin-right: 0.7rem;
+  color: #3b82f6;
+  font-size: 1.2rem;
+}
+
+.lmslist-card .lmslist-count {
+  margin-left: 0.7rem;
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.lmslist-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: #fff;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 1px 2px rgba(60,72,88,0.03);
+}
+
+.lmslist-list li {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid #f3f4f6;
+  background: #fff;
+  transition: background 0.2s;
+}
+
+.lmslist-list li:last-child {
+  border-bottom: none;
+}
+
+.lmslist-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.lmslist-name {
+  font-weight: 600;
+  font-size: 1.08rem;
+  color: #222b45;
+}
+
+.lmslist-email {
+  color: #6b7280;
+  font-size: 0.98rem;
+}
+
+.lmslist-meta {
+  color: #8b909a;
+  font-size: 0.95rem;
+  margin-left: 1.5rem;
+  white-space: nowrap;
+}
+
+.lmslist-role-badge {
+  background: #e3eafc;
+  color: #2563eb;
+  font-size: 0.85rem;
+  border-radius: 8px;
+  padding: 0.1rem 0.7rem;
+  margin-left: 0.7rem;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+}

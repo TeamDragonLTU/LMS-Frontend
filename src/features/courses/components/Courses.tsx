@@ -1,4 +1,4 @@
-import '../css/Courses.css';
+import '../../../css/lmslist.css';
 import { ReactElement } from 'react';
 import { useLoaderData, Link } from 'react-router';
 import { ICourse } from '../types';
@@ -16,14 +16,19 @@ export function Courses(): ReactElement {
   if (!courses || courses.length === 0) return <p>Inga kurser...</p>;
 
   return (
-    <section className="courses">
-      <h2>Dina kurser</h2>
-      {courses.map((course) => (
-        <div key={course.id}>
-          <p>{course.name}</p>
-          <Link to={"/course"}>Se kursinfo</Link>
-        </div>
-      ))}
+    <section className="lmslist-container">
+      <h1 className="lmslist-title">Dina kurser</h1>
+      <ul className="lmslist-list">
+        {courses.map((course) => (
+          <li key={course.id}>
+            <div className="lmslist-info">
+              <span className="lmslist-name">{course.name}</span>
+              <span className="lmslist-email">{course.description}</span>
+            </div>
+            <Link className="lmslist-role-badge" to={`/course/${course.id}`}>Se kursinfo</Link>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }
