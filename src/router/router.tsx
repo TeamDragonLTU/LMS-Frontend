@@ -18,6 +18,7 @@ import { Home } from "../features/dashboard/Home";
 import { homeLoader } from "../features/dashboard/homeLoader";
 import { Course } from "../features/courses/components/Course";
 import { courseLoader } from "../features/courses/loaders/courseLoader";
+import { courseParticipantsLoader } from "../features/course-participants/loaders/courseParticipantsLoader";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,7 +30,11 @@ export const router = createBrowserRouter(
 
         {/* Dashboard + Users */}
         <Route path="dashboard" element={<Home />} loader={homeLoader} />
-        <Route path="users" element={<UsersPage />} />
+        <Route
+          path="users"
+          element={<UsersPage />}
+          loader={courseParticipantsLoader}
+        />
 
         {/* Companies */}
         <Route element={<Companies />} index loader={companiesLoader} />

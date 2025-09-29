@@ -1,3 +1,5 @@
+import CourseParticipantsPage from "../../course-participants/components/CourseParticipantsPage";
+
 export default function UsersPage() {
-  return <h1>Kursdeltagare</h1>;
+  return <CourseParticipantsPage />;
 }

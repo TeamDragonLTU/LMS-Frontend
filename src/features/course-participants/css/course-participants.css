@@ -1,0 +1,71 @@
+.crspar-section-container {
+  font-family: sans-serif;
+}
+
+.crspar-header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 50rem;
+  margin-bottom: 1rem;
+}
+
+.crspar-header-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.crspar-module-container {
+  width: 50rem;
+  background-color: #f0f8ff;
+  border-radius: 0.5rem;
+  padding-top: 1rem;
+}
+
+.crspar-module-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: bold;
+  margin-bottom: 0.8rem;
+  padding-left: 1rem;
+}
+
+.crspar-module-name {
+  color: #1e40af;
+  font-size: 0.95rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.crspar-item-container {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border: 1px solid rgba(128, 128, 128, 0.1);
+  padding: 0.8rem;
+  gap: 0.25rem;
+}
+
+.crspar-item-container:last-of-type {
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.crspar-item-top,
+.crspar-item-bottom {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.crspar-item-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.crspar-subtext {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
