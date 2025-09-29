@@ -5,9 +5,6 @@ export interface ICourse {
   startDate: string;
 }
 
-export interface ICoursesLoader {
-  courses: Promise<ICourse[]>;
-}
 export interface ICourseLoader {
   course: ICourse;
 }
