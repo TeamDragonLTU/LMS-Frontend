@@ -74,7 +74,7 @@ const UserForm: React.FC<{
     Email: "",
     UserName: "",
     Password: "",
-    Role: "Elev",
+    Role: "Student",
   });
 
   return (
@@ -117,10 +117,9 @@ const UserForm: React.FC<{
           setForm({ ...form, Role: e.target.value })
         }
       >
-        <option>Elev</option>
-        <option>Lärare</option>
+        <option value="Student">Elev</option>
+        <option value="Teacher">Lärare</option>
       </select>
-
       <div className="modal-actions">
         <button type="submit" className="btn-primary">
           Spara
