@@ -4,8 +4,13 @@ import { User, RegisterUserRequest } from "../../auth/types";
 import { BASE_URL } from "../../shared/constants";
 
 const UsersPage: React.FC = () => {
+  const { role } = useAuthContext();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [search, setSearch] = useState("");
+  const [message, setMessage] = useState<string | null>(null);
+
+  if (role !== "Teacher") {
+    return;
+  }
 
   const handleAddUser = async (newUser: RegisterUserRequest) => {
     try {
@@ -14,17 +19,19 @@ const UsersPage: React.FC = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newUser),
       });
+
       if (res.status === 201) {
-        // success, but no body returned
-        console.log("User registered successfully");
+        setMessage("✅ Användaren registrerades.");
         setIsAddModalOpen(false);
         return;
       }
 
       const error = await res.json();
-      console.error("Registration failed", error);
-    } catch (err) {
-      console.error("Add user failed:", err);
+      setMessage(
+        `❌ Registrering misslyckades: ${error?.message || "Okänt fel"}`
+      );
+    } catch {
+      setMessage("❌ Ett fel inträffade vid registrering.");
     }
   };
 
@@ -32,22 +39,14 @@ const UsersPage: React.FC = () => {
     <div className="container">
       <h1 className="page-title">Användare</h1>
 
+      {message && <div className="message">{message}</div>}
+
       <div className="toolbar">
-        <input
-          type="text"
-          placeholder="Sök..."
-          className="input"
-          value={search}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setSearch(e.target.value)
-          }
-        />
         <button className="btn-primary" onClick={() => setIsAddModalOpen(true)}>
           Lägg till användare
         </button>
       </div>
 
-      {/* Add User Modal */}
       {isAddModalOpen && (
         <div className="modal">
           <div className="modal-content">
@@ -131,5 +130,11 @@ const UserForm: React.FC<{
     </form>
   );
 };
+
+type UserRole = "Teacher" | "Student";
+
+function useAuthContext(): { role: UserRole } {
+  throw new Error("Function not implemented.");
+}
 
 export default UsersPage;
