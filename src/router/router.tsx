@@ -1,63 +1,57 @@
-import { useEffect, useState } from 'react';
-import '../../../css/lmslist.css';
-import { IUserDto } from '../types';
-import { fetchWithToken } from '../../shared/utilities/fetchWithToken';
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+} from "react-router";
+import { App } from "../features/app";
+import { Login } from "../features/auth/components/Login";
+import { requireAuthLoader } from "../features/auth/loaders";
 
+import { Companies, Company } from "../features/companies/components";
+import { companiesLoader, companyLoader } from "../features/companies/loaders";
 
-export default function Userboard() {
-  const [classmates, setClassmates] = useState<IUserDto[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+import Userboard from "../features/usersboard/component/Userboard";
 
-  useEffect(() => {
-    fetchWithToken<IUserDto[]>('https://localhost:7213/api/course/participants/my')
-      .then((data) => {
-        console.log('API /api/course/participants/my response:', data);
-        setClassmates(data || []);
-      })
-      .catch((err: any) => setError(err?.message || 'Något gick fel'))
-      .finally(() => setLoading(false));
-  }, []);
+import { Home } from "../features/dashboard/Home";
+import { homeLoader } from "../features/dashboard/homeLoader";
+import { Course } from "../features/courses/components/Course";
+import { Courses } from "../features/courses/components/Courses";
+import { courseLoader } from "../features/courses/loaders/courseLoader";
+import { ThisWeeksActivities } from "../features/dashboard/ThisWeeksActivities/component/ThisWeeksActivities";
+import { thisWeeksActivitiesLoader } from "../features/dashboard/ThisWeeksActivities/loaders/thisWeeksActivitiesLoader";
 
-  if (loading) return <p>Laddar klasskamrater...</p>;
-  if (error) return <p style={{ color: 'red' }}>{error}</p>;
+export const router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+      {/* requireAuthLoader is a route guard that protects the App and its child routes. */}
+      <Route element={<App />} loader={requireAuthLoader} path="/">
+        {/* Default route for "/" */}
+        <Route index element={<Home />} loader={homeLoader} />
 
-  const teachers = classmates.filter((u) => u.role === 'Teacher');
-  const students = classmates.filter((u) => u.role === 'Student');
+        {/* Dashboard + Users */}
+        <Route path="dashboard" element={<Home />} loader={homeLoader} />
+        <Route path="users" element={<Userboard />} />
 
-  return (
-    <div className="lmslist-container">
-      <h1 className="lmslist-title">Kursdeltagare</h1>
-      <ul className="lmslist-list">
-          {teachers.length > 0 && (
-            <>
-              <li className="lmslist-section-header">Lärare</li>
-              {teachers.map((user) => (
-                <li key={user.id}>
-                  <div className="lmslist-info">
-                    <span className="lmslist-name">{user.userName}</span>
-                    <span className="lmslist-email">{user.email}</span>
-                  </div>
-                  <span className="lmslist-role-badge">Lärare</span>
-                </li>
-              ))}
-            </>
-          )}
-          {students.length > 0 && (
-            <>
-              <li className="lmslist-section-header">Studenter</li>
-              {students.map((user) => (
-                <li key={user.id}>
-                  <div className="lmslist-info">
-                    <span className="lmslist-name">{user.userName}</span>
-                    <span className="lmslist-email">{user.email}</span>
-                  </div>
-                  <span className="lmslist-role-badge">Student</span>
-                </li>
-              ))}
-            </>
-          )}
-        </ul>
-    </div>
-  );
-}
+        {/* Companies */}
+        <Route element={<Companies />} index loader={companiesLoader} />
+        <Route
+          element={<Company />}
+          loader={({ params }) => companyLoader(params.id)}
+          path="companies/:id"
+        />
+
+  {/* Courses */}
+  <Route element={<Courses />} path="course" />
+  <Route element={<Course />} loader={courseLoader} path="course/:id" />
+
+        {/* Veckans aktiviteter direkt route */}
+        <Route
+          element={<ThisWeeksActivities />}
+          loader={thisWeeksActivitiesLoader}
+          path="veckans-aktiviteter"
+        />
+      </Route>
+      <Route element={<Login />} path="/login" />
+    </>
+  )
+);
