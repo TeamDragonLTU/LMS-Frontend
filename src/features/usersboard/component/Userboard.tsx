@@ -1,6 +1,4 @@
-
 import { useEffect, useState } from 'react';
-import React from 'react';
 import '../../../css/lmslist.css';
 import { IUserDto } from '../types';
 import { fetchWithToken } from '../../shared/utilities/fetchWithToken';
@@ -15,7 +13,7 @@ export default function Userboard() {
     fetchWithToken<IUserDto[]>('https://localhost:7213/api/course/participants/my')
       .then((data) => {
         console.log('API /api/course/participants/my response:', data);
-        setClassmates(data);
+        setClassmates(data || []);
       })
       .catch((err: any) => setError(err?.message || 'Något gick fel'))
       .finally(() => setLoading(false));
@@ -31,33 +29,35 @@ export default function Userboard() {
     <div className="lmslist-container">
       <h1 className="lmslist-title">Kursdeltagare</h1>
       <ul className="lmslist-list">
-        {/* Lärare */}
-        {teachers.length > 0 && [
-          <li className="lmslist-section-header" key="section-header-teachers">Lärare</li>,
-          ...teachers.map((user, idx) => (
-            <li key={user.id ?? `teacher-${idx}`}>
-              <div className="lmslist-info">
-                <span className="lmslist-name">{user.userName}</span>
-                <span className="lmslist-email">{user.email}</span>
-              </div>
-              <span className="lmslist-role-badge">Lärare</span>
-            </li>
-          ))
-        ]}
-        {/* Studenter */}
-        {students.length > 0 && [
-          <li className="lmslist-section-header" key="section-header-students">Studenter</li>,
-          ...students.map((user, idx) => (
-            <li key={user.id ?? `student-${idx}`}>
-              <div className="lmslist-info">
-                <span className="lmslist-name">{user.userName}</span>
-                <span className="lmslist-email">{user.email}</span>
-              </div>
-              <span className="lmslist-role-badge">Student</span>
-            </li>
-          ))
-        ]}
-      </ul>
+          {teachers.length > 0 && (
+            <>
+              <li className="lmslist-section-header">Lärare</li>
+              {teachers.map((user) => (
+                <li key={user.id}>
+                  <div className="lmslist-info">
+                    <span className="lmslist-name">{user.userName}</span>
+                    <span className="lmslist-email">{user.email}</span>
+                  </div>
+                  <span className="lmslist-role-badge">Lärare</span>
+                </li>
+              ))}
+            </>
+          )}
+          {students.length > 0 && (
+            <>
+              <li className="lmslist-section-header">Studenter</li>
+              {students.map((user) => (
+                <li key={user.id}>
+                  <div className="lmslist-info">
+                    <span className="lmslist-name">{user.userName}</span>
+                    <span className="lmslist-email">{user.email}</span>
+                  </div>
+                  <span className="lmslist-role-badge">Student</span>
+                </li>
+              ))}
+            </>
+          )}
+        </ul>
     </div>
   );
 }
