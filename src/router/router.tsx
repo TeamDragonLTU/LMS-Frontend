@@ -18,7 +18,7 @@ import { Home } from "../features/dashboard/Home";
 import { homeLoader } from "../features/dashboard/homeLoader";
 import { Course } from "../features/courses/components/Course";
 import { Courses } from "../features/courses/components/Courses";
-import { courseLoader, coursesLoader } from "../features/courses/loaders/courseLoader";
+import { courseLoader } from "../features/courses/loaders/courseLoader";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -41,7 +41,7 @@ export const router = createBrowserRouter(
         />
 
   {/* Courses */}
-  <Route element={<Courses />} loader={coursesLoader} path="course" />
+  <Route element={<Courses />} path="course" />
   <Route element={<Course />} loader={courseLoader} path="course/:id" />
       </Route>
       <Route element={<Login />} path="/login" />

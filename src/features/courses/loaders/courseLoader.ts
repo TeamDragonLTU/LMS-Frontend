@@ -1,7 +1,4 @@
-export async function coursesLoader(): Promise<{ courses: ICourse[] }> {
-  const courses: ICourse[] = await fetchWithToken('https://localhost:7213/api/course');
-  return { courses };
-}
+
 
 
 import { ICourse } from '../types';
