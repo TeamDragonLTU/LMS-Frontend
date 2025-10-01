@@ -18,7 +18,13 @@ import { Home } from "../features/dashboard/Home";
 import { homeLoader } from "../features/dashboard/homeLoader";
 import { Course } from "../features/courses/components/Course";
 import { Courses } from "../features/courses/components/Courses";
+<<<<<<< Updated upstream
 import { courseLoader, coursesLoader } from "../features/courses/loaders/courseLoader";
+=======
+import { courseLoader } from "../features/courses/loaders/courseLoader";
+import { ThisWeeksActivities } from "../features/dashboard/ThisWeeksActivities/component/ThisWeeksActivities";
+import { thisWeeksActivitiesLoader } from "../features/dashboard/ThisWeeksActivities/loaders/thisWeeksActivitiesLoader";
+>>>>>>> Stashed changes
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -43,6 +49,13 @@ export const router = createBrowserRouter(
   {/* Courses */}
   <Route element={<Courses />} loader={coursesLoader} path="course" />
   <Route element={<Course />} loader={courseLoader} path="course/:id" />
+
+  {/* Veckans aktiviteter direkt route */}
+  <Route
+    element={<ThisWeeksActivities />}
+    loader={thisWeeksActivitiesLoader}
+    path="veckans-aktiviteter"
+  />
       </Route>
       <Route element={<Login />} path="/login" />
     </>
