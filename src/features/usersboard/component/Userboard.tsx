@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import '../../../css/lmslist.css';
 import { IUserDto } from '../types';
@@ -11,8 +10,10 @@ export default function Userboard() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchWithToken<IUserDto[]>('https://localhost:7213/api/classmates')
-      .then(setClassmates)
+    fetchWithToken<IUserDto[]>('https://localhost:7213/api/course/participants/my')
+      .then((data) => {
+        setClassmates(data || []);
+      })
       .catch((err: any) => setError(err?.message || 'Något gick fel'))
       .finally(() => setLoading(false));
   }, []);
