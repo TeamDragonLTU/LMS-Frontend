@@ -14,7 +14,6 @@ export default function Userboard() {
   useEffect(() => {
     fetchWithToken<IUserDto[]>('https://localhost:7213/api/course/participants/my')
       .then((data) => {
-        console.log('API /api/course/participants/my response:', data);
         setClassmates(data);
       })
       .catch((err: any) => setError(err?.message || 'Något gick fel'))
