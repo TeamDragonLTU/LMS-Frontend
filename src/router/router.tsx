@@ -7,24 +7,18 @@ import { App } from "../features/app";
 import { Login } from "../features/auth/components/Login";
 import { requireAuthLoader } from "../features/auth/loaders";
 
-// From dev-skapa-meny
 import { Companies, Company } from "../features/companies/components";
 import { companiesLoader, companyLoader } from "../features/companies/loaders";
 
 import Userboard from "../features/usersboard/component/Userboard";
 
-// From dev
 import { Home } from "../features/dashboard/Home";
 import { homeLoader } from "../features/dashboard/homeLoader";
 import { Course } from "../features/courses/components/Course";
 import { Courses } from "../features/courses/components/Courses";
-<<<<<<< Updated upstream
 import { courseLoader, coursesLoader } from "../features/courses/loaders/courseLoader";
-=======
-import { courseLoader } from "../features/courses/loaders/courseLoader";
 import { ThisWeeksActivities } from "../features/dashboard/ThisWeeksActivities/component/ThisWeeksActivities";
 import { thisWeeksActivitiesLoader } from "../features/dashboard/ThisWeeksActivities/loaders/thisWeeksActivitiesLoader";
->>>>>>> Stashed changes
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,7 +30,7 @@ export const router = createBrowserRouter(
 
         {/* Dashboard + Users */}
         <Route path="dashboard" element={<Home />} loader={homeLoader} />
-  <Route path="users" element={<Userboard />} />
+        <Route path="users" element={<Userboard />} />
 
         {/* Companies */}
         <Route element={<Companies />} index loader={companiesLoader} />
@@ -46,16 +40,16 @@ export const router = createBrowserRouter(
           path="companies/:id"
         />
 
-  {/* Courses */}
-  <Route element={<Courses />} loader={coursesLoader} path="course" />
-  <Route element={<Course />} loader={courseLoader} path="course/:id" />
+        {/* Courses */}
+        <Route element={<Courses />} loader={coursesLoader} path="course" />
+        <Route element={<Course />} loader={courseLoader} path="course/:id" />
 
-  {/* Veckans aktiviteter direkt route */}
-  <Route
-    element={<ThisWeeksActivities />}
-    loader={thisWeeksActivitiesLoader}
-    path="veckans-aktiviteter"
-  />
+        {/* Veckans aktiviteter direkt route */}
+        <Route
+          element={<ThisWeeksActivities />}
+          loader={thisWeeksActivitiesLoader}
+          path="veckans-aktiviteter"
+        />
       </Route>
       <Route element={<Login />} path="/login" />
     </>

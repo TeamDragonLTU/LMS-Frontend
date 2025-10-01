@@ -10,7 +10,6 @@ export function Home() {
   return (
     <div className="home-wrapper">
       <ThisWeeksActivities />
-      <Courses />
     </div>
   );
 }
