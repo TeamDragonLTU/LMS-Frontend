@@ -2,11 +2,14 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "../css/Menu.css";
 import { BookOpenCheck, LibraryBig, UserRoundCheck } from "lucide-react";
+import { useAuthContext } from "../../../../auth/hooks";
 
 export default function Menu() {
   const [open, setOpen] = useState(false);
 
   const closeOnNav = () => setOpen(false);
+
+  const { role } = useAuthContext();
 
   return (
     <>
@@ -24,27 +27,37 @@ export default function Menu() {
         <nav className="nav">
           <NavLink
             to="/dashboard"
-            className={({ isActive }) => "nav__link" + (isActive ? " is-active" : "")}
+            className={({ isActive }) =>
+              "nav__link" + (isActive ? " is-active" : "")
+            }
             onClick={closeOnNav}
           >
-            <LibraryBig />Dashboard
+            <LibraryBig />
+            Dashboard
           </NavLink>
 
           <NavLink
             to="/course"
-            className={({ isActive }) => "nav__link" + (isActive ? " is-active" : "")}
+            className={({ isActive }) =>
+              "nav__link" + (isActive ? " is-active" : "")
+            }
             onClick={closeOnNav}
           >
             <BookOpenCheck /> Min kurs
           </NavLink>
 
-          <NavLink
-            to="/users"
-            className={({ isActive }) => "nav__link" + (isActive ? " is-active" : "")}
-            onClick={closeOnNav}
-          >
-            <UserRoundCheck />Kursdeltagare
-          </NavLink>
+          {role === "Teacher" && (
+            <NavLink
+              to="/users"
+              className={({ isActive }) =>
+                "nav__link" + (isActive ? " is-active" : "")
+              }
+              onClick={closeOnNav}
+            >
+              <UserRoundCheck />
+              Kursdeltagare
+            </NavLink>
+          )}
         </nav>
       </aside>
 

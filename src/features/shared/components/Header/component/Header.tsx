@@ -2,10 +2,10 @@ import { ReactElement } from "react";
 import { useAuthContext } from "../../../../auth/hooks";
 import { useNavigate } from "react-router";
 import { BookOpen, UserCircle, LogOut } from "lucide-react";
-import  "../css/Header.css";
+import "../css/Header.css";
 
 export function Header(): ReactElement {
-  const { isLoggedIn, logout } = useAuthContext();
+  const { isLoggedIn, logout, role } = useAuthContext();
   const navigate = useNavigate();
 
   const handleOnLogout = () => {
@@ -25,7 +25,7 @@ export function Header(): ReactElement {
           <div className="account-circle-icon-background">
             <UserCircle size={24} />
           </div>
-          <p>Elev</p>
+          <span>{role === "Student" ? "Elev" : "Lärare"}</span>
         </div>
 
         {isLoggedIn && (

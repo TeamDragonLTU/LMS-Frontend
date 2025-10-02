@@ -2,6 +2,7 @@ export interface IAuthContext {
   isLoggedIn: boolean;
   login: (username: string, password: string) => Promise<void>;
   logout: () => void;
+  role: "Student" | "Teacher" | null;
 }
 
 export interface ITokens {
@@ -11,12 +12,10 @@ export interface ITokens {
 
 // User.ts
 export interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
+  password: string;
   email: string;
+  userName: string;
   role: string;
-  lastActive: string;
 }
 
 // Payload for creating a new user
