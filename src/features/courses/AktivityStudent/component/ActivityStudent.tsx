@@ -7,8 +7,8 @@ interface Activity{
     id: string;
     name: string;
     description: string;
-    startDate: string;
-    endDate: string;
+    startTime: string;
+    endTime: string;
     type: string;
 }
 interface ActivityProps{
@@ -28,13 +28,22 @@ export default function ActivityStudent({moduleId}:ActivityProps):ReactElement {
         );
           setActivities(data);
         } catch {
-        setError("Cannot find activities.");
+        setError("Inga aktiviteter för denna modul.");
       } finally {
         setLoading(false); 
       }
     };
     fetchActivities();
   }, [moduleId]);
+
+
+  const formatDate = (dateString: string) =>
+    new Date(dateString).toLocaleDateString("sv-SE", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+
 
   if (loading) return <p className="loading">Laddar...</p>;
   if (error) return <p className="error">{error}</p>;
@@ -47,18 +56,9 @@ export default function ActivityStudent({moduleId}:ActivityProps):ReactElement {
           {activities.map((activity)=>(
             <li key={activity.id} className="activity-item">
               <h4 className="activity-name"><span className="activity-type">{activity.type}</span>{activity.name}</h4>
-              <p className="activity-description">{activity.description}</p>
+              {/*<p className="activity-description">{activity.description}</p>*/}
               <p className="activity-dates">
-                {new Date(activity.startDate).toLocaleDateString("sv-SE", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                })}{" "}–{" "}
-                {new Date(activity.endDate).toLocaleDateString("sv-SE", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                })}
+               {formatDate(activity.startTime)} – {formatDate(activity.endTime)}
               </p>
               
             </li>

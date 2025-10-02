@@ -39,7 +39,7 @@ return (
         className="module-arrow-btn"
         aria-label={`Open ${module.name}`}
       >
-        <ChevronRight />
+        <ChevronRight className={open ? "rotated" : ""}/>
       </button>
     </div>
     {open && (
