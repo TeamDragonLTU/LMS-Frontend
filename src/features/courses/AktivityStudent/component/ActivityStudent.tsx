@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+import { useEffect, useState } from "react";
 import "../css/style.css";
 import { fetchWithToken } from "../../../shared/utilities";
 
@@ -14,7 +15,7 @@ interface ActivityProps{
     moduleId: string;
 }
 
-export default function ActivityStudent({moduleId}:A):ReactElement {
+export default function ActivityStudent({moduleId}:ActivityProps):ReactElement {
   const [activities, setActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -23,7 +24,7 @@ export default function ActivityStudent({moduleId}:A):ReactElement {
     const fetchActivities = async () => {
       try {
         const data= await fetchWithToken<any>(
-          `https://localhost:7213/api/activity/module/${moduleId}/activities `
+          `https://localhost:7213/api/activity/${moduleId}/activities`
         );
           setActivities(data);
         } catch {
@@ -44,8 +45,8 @@ export default function ActivityStudent({moduleId}:A):ReactElement {
         <h3 className="section-title">Aktiviteter</h3>
         <ul className="activity-list">
           {activities.map((activity)=>(
-            <li key={acitivity.id} className="activity-item">
-              <h4 className="activity-name">{activity.name}</h4>
+            <li key={activity.id} className="activity-item">
+              <h4 className="activity-name"><span className="activity-type">{activity.type}</span>{activity.name}</h4>
               <p className="activity-description">{activity.description}</p>
               <p className="activity-dates">
                 {new Date(activity.startDate).toLocaleDateString("sv-SE", {
@@ -59,7 +60,7 @@ export default function ActivityStudent({moduleId}:A):ReactElement {
                   day: "numeric",
                 })}
               </p>
-              <p className="activity-type">{activity.type}</p>
+              
             </li>
           ))}
         </ul>
