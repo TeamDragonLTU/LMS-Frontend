@@ -1,6 +1,11 @@
 
 import { ReactElement, useEffect, useState } from "react";
 import ModuleCard from "./ModuleCard";
+// Adjust the import path and filename as needed, for example:
+// If the file is named CreateModuleModal.tsx and located in the parent folder:
+import CreateModuleModal from "../../CreateModuleModal/component/CreateModuleModal";
+// If the file extension is required, use:
+// import CreateModuleModal from "../CreateModuleModal.tsx";
 import { ModuleProps } from "./type";
 import "../css/style.css";
 import { fetchWithToken } from "../../../shared/utilities";
@@ -9,6 +14,9 @@ export function ModuleStudent(): ReactElement {
   const [modules, setModules] = useState<ModuleProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+
+
 
   useEffect(() => {
     const fetchModules = async () => {
@@ -18,7 +26,7 @@ export function ModuleStudent(): ReactElement {
         );
 
         const today = new Date();
-  const withStatus = data.map((m: ModuleProps) => {
+        const withStatus = data.map((m: ModuleProps) => {
           const start = new Date(m.startDate);
           const end = new Date(m.endDate);
 
@@ -51,6 +59,18 @@ export function ModuleStudent(): ReactElement {
   ];
 
   return (
+    <div>
+    <div>
+      <button className="create-module-btn" onClick={() => setModalOpen(true)}>Lägg en modul</button>
+      <CreateModuleModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onModuleCreated={() => {
+          setModalOpen(false);
+          setLoading(true);
+          setError(null);}}
+          /> 
+    </div>
     <div className="module-container">
       {sections.map(({ title, status }) => {
         const filteredModules = modules.filter((m) => m.status === status);
@@ -65,6 +85,8 @@ export function ModuleStudent(): ReactElement {
         );
       })}
     </div>
+    </div>
+
   );
 }
 
