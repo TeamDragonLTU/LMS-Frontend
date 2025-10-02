@@ -8,6 +8,11 @@ interface ModuleCardProps {
 }
 
 export function ModuleCard({ module }: ModuleCardProps): ReactElement {
+  const[open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
   const formatDate = (dateString: string) =>
     new Date(dateString).toLocaleDateString("sv-SE", {
       year: "numeric",
@@ -27,11 +32,17 @@ export function ModuleCard({ module }: ModuleCardProps): ReactElement {
         </div>
       </div>
         <button
+        onclick={handleClick}
         className="module-arrow-btn"
         aria-label={`Open ${module.name}`}
       >
         <ChevronRight />
       </button>
+      {open && (
+        <div className="module-dropdown">
+             <ActivityStudent moduleId={module.id} />
+        </div>
+      )}
     </div>
   );
 }
