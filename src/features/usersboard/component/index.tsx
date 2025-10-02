@@ -4,13 +4,8 @@ import { User, RegisterUserRequest } from "../../auth/types";
 import { BASE_URL } from "../../shared/constants";
 
 const UsersPage: React.FC = () => {
-  const { role } = useAuthContext();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
-
-  if (role !== "Teacher") {
-    return;
-  }
 
   const handleAddUser = async (newUser: RegisterUserRequest) => {
     try {
@@ -130,11 +125,5 @@ const UserForm: React.FC<{
     </form>
   );
 };
-
-type UserRole = "Teacher" | "Student";
-
-function useAuthContext(): { role: UserRole } {
-  throw new Error("Function not implemented.");
-}
 
 export default UsersPage;
