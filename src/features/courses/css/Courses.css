@@ -1,0 +1,8 @@
+.edit-course-button {
+  width: 10rem;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.edit-course-button:hover {
+  background-color: #1e40af;
+}
