@@ -18,7 +18,7 @@ export const EditCourseModal = ({
   const [description, setDescription] = useState(course.description);
   const [startDate, setStartDate] = useState(course.startDate.substring(0, 10));
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string [] | null | undefined>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,21 +37,25 @@ export const EditCourseModal = ({
             startDate: new Date(startDate).toISOString(),
           }),
         }
-      );
+      )
 
       onUpdated();
       onClose();
-    } catch (err: any) {
+    } catch (error: any) {
+        console.log('ERROR', error);
+        console.log('error.status', error.errorCode);
+        console.log('error.errors', error.errors); 
+
       if (
-        err?.message &&
-        err.message.includes("Unexpected end of JSON input")
+        error?.message &&
+        error.message.includes("Unexpected end of JSON input")
       ) {
         onUpdated();
         onClose();
         return;
       }
 
-      setError(err?.message || "Något gick fel.");
+      setError(error?.errors || "Något gick fel.");
     }
   };
 
@@ -88,6 +92,7 @@ export const EditCourseModal = ({
             />
           </label>
 
+          {/* mappa ut errors ur error*/}
           {error && <p style={{ color: "red" }}>{error}</p>}
 
           <div className="modal-actions">
