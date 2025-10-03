@@ -1,14 +1,11 @@
 
 import { ReactElement, useEffect, useState } from "react";
 import ModuleCard from "./ModuleCard";
-// Adjust the import path and filename as needed, for example:
-// If the file is named CreateModuleModal.tsx and located in the parent folder:
 import CreateModuleModal from "../../CreateModuleModal/component/CreateModuleModal";
-// If the file extension is required, use:
-// import CreateModuleModal from "../CreateModuleModal.tsx";
 import { ModuleProps } from "./type";
 import "../css/style.css";
 import { fetchWithToken } from "../../../shared/utilities";
+import { FilePlus2 } from "lucide-react";
 
 export function ModuleStudent(): ReactElement {
   const [modules, setModules] = useState<ModuleProps[]>([]);
@@ -61,7 +58,7 @@ export function ModuleStudent(): ReactElement {
   return (
     <div>
     <div>
-      <button className="create-module-btn" onClick={() => setModalOpen(true)}>Lägg en modul</button>
+      <button className="create-module-btn" onClick={() => setModalOpen(true)}><FilePlus2 /> Lägg en modul</button>
       <CreateModuleModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}

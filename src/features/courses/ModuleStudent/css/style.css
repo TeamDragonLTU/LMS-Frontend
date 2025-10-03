@@ -101,3 +101,7 @@
   margin-top: 0.5rem;
   box-shadow: 0 1px 4px rgba(0,0,0,0.04);
 }
+.create-module-btn{
+  width: auto;
+  margin-top: 3rem;
+}
