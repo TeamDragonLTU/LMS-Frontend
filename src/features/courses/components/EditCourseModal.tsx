@@ -18,12 +18,12 @@ export const EditCourseModal = ({
   const [description, setDescription] = useState(course.description);
   const [startDate, setStartDate] = useState(course.startDate.substring(0, 10));
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string [] | null | undefined>(null);
+  const [errors, setErrors] = useState<Record<string, string[]> | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
+    setErrors(null);
 
     try {
       await fetchWithToken<void>(
@@ -45,6 +45,7 @@ export const EditCourseModal = ({
         console.log('ERROR', error);
         console.log('error.status', error.errorCode);
         console.log('error.errors', error.errors); 
+        setLoading(false)
 
       if (
         error?.message &&
@@ -55,7 +56,7 @@ export const EditCourseModal = ({
         return;
       }
 
-      setError(error?.errors || "Något gick fel.");
+      setErrors(error?.errors || "Något gick fel.");
     }
   };
 
@@ -93,7 +94,19 @@ export const EditCourseModal = ({
           </label>
 
           {/* mappa ut errors ur error*/}
-          {error && <p style={{ color: "red" }}>{error}</p>}
+          {errors && (
+            <div className="error-container">
+              {Object.entries(errors).map(([field, messages]) => (
+                <div key={field} className="field-errors">
+                  {messages.map((message) => (
+                    <p key={field} className="error-message">
+                      {message}
+                    </p>
+                  ))}
+                </div>
+              ))}
+            </div>
+          )}
 
           <div className="modal-actions">
             <button type="submit" disabled={loading}>
