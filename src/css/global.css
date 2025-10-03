@@ -1,3 +1,7 @@
 .g-container {
   padding-inline: 4rem;
 }
+
+.error-message {
+  color: red;
+}
