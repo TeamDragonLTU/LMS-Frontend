@@ -125,6 +125,7 @@ export function CreateModuleModal({
               placeholder="Beskriv modulen och dess innehåll"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              required
             />
           </label>
           {error && <p className="error">{error}</p>}
