@@ -57,7 +57,7 @@ export function ModuleStudent(): ReactElement {
 
   return (
     <div>
-    <div>
+    <div className="module-btn">
       <button className="create-module-btn" onClick={() => setModalOpen(true)}><FilePlus2 /> Lägg en modul</button>
       <CreateModuleModal
         open={modalOpen}
@@ -65,7 +65,9 @@ export function ModuleStudent(): ReactElement {
         onModuleCreated={() => {
           setModalOpen(false);
           setLoading(true);
-          setError(null);}}
+          setError(null);
+          fetchModules();
+        }}
           /> 
     </div>
     <div className="module-container">

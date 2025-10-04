@@ -105,3 +105,10 @@
   width: auto;
   margin-top: 3rem;
 }
+.module-btn {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  margin-right: 20px;
+}
