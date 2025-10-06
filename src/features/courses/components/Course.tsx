@@ -1,25 +1,52 @@
-import { ReactElement, ReactNode, Suspense } from 'react';
-import { Await, useLoaderData, useParams } from 'react-router';
-import { ICourse, ICourseLoader } from '../types';
+import React, { ReactElement, useState } from "react";
+import ModuleStudent from "../ModuleStudent/component/ModuleStudent";
+import { useLoaderData, useRevalidator } from "react-router";
+import { ICourseLoader } from "../types";
+import "../../../css/lmslist.css";
+import "../css/Courses.css";
+import { Pencil } from "lucide-react";
+import { EditCourseModal } from "./EditCourseModal";
 
 export function Course(): ReactElement {
   const { course } = useLoaderData<ICourseLoader>();
-  const { id } = useParams();
-
-  const renderCourse = (course: ICourse): ReactNode => (
-    <article className="course">
-      <h3>{course.name}</h3>
-      <p>{course.description}</p>
-      <p>Startdatum: {course.startDate}</p>
-    </article>
-  );
+  const [showModal, setShowModal] = useState(false);
+  const { revalidate } = useRevalidator();
 
   return (
-    <main className="course">
-      <h2>Kursinformation för kurs {id}</h2>
-      <Suspense fallback={<p>Loading...</p>}>
-        <Await children={(course) => renderCourse(course)} resolve={course} />
-      </Suspense>
+    <main className="lmslist-container">
+      <div className="teacher-course-header-container">
+        <div className="teacher-course-header-text-content">
+          <h2 className="lmslist-title">{course.name}</h2>
+          <p className="lmslist-subtitle">{course.description}</p>
+          <p className="course-startdate">
+            Startdatum: {new Date(course.startDate).toLocaleDateString()}
+          </p>
+        </div>
+        <button
+          onClick={() => {
+            setShowModal(true);
+          }}
+          className="edit-course-button"
+        >
+          <Pencil size={16} style={{ marginRight: "8px" }} />
+          Redigera kurs
+        </button>
+      </div>
+
+      <section>
+        <ModuleStudent />
+      </section>
+
+      {showModal && (
+        <EditCourseModal
+          course={course}
+          onClose={() => setShowModal(false)}
+          onUpdated={() => {
+            revalidate();
+            setShowModal(false);
+          }}
+        />
+      )}
     </main>
   );
 }

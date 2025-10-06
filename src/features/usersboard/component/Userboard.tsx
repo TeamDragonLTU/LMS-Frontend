@@ -1,31 +1,31 @@
-import { useEffect, useState } from "react";
-import "../../../css/lmslist.css";
-import { IUserDto } from "../types";
-import { fetchWithToken } from "../../shared/utilities/fetchWithToken";
-import { BASE_URL } from "../../shared/constants";
-
+import { useEffect, useState } from 'react';
+import React from 'react';
+import '../../../css/lmslist.css';
+import '../css/userboard-adduser.css';
+import { IUserDto } from '../types';
+import { fetchWithToken } from '../../shared/utilities/fetchWithToken';
+import { useRole } from '../../auth/hooks/useRole';
+import { BASE_URL } from '../../shared/constants';
 export default function Userboard() {
   const [classmates, setClassmates] = useState<IUserDto[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  const [searchTerm, setSearchTerm] = useState("");
-
+  const [message, setMessage] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-
   const [editingUser, setEditingUser] = useState<IUserDto | null>(null);
   const [deletingUser, setDeletingUser] = useState<IUserDto | null>(null);
-
   const [newUser, setNewUser] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    userName: "", // will be auto-combined, kept for safety
-    role: "Student",
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    userName: '',
+    role: 'Student',
   });
+  const role = useRole();
 
   useEffect(() => {
     fetchClassmates();
@@ -37,7 +37,7 @@ export default function Userboard() {
       .then((data) => setClassmates(data || []))
       .catch((err: unknown) => {
         if (err instanceof Error) setError(err.message);
-        else setError("Något gick fel");
+        else setError('Något gick fel');
       })
       .finally(() => setLoading(false));
   };
@@ -46,56 +46,69 @@ export default function Userboard() {
   const handleAddUser = async () => {
     try {
       setLoading(true);
-
-      const res = await fetch("https://localhost:7213/api/auth", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch(`${BASE_URL}/auth`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           Email: newUser.email,
           Password: newUser.password,
-          UserName: `${newUser.firstName}.${newUser.lastName}`.replace(
-            /\s+/g,
-            ""
-          ),
+          UserName: `${newUser.firstName}.${newUser.lastName}`.replace(/\s+/g, ''),
           Role: newUser.role,
         }),
       });
-
-      if (!res.ok) {
-        const text = await res.text();
-        console.error("Failed:", res.status, text);
-        setError(`Kunde inte lägga till användaren (${res.status})`);
+      if (res.status === 201) {
+        setMessage('✅ Användaren registrerades.');
+        setShowAddModal(false);
+        setNewUser({
+          firstName: '',
+          lastName: '',
+          password: '',
+          email: '',
+          userName: '',
+          role: 'Student',
+        });
+        fetchClassmates();
         return;
       }
-
-      // optional: if backend doesn't return JSON, just skip parsing
-      try {
-        const text = await res.text();
-        if (text) JSON.parse(text);
-      } catch {
-        console.warn("Response not JSON, continuing...");
+      const error = await res.json();
+      let feedback = '❌ Registrering misslyckades. ';
+      if (error) {
+        if (Array.isArray(error)) {
+          feedback += error
+            .map((e) => {
+              if (typeof e === 'object' && e.description) {
+                return `<b>${e.code || ''}</b>: ${e.description}`;
+              } else if (typeof e === 'object' && e.message) {
+                return e.message;
+              } else if (typeof e === 'string') {
+                return e;
+              } else {
+                return '';
+              }
+            })
+            .filter(Boolean)
+            .join('<br/>');
+        } else if (typeof error === 'object') {
+          if (error.description) {
+            feedback += `<br/><b>${error.code || ''}</b>: ${error.description}`;
+          } else if (error.message) {
+            feedback += `<br/>${error.message}`;
+          } else {
+            feedback += `<br/>${JSON.stringify(error)}`;
+          }
+        } else if (typeof error === 'string') {
+          feedback += `<br/>${error}`;
+        }
       }
-
-      // Reset state and refresh classmates
-      setShowAddModal(false);
-      setNewUser({
-        firstName: "",
-        lastName: "",
-        password: "",
-        email: "",
-        userName: "",
-        role: "Student",
-      });
-
-      fetchClassmates();
-    } catch (err: unknown) {
-      if (err instanceof Error) setError(err.message);
-      else setError("Något gick fel");
+      setMessage(feedback);
+    } catch (e) {
+      setMessage('❌ Ett fel inträffade vid registrering.');
     } finally {
       setLoading(false);
     }
   };
 
+  // --- UPDATE USER (local only, for demo) ---
   const handleUpdateUser = async () => {
     if (!editingUser) return;
     setLoading(true);
@@ -105,14 +118,15 @@ export default function Userboard() {
       );
       setShowEditModal(false);
       setEditingUser(null);
+      setMessage('✅ Användaren uppdaterad (lokalt, ej backend).');
     } catch (e) {
-      if (e instanceof Error) setError(e.message);
-      else setError("Kunde inte uppdatera användaren");
+      setError('Kunde inte uppdatera användaren');
     } finally {
       setLoading(false);
     }
   };
 
+  // --- DELETE USER (local only, for demo) ---
   const handleConfirmDelete = async () => {
     if (!deletingUser) return;
     setLoading(true);
@@ -120,9 +134,9 @@ export default function Userboard() {
       setClassmates((prev) => prev.filter((u) => u.id !== deletingUser.id));
       setShowDeleteModal(false);
       setDeletingUser(null);
+      setMessage('✅ Användaren borttagen (lokalt, ej backend).');
     } catch (e) {
-      if (e instanceof Error) setError(e.message);
-      else setError("Kunde inte ta bort användaren");
+      setError('Kunde inte ta bort användaren');
     } finally {
       setLoading(false);
     }
@@ -135,32 +149,35 @@ export default function Userboard() {
   );
 
   if (loading) return <p>Laddar klasskamrater...</p>;
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
+  if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
-  const teachers = filteredClassmates.filter((u) => u.role === "Teacher");
-  const students = filteredClassmates.filter((u) => u.role === "Student");
+  const teachers = filteredClassmates.filter((u) => u.role === 'Teacher');
+  const students = filteredClassmates.filter((u) => u.role === 'Student');
 
   const backdropClose =
     (closer: () => void) => (e: React.MouseEvent<HTMLDivElement>) => {
       if (e.target === e.currentTarget) closer();
     };
-
   return (
     <div className="lmslist-container">
       <h1 className="lmslist-title">Kursdeltagare</h1>
 
-      <div style={{ marginBottom: "1rem" }}>
+      <div style={{ marginBottom: '1rem' }}>
         <input
           type="text"
           placeholder="Sök användare..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ padding: "5px", marginRight: "10px" }}
+          style={{ padding: '5px', marginRight: '10px' }}
         />
-        <button type="button" onClick={() => setShowAddModal(true)}>
-          + Lägg till användare
-        </button>
+        {role === 'Teacher' && (
+          <button type="button" onClick={() => setShowAddModal(true)}>
+            + Lägg till användare
+          </button>
+        )}
       </div>
+
+      {message && <div className="userboard-message" dangerouslySetInnerHTML={{ __html: message }} />}
 
       <ul className="lmslist-list">
         {teachers.length > 0 && (
@@ -173,24 +190,28 @@ export default function Userboard() {
                   <span className="lmslist-email">{user.email}</span>
                 </div>
                 <span className="lmslist-role-badge">Lärare</span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setEditingUser(user);
-                    setShowEditModal(true);
-                  }}
-                >
-                  Redigera
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setDeletingUser(user);
-                    setShowDeleteModal(true);
-                  }}
-                >
-                  Ta bort
-                </button>
+                {role === 'Teacher' && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEditingUser(user);
+                        setShowEditModal(true);
+                      }}
+                    >
+                      Redigera
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setDeletingUser(user);
+                        setShowDeleteModal(true);
+                      }}
+                    >
+                      Ta bort
+                    </button>
+                  </>
+                )}
               </li>
             ))}
           </>
@@ -206,24 +227,28 @@ export default function Userboard() {
                   <span className="lmslist-email">{user.email}</span>
                 </div>
                 <span className="lmslist-role-badge">Student</span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setEditingUser(user);
-                    setShowEditModal(true);
-                  }}
-                >
-                  Redigera
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setDeletingUser(user);
-                    setShowDeleteModal(true);
-                  }}
-                >
-                  Ta bort
-                </button>
+                {role === 'Teacher' && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEditingUser(user);
+                        setShowEditModal(true);
+                      }}
+                    >
+                      Redigera
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setDeletingUser(user);
+                        setShowDeleteModal(true);
+                      }}
+                    >
+                      Ta bort
+                    </button>
+                  </>
+                )}
               </li>
             ))}
           </>
@@ -290,7 +315,7 @@ export default function Userboard() {
               onChange={(e) =>
                 setNewUser({
                   ...newUser,
-                  role: e.target.value as "Student" | "Teacher",
+                  role: e.target.value as 'Student' | 'Teacher',
                 })
               }
             >
@@ -372,7 +397,7 @@ export default function Userboard() {
           <div className="modal-content">
             <h2>Ta bort användare</h2>
             <p>
-              Är du säker på att du vill ta bort{" "}
+              Är du säker på att du vill ta bort{' '}
               <strong>{deletingUser.userName}</strong>?
             </p>
             <div className="modal-actions">
@@ -389,3 +414,4 @@ export default function Userboard() {
     </div>
   );
 }
+

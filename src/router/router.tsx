@@ -1,3 +1,4 @@
+
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -6,17 +7,16 @@ import {
 import { App } from "../features/app";
 import { Login } from "../features/auth/components/Login";
 import { requireAuthLoader } from "../features/auth/loaders";
-
-// From dev-skapa-meny
 import { Companies, Company } from "../features/companies/components";
 import { companiesLoader, companyLoader } from "../features/companies/loaders";
-
-// From dev
+import Userboard from "../features/usersboard/component/Userboard";
 import { Home } from "../features/dashboard/Home";
 import { homeLoader } from "../features/dashboard/homeLoader";
 import { Course } from "../features/courses/components/Course";
+import { Courses } from "../features/courses/components/Courses";
 import { courseLoader } from "../features/courses/loaders/courseLoader";
-import Userboard from "../features/usersboard/component/Userboard";
+import { ThisWeeksActivities } from "../features/dashboard/ThisWeeksActivities/component/ThisWeeksActivities";
+import { thisWeeksActivitiesLoader } from "../features/dashboard/ThisWeeksActivities/loaders/thisWeeksActivitiesLoader";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -38,8 +38,16 @@ export const router = createBrowserRouter(
           path="companies/:id"
         />
 
-        {/* Courses */}
-        <Route element={<Course />} loader={courseLoader} path="course" />
+  {/* Courses */}
+  <Route element={<Courses />} path="course" />
+  <Route element={<Course />} loader={courseLoader} path="course/:id" />
+
+        {/* Veckans aktiviteter direkt route */}
+        <Route
+          element={<ThisWeeksActivities />}
+          loader={thisWeeksActivitiesLoader}
+          path="veckans-aktiviteter"
+        />
       </Route>
       <Route element={<Login />} path="/login" />
     </>

@@ -1,81 +1,50 @@
 import { ReactElement } from "react";
 import { Calendar, Clock, BookOpen } from "lucide-react";
 import "../css/ThisWeeksActivities.css";
+import { useLoaderData } from "react-router-dom";
 
 export const ThisWeeksActivities = (): ReactElement => {
-  /* Hårdkodade värden */
-  const activities = [
-    {
-      id: "1",
-      type: "Föreläsning",
-      tagClass: "lecture",
-      title: "Introduktion till React",
-      date: "2023-09-04",
-      time: "09:00-12:00",
-    },
-    {
-      id: "2",
-      type: "Övning",
-      tagClass: "exercise",
-      title: "React komponenter",
-      date: "2023-09-05",
-      time: "09:00-12:00",
-    },
-    {
-      id: "3",
-      type: "E-learning",
-      tagClass: "elearning",
-      title: "React Hooks",
-      date: "2023-09-06",
-      time: "09:00-12:00",
-    },
-    {
-      id: "4",
-      type: "Inlämning",
-      tagClass: "submission",
-      title: "React applikation",
-      date: "2023-09-08",
-      time: "23:59",
-    },
-  ];
-
+  const { activities } = useLoaderData() as { activities: any[] };
   return (
     <section className="twa-section-container">
-      {/* Header */}
       <div className="twa-header-container">
-        <h2 className="twa-header-title">Veckans aktiviteter</h2>
+        <h2 className="twa-header-title">
+          <BookOpen size={20} /> Veckans aktiviteter
+        </h2>
         <div className="twa-week-badge">
-          <Calendar size={16} />
-          <span>Vecka 36</span>
+          <Calendar size={16} /> Vecka {getWeekNumber(new Date())}
         </div>
       </div>
-
-      {/* Module */}
-      <div className="twa-module-container">
-        <div className="twa-module-header">
-          <BookOpen size={16} color="#1e40af" />
-          <h4 className="twa-module-name">Modul: Javascript</h4>
-        </div>
-
-        {/* Activities */}
-        {activities.map((a) => (
-          <div key={a.id} className="twa-activity-container">
+      {activities.length === 0 ? (
+        <div className="twa-empty">Inga aktiviteter denna vecka.</div>
+      ) : (
+        activities.map((a: any) => (
+          <div className="twa-activity-container" key={a.id}>
             <div className="twa-activity-top">
-              <div className="twa-tag">{a.type}</div>
-              <h3 className="twa-activity-title">{a.title}</h3>
+              <span className="twa-tag">{a.type}</span>
+              <span className="twa-activity-title">{a.name}</span>
+              <span className="twa-module-name">{a.moduleName}</span>
             </div>
-
             <div className="twa-activity-bottom">
               <span className="twa-datetime">
-                <Calendar size={16} /> {a.date}
+                <Calendar size={16} /> {new Date(a.startTime).toLocaleDateString()}
               </span>
               <span className="twa-datetime">
-                <Clock size={16} /> {a.time}
+                <Clock size={16} /> {new Date(a.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {new Date(a.endTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </span>
             </div>
           </div>
-        ))}
-      </div>
+        ))
+      )}
     </section>
   );
 };
+
+function getWeekNumber(date: Date) {
+  // Robust ISO 8601 week number
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+  return weekNo;
+}

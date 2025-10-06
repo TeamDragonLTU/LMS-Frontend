@@ -7,6 +7,8 @@ import { ITokens, IAuthContext } from "../types";
 import { CustomError } from "../../shared/classes";
 import { jwtDecode } from "jwt-decode";
 
+
+
 interface IAuthProviderProps {
   children: ReactNode;
 }
@@ -22,6 +24,7 @@ interface JwtPayload {
 export function AuthProvider({ children }: IAuthProviderProps): ReactElement {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role, setRole] = useState<"Teacher" | "Student" | null>(null);
+
 
   // useLocalStorage works as a useState but it is always hooked up to LS, which means, if another component updates LS, this component will update as well.
   const [tokens, setTokens, clearTokens] = useLocalStorage<ITokens | null>(
@@ -53,14 +56,13 @@ export function AuthProvider({ children }: IAuthProviderProps): ReactElement {
           decodedToken[
             "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
           ] ?? null;
-
         setRole(roleFromToken);
         setIsLoggedIn(true);
         console.log(decodedToken);
       } catch (err) {
         console.error("Failed to decode JWT", err);
         setRole(null);
-        setIsLoggedIn(false);
+        setIsLoggedIn(!!tokens); // Om tokens finns, sätt inloggad ändå
       }
     } else {
       setRole(null);
@@ -72,3 +74,6 @@ export function AuthProvider({ children }: IAuthProviderProps): ReactElement {
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 }
+
+
+

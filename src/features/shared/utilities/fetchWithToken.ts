@@ -29,21 +29,22 @@ export async function fetchWithToken<T>(input: RequestInfo | URL, options?: Requ
     headers: { Accept: 'application/json', ...(options?.headers || {}) },
   });
 
-  return fetchJson<T>(input, reqInit);
-    try {
-      // ...existing fetch logic...
-    } catch (error: any) {
-      // Om token-refresh misslyckas, logga ut och redirecta
-      const status = error?.status || error?.response?.status;
-      const message = typeof error?.message === 'string' ? error.message.toLowerCase() : '';
-      if (
-        status === 401 ||
-        status === 403 ||
-        message.includes('token')
-      ) {
-            clearTokens(); // Rensa tokens
-        window.location.href = '/login'; // Redirect till login
-      }
-      throw error;
+  try {
+    return await fetchJson<T>(input, reqInit);
+  } catch (error: any) {
+    // Om token-refresh misslyckas, logga ut och redirecta
+    const status = error?.status || error?.response?.status;
+    const message = typeof error?.message === 'string' ? error.message.toLowerCase() : '';
+    if (
+      status === 401 ||
+      status === 403 ||
+      message.includes('token')
+    ) {
+      clearTokens(); // Rensa tokens
+      window.location.href = '/login'; // Redirect till login
+      // Returnera ett "hängande" promise så att inget fel kastas vidare
+      return new Promise(() => {});
     }
+    throw error;
+  }
 }

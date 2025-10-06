@@ -1,8 +1,8 @@
 import { companiesLoader } from '../companies/loaders/companiesLoader';
-import { coursesLoader } from '../courses/loaders/courseLoader';
+import { thisWeeksActivitiesLoader } from './ThisWeeksActivities/loaders/thisWeeksActivitiesLoader';
 
 export async function homeLoader() {
   const companies = await companiesLoader().companies;
-  const courses = await coursesLoader().then(res => res.courses);
-  return { companies, courses };
+  const { activities } = await thisWeeksActivitiesLoader();
+  return { companies, activities };
 }
