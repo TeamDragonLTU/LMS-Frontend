@@ -23,7 +23,8 @@ export async function thisWeeksActivitiesLoader() {
     });
     return { activities: filtered };
   } catch (err) {
-    throw new Response('Inga aktiviteter denna vecka', { status: 500 });
+    // Returnera tom lista om API:et misslyckas, så att sidan inte kraschar för användare utan kurser
+    return { activities: [] };
   }
 }
 

@@ -58,7 +58,7 @@ export function ModuleStudent(): ReactElement {
 
   return (
     <div>
-      { userRole === "teacher" && (
+      { userRole === "Teacher" && (
     <div className="module-btn">
       <button className="create-module-btn" onClick={() => setModalOpen(true)}><FilePlus2 /> Lägg en modul</button>
       <CreateModuleModal
@@ -68,7 +68,7 @@ export function ModuleStudent(): ReactElement {
           setModalOpen(false);
           setLoading(true);
           setError(null);
-          fetchModules();
+          setModules([]);
         }} userRole={userRole}
           /> 
     </div> )}
