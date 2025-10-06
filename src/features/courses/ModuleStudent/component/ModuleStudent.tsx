@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState, useCallback } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import ModuleCard from "./ModuleCard";
 import CreateModuleModal from "../../CreateModuleModal/component/CreateModuleModal";
 import { ModuleProps } from "./type";
@@ -17,31 +17,34 @@ export function ModuleStudent({courseId}: ModuleStudentProps): ReactElement {
   const [modalOpen, setModalOpen] = useState(false);
   const userRole = "Teacher";
 
-  useEffect(() => {
+
     const fetchModules = async () => {
-      try {
-        const data = await fetchWithToken<ModuleProps[]>(
-          `https://localhost:7213/api/module/${courseId}/modules`
-        );
+  try {
+    const data = await fetchWithToken<ModuleProps[]>(
+      `https://localhost:7213/api/module/${courseId}/modules`
+    );
 
-        const today = new Date();
-        const withStatus = data.map((m: ModuleProps) => {
-          const start = new Date(m.startDate);
-          const end = new Date(m.endDate);
+    const today = new Date();
+    const withStatus = data.map((m: ModuleProps) => {
+      const start = new Date(m.startDate);
+      const end = new Date(m.endDate);
 
-        if (today >= start && today <= end) status = "active";
-        else if (today < start) status = "upcoming";
-        else status = "past";
+      let status: "active" | "upcoming" | "past";
 
-        return { ...m, status };
-      });
-      setModules(withStatus);
-    } catch {
-      setError("Cannot find module.");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+      if (today >= start && today <= end) status = "active";
+      else if (today < start) status = "upcoming";
+      else status = "past";
+
+      return { ...m, status };
+    });
+
+    setModules(withStatus);
+  } catch {
+    setError("Cannot find module.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     fetchModules();
