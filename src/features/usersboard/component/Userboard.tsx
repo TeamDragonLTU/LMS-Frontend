@@ -166,8 +166,8 @@ export default function Userboard() {
         {teachers.length > 0 && (
           <>
             <li className="lmslist-section-header">Lärare</li>
-            {teachers.map((user) => (
-              <li key={user.id}>
+            {teachers.map((user, index) => (
+              <li key={user.id ? `teacher-${user.id}` : `teacher-${index}`}>
                 <div className="lmslist-info">
                   <span className="lmslist-name">{user.userName}</span>
                   <span className="lmslist-email">{user.email}</span>
@@ -199,8 +199,8 @@ export default function Userboard() {
         {students.length > 0 && (
           <>
             <li className="lmslist-section-header">Studenter</li>
-            {students.map((user) => (
-              <li key={user.id}>
+            {students.map((user, index) => (
+              <li key={user.id ? `student-${user.id}` : `student-${index}`}>
                 <div className="lmslist-info">
                   <span className="lmslist-name">{user.userName}</span>
                   <span className="lmslist-email">{user.email}</span>
