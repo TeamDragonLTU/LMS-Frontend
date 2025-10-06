@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useMemo, useState } from "react";
 import { ICourse } from "../types";
 import "../css/EditCourseModal.css";
 import { fetchWithToken } from "../../shared/utilities/fetchWithToken";
@@ -20,6 +20,11 @@ export const EditCourseModal = ({
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string[]> | null>(null);
 
+  const hasChanges =
+    name !== course.name ||
+    description !== course.description ||
+    startDate !== course.startDate.substring(0, 10);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -37,15 +42,15 @@ export const EditCourseModal = ({
             startDate: new Date(startDate).toISOString(),
           }),
         }
-      )
+      );
 
       onUpdated();
       onClose();
     } catch (error: any) {
-        console.log('ERROR', error);
-        console.log('error.status', error.errorCode);
-        console.log('error.errors', error.errors); 
-        setLoading(false)
+      console.log("ERROR", error);
+      console.log("error.status", error.errorCode);
+      console.log("error.errors", error.errors);
+      setLoading(false);
 
       if (
         error?.message &&
@@ -109,7 +114,7 @@ export const EditCourseModal = ({
           )}
 
           <div className="modal-actions">
-            <button type="submit" disabled={loading}>
+            <button type="submit" disabled={loading || !hasChanges}>
               {loading ? "Sparar..." : "Spara"}
             </button>
             <button type="button" onClick={onClose}>

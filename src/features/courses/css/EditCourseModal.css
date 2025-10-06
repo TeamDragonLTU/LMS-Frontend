@@ -89,3 +89,8 @@
 .modal-actions button[type="button"]:hover {
   background-color: #d1d5db;
 }
+
+.modal-actions button[type="submit"][disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
