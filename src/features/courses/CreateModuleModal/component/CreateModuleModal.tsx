@@ -17,7 +17,7 @@ interface CreateModuleModalProps {
 export function CreateModuleModal({
   open,
   onClose,
-  onModuleCreated, userRole="student"
+  onModuleCreated, userRole="Student"
 }: CreateModuleModalProps): ReactElement | null {
   const [courses, setCourses] = useState<Course[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<string>("");
@@ -71,7 +71,7 @@ export function CreateModuleModal({
   };
 
   if (!open) return null;
- const isTeacher = userRole === "teacher";
+ const isTeacher = userRole === "Teacher";
 
   return !isTeacher ? null :(
     <div className="modal-overlay">
