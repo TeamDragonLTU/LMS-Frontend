@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import React from 'react';
 import '../../../css/lmslist.css';
-import '../css/userboard-adduser.css';
+import './userboard.css';
 import { IUserDto } from '../types';
 import { fetchWithToken } from '../../shared/utilities/fetchWithToken';
 import { useRole } from '../../auth/hooks/useRole';
@@ -159,20 +159,28 @@ export default function Userboard() {
       if (e.target === e.currentTarget) closer();
     };
   return (
-    <div className="lmslist-container">
-      <h1 className="lmslist-title">Kursdeltagare</h1>
 
-      <div style={{ marginBottom: '1rem' }}>
+    <div className="lmslist-container">
+      <h1 className="lmslist-title" style={{ marginBottom: '1.5rem' }}>Kursdeltagare</h1>
+
+      <div className="userboard-searchbar-row">
+        <h2 className="userboard-searchbar-label">Sök deltagare</h2>
         <input
+          id="search-participant"
+          name="searchParticipant"
           type="text"
-          placeholder="Sök användare..."
+          className="userboard-searchbar-input"
+          placeholder="Sök deltagare..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ padding: '5px', marginRight: '10px' }}
         />
         {role === 'Teacher' && (
-          <button type="button" onClick={() => setShowAddModal(true)}>
-            + Lägg till användare
+          <button
+            type="button"
+            className="userboard-add-btn"
+            onClick={() => setShowAddModal(true)}
+          >
+            + Lägg till deltagare
           </button>
         )}
       </div>
