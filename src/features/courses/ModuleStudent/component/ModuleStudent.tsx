@@ -56,7 +56,7 @@ export function ModuleStudent(): ReactElement {
 
   return (
     <div>
-      {userRole === "Teacher" && (
+      {userRole === "Teacher" ? (
         <div className="module-btn">
           <button
             className="create-module-btn"
@@ -74,7 +74,7 @@ export function ModuleStudent(): ReactElement {
             userRole={userRole}
           />
         </div>
-      )}
+      ) : null}
       <div className="module-container">
         {sections.map(({ title, status }) => {
           const filteredModules = modules.filter((m) => m.status === status);
