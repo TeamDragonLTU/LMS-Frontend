@@ -185,15 +185,18 @@ export default function Userboard() {
             <li className="lmslist-section-header">Lärare</li>
             {teachers.map((user, index) => (
               <li key={user.id ? `teacher-${user.id}` : `teacher-${index}`}>
-                <div className="lmslist-info">
-                  <span className="lmslist-name">{user.userName}</span>
-                  <span className="lmslist-email">{user.email}</span>
+                <div className="lmslist-user-row">
+                  <div className="lmslist-info">
+                    <span className="lmslist-name">{user.userName}</span>
+                    <span className="lmslist-email">{user.email}</span>
+                  </div>
+                  <span className="lmslist-role-badge">Lärare</span>
                 </div>
-                <span className="lmslist-role-badge">Lärare</span>
                 {role === 'Teacher' && (
-                  <>
+                  <div className="userboard-action-buttons">
                     <button
                       type="button"
+                      className="btn-secondary"
                       onClick={() => {
                         setEditingUser(user);
                         setShowEditModal(true);
@@ -203,6 +206,7 @@ export default function Userboard() {
                     </button>
                     <button
                       type="button"
+                      className="btn-danger"
                       onClick={() => {
                         setDeletingUser(user);
                         setShowDeleteModal(true);
@@ -210,7 +214,7 @@ export default function Userboard() {
                     >
                       Ta bort
                     </button>
-                  </>
+                  </div>
                 )}
               </li>
             ))}
@@ -222,15 +226,18 @@ export default function Userboard() {
             <li className="lmslist-section-header">Studenter</li>
             {students.map((user, index) => (
               <li key={user.id ? `student-${user.id}` : `student-${index}`}>
-                <div className="lmslist-info">
-                  <span className="lmslist-name">{user.userName}</span>
-                  <span className="lmslist-email">{user.email}</span>
+                <div className="lmslist-user-row">
+                  <div className="lmslist-info">
+                    <span className="lmslist-name">{user.userName}</span>
+                    <span className="lmslist-email">{user.email}</span>
+                  </div>
+                  <span className="lmslist-role-badge">Student</span>
                 </div>
-                <span className="lmslist-role-badge">Student</span>
                 {role === 'Teacher' && (
-                  <>
+                  <div className="userboard-action-buttons">
                     <button
                       type="button"
+                      className="btn-secondary"
                       onClick={() => {
                         setEditingUser(user);
                         setShowEditModal(true);
@@ -240,6 +247,7 @@ export default function Userboard() {
                     </button>
                     <button
                       type="button"
+                      className="btn-danger"
                       onClick={() => {
                         setDeletingUser(user);
                         setShowDeleteModal(true);
@@ -247,7 +255,7 @@ export default function Userboard() {
                     >
                       Ta bort
                     </button>
-                  </>
+                  </div>
                 )}
               </li>
             ))}
