@@ -1,4 +1,4 @@
-import React, { ReactElement, useMemo, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { ICourse } from "../types";
 import "../css/EditCourseModal.css";
 import { fetchWithToken } from "../../shared/utilities/fetchWithToken";
@@ -75,6 +75,7 @@ export const EditCourseModal = ({
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
+              onBlur={(e) => setName(e.target.value.trim())}
               required
             />
           </label>
@@ -84,6 +85,7 @@ export const EditCourseModal = ({
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              onBlur={(e) => setDescription(e.target.value.trim())}
               required
             />
           </label>
