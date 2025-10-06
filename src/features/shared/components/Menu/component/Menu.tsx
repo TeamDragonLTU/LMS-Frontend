@@ -46,7 +46,7 @@ export default function Menu() {
             <BookOpenCheck /> Min kurs
           </NavLink>
 
-          {role === "Teacher" && (
+          {(role === "Teacher" || role === "Student") && (
             <NavLink
               to="/users"
               className={({ isActive }) =>
