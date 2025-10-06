@@ -14,21 +14,24 @@ export function Course(): ReactElement {
 
   return (
     <main className="lmslist-container">
-      <h2 className="lmslist-title">{course.name}</h2>
-      <p className="lmslist-subtitle">{course.description}</p>
-      <p className="course-startdate">
-        Startdatum: {new Date(course.startDate).toLocaleDateString()}
-      </p>
-
-      <button
-        onClick={() => {
-          setShowModal(true);
-        }}
-        className="edit-course-button"
-      >
-        <Pencil size={16} style={{ marginRight: "8px" }} />
-        Redigera kurs
-      </button>
+      <div className="teacher-course-header-container">
+        <div className="teacher-course-header-text-content">
+          <h2 className="lmslist-title">{course.name}</h2>
+          <p className="lmslist-subtitle">{course.description}</p>
+          <p className="course-startdate">
+            Startdatum: {new Date(course.startDate).toLocaleDateString()}
+          </p>
+        </div>
+        <button
+          onClick={() => {
+            setShowModal(true);
+          }}
+          className="edit-course-button"
+        >
+          <Pencil size={16} style={{ marginRight: "8px" }} />
+          Redigera kurs
+        </button>
+      </div>
 
       <section>
         <ModuleStudent />
