@@ -12,6 +12,7 @@ export function ModuleStudent(): ReactElement {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const userRole = "Teacher"; 
 
 
 
@@ -57,6 +58,7 @@ export function ModuleStudent(): ReactElement {
 
   return (
     <div>
+      { userRole === "Teacher" && (
     <div className="module-btn">
       <button className="create-module-btn" onClick={() => setModalOpen(true)}><FilePlus2 /> Lägg en modul</button>
       <CreateModuleModal
@@ -67,9 +69,9 @@ export function ModuleStudent(): ReactElement {
           setLoading(true);
           setError(null);
           fetchModules();
-        }}
+        }} userRole={userRole}
           /> 
-    </div>
+    </div> )}
     <div className="module-container">
       {sections.map(({ title, status }) => {
         const filteredModules = modules.filter((m) => m.status === status);

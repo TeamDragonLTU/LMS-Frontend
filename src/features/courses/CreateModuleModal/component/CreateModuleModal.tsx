@@ -11,12 +11,13 @@ interface CreateModuleModalProps {
   open: boolean;
   onClose: () => void;
   onModuleCreated?: () => void;
+  userRole?: string;
 }
 
 export function CreateModuleModal({
   open,
   onClose,
-  onModuleCreated,
+  onModuleCreated, userRole="student"
 }: CreateModuleModalProps): ReactElement | null {
   const [courses, setCourses] = useState<Course[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<string>("");
@@ -70,8 +71,9 @@ export function CreateModuleModal({
   };
 
   if (!open) return null;
+ const isTeacher = userRole === "teacher";
 
-  return (
+  return !isTeacher ? null :(
     <div className="modal-overlay">
       <div className="modal-content">
         <h2>Lägg till modul</h2>
