@@ -7,45 +7,50 @@ import { fetchWithToken } from "../../../shared/utilities";
 import { FilePlus2 } from "lucide-react";
 
 interface ModuleStudentProps {
-  courseId: string
+  courseId: string;
 }
 
-export function ModuleStudent({courseId}: ModuleStudentProps): ReactElement {
+export function ModuleStudent({ courseId }: ModuleStudentProps): ReactElement {
   const [modules, setModules] = useState<ModuleProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
-  const userRole = "Teacher";
+  const userRole = "Teacher"; 
 
-  useEffect(() => {
-    const fetchModules = async () => {
-      try {
-        const data = await fetchWithToken<ModuleProps[]>(
-          `https://localhost:7213/api/module/${courseId}/modules`
-        );
 
-        const today = new Date();
-        const withStatus = data.map((m: ModuleProps) => {
-          const start = new Date(m.startDate);
-          const end = new Date(m.endDate);
+  const fetchModules = useCallback(async () => {
+    setLoading(true);
+    try {
+      const data = await fetchWithToken<ModuleProps[]>(
+        `https://localhost:7213/api/module/${courseId}/modules`
+      );
 
+      const today = new Date();
+      const withStatus = data.map((m: ModuleProps) => {
+        const start = new Date(m.startDate);
+        const end = new Date(m.endDate);
+
+        let status: "active" | "upcoming" | "past";
         if (today >= start && today <= end) status = "active";
         else if (today < start) status = "upcoming";
         else status = "past";
 
         return { ...m, status };
       });
+
       setModules(withStatus);
+      setError(null);
     } catch {
       setError("Cannot find module.");
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [courseId]); 
+
 
   useEffect(() => {
     fetchModules();
-  }, [courseId]);
+  }, [fetchModules]);
 
   if (loading) return <p className="loading">Loading...</p>;
   if (error) return <p className="error">{error}</p>;
@@ -58,7 +63,7 @@ export function ModuleStudent({courseId}: ModuleStudentProps): ReactElement {
 
   return (
     <div>
-      {userRole === "Teacher" ? (
+      {userRole === "Teacher" && (
         <div className="module-btn">
           <button
             className="create-module-btn"
@@ -76,7 +81,7 @@ export function ModuleStudent({courseId}: ModuleStudentProps): ReactElement {
             userRole={userRole}
           />
         </div>
-      ) : null}
+      )}
       <div className="module-container">
         {sections.map(({ title, status }) => {
           const filteredModules = modules.filter((m) => m.status === status);
