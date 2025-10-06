@@ -23,10 +23,10 @@ export function AuthProvider({ children }: IAuthProviderProps): ReactElement {
     try {
       const tokens = await loginReq(username, password);
       setTokens(tokens);
+      return;
     } catch (error) {
-      if (error instanceof CustomError) {
-        console.log(error);
-      }
+      // Visa alltid ett svenskt felmeddelande
+      throw 'Ett fel uppstod vid inloggning. Försök igen eller kontakta support om problemet kvarstår.';
     }
   }
 

@@ -60,12 +60,18 @@ export default function Userboard() {
             .filter(Boolean)
             .join('<br/>');
         } else if (typeof error === 'object') {
-          if (error.description) {
+          if (error.errors && typeof error.errors === 'object') {
+            feedback += '<br/><b>Valideringsfel:</b>';
+            for (const key in error.errors) {
+              if (Array.isArray(error.errors[key])) {
+                feedback += `<br/><b>${key}:</b> ${error.errors[key].join(', ')}`;
+              }
+            }
+          } else if (error.description) {
             feedback += `<br/><b>${error.code || ''}</b>: ${error.description}`;
           } else if (error.message) {
             feedback += `<br/>${error.message}`;
           } else {
-            // Om det är ett objekt utan description/message, visa hela objektet på ny rad
             feedback += `<br/>${JSON.stringify(error)}`;
           }
         } else if (typeof error === 'string') {
