@@ -34,7 +34,6 @@ export default function Userboard() {
       if (res.status === 201) {
         setMessage('✅ Användaren registrerades.');
         setIsAddModalOpen(false);
-        // Optionellt: Hämta om klasslistan
         setLoading(true);
         fetchWithToken<IUserDto[]>('https://localhost:7213/api/course/participants/my')
           .then((data) => setClassmates(data || []))
@@ -42,8 +41,40 @@ export default function Userboard() {
         return;
       }
       const error = await res.json();
-      setMessage(`❌ Registrering misslyckades: ${error?.message || 'Okänt fel'}`);
-    } catch {
+      console.error('Fel från backend:', error);
+      let feedback = '❌ Registrering misslyckades. ';
+      if (error) {
+        if (Array.isArray(error)) {
+          feedback += error
+            .map((e) => {
+              if (typeof e === 'object' && e.description) {
+                return `<b>${e.code || ''}</b>: ${e.description}`;
+              } else if (typeof e === 'object' && e.message) {
+                return e.message;
+              } else if (typeof e === 'string') {
+                return e;
+              } else {
+                return '';
+              }
+            })
+            .filter(Boolean)
+            .join('<br/>');
+        } else if (typeof error === 'object') {
+          if (error.description) {
+            feedback += `<br/><b>${error.code || ''}</b>: ${error.description}`;
+          } else if (error.message) {
+            feedback += `<br/>${error.message}`;
+          } else {
+            // Om det är ett objekt utan description/message, visa hela objektet på ny rad
+            feedback += `<br/>${JSON.stringify(error)}`;
+          }
+        } else if (typeof error === 'string') {
+          feedback += `<br/>${error}`;
+        }
+      }
+      setMessage(feedback);
+    } catch (e) {
+      console.error('Nätverks- eller kodfel vid registrering:', e);
       setMessage('❌ Ett fel inträffade vid registrering.');
     }
   };
@@ -59,7 +90,7 @@ export default function Userboard() {
       <h1 className="lmslist-title">Kursdeltagare</h1>
       {role === 'Teacher' && (
         <>
-          {message && <div className="userboard-message">{message}</div>}
+          {message && <div className="userboard-message" dangerouslySetInnerHTML={{ __html: message }} />}
           <div className="userboard-toolbar">
             <button className="userboard-btn-primary" onClick={() => setIsAddModalOpen(true)}>
               Lägg till användare
