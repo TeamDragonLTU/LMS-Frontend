@@ -101,6 +101,7 @@ export function CreateModuleModal({
               placeholder="T.ex. HTML & CSS"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              onBlur={(e) => setName(e.target.value.trim())}
             />
           </label>
           <label>
@@ -128,6 +129,7 @@ export function CreateModuleModal({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
+              onBlur={(e) => setDescription(e.target.value.trim())}
             />
           </label>
           {error && <p className="error">{error}</p>}
