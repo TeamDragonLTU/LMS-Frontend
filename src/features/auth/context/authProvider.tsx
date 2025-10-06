@@ -1,12 +1,11 @@
-// authProvider.tsx
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import { jwtDecode } from "jwt-decode";
 import { AuthContext } from ".";
 import { loginReq } from "../api";
 import { TOKENS } from "../constants";
 import { ITokens, IAuthContext } from "../types";
 import { CustomError } from "../../shared/classes";
+import { jwtDecode } from "jwt-decode";
 
 interface IAuthProviderProps {
   children: ReactNode;
@@ -24,11 +23,11 @@ export function AuthProvider({ children }: IAuthProviderProps): ReactElement {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role, setRole] = useState<"Teacher" | "Student" | null>(null);
 
+  // useLocalStorage works as a useState but it is always hooked up to LS, which means, if another component updates LS, this component will update as well.
   const [tokens, setTokens, clearTokens] = useLocalStorage<ITokens | null>(
     TOKENS,
     null
   );
-
   async function login(username: string, password: string) {
     try {
       const tokens = await loginReq(username, password);
