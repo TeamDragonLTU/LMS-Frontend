@@ -58,7 +58,7 @@ export function ModuleStudent(): ReactElement {
 
   return (
     <div>
-      { userRole === "Teacher" && (
+      { userRole === "teacher" && (
     <div className="module-btn">
       <button className="create-module-btn" onClick={() => setModalOpen(true)}><FilePlus2 /> Lägg en modul</button>
       <CreateModuleModal
