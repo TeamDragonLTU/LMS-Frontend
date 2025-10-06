@@ -54,6 +54,7 @@ export function CreateModuleModal({
     endDate,
     description: description.trim() || "Ingen beskrivning",
   };
+  
   console.log("Payload:", payload);
     try {
       await fetchWithToken("https://localhost:7213/api/module", {
@@ -64,7 +65,17 @@ export function CreateModuleModal({
       if (onModuleCreated) onModuleCreated();
       onClose();
     } catch {
-      setError("Kunde inte skapa modul.");
+    if (userRole !== "Teacher") {
+    setError("Du är inte behörig att skapa en modul.");
+  } else if (value.trim().length === 0) {
+    setError("Fältet kan inte vara tomt.");
+  } else if (value.trim().length < 3) {
+    setError("Fältet måste ha minst 3 tecken.");
+  } else if (value.trim().length > 50) {
+    setError("Fältet får max vara 50 tecken.");
+  } else {
+    setError("");
+  }
     } finally {
       setLoading(false);
     }
