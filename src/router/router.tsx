@@ -1,3 +1,4 @@
+
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -6,12 +7,9 @@ import {
 import { App } from "../features/app";
 import { Login } from "../features/auth/components/Login";
 import { requireAuthLoader } from "../features/auth/loaders";
-
 import { Companies, Company } from "../features/companies/components";
 import { companiesLoader, companyLoader } from "../features/companies/loaders";
-
 import Userboard from "../features/usersboard/component/Userboard";
-
 import { Home } from "../features/dashboard/Home";
 import { homeLoader } from "../features/dashboard/homeLoader";
 import { Course } from "../features/courses/components/Course";
