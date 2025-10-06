@@ -11,8 +11,6 @@ import { requireAuthLoader } from "../features/auth/loaders";
 import { Companies, Company } from "../features/companies/components";
 import { companiesLoader, companyLoader } from "../features/companies/loaders";
 
-import UsersPage from "../features/usersboard/component/index";
-
 // From dev
 import { Home } from "../features/dashboard/Home";
 import { homeLoader } from "../features/dashboard/homeLoader";
