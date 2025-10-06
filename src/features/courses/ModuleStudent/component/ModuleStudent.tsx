@@ -5,7 +5,11 @@ import { ModuleProps } from "./type";
 import "../css/style.css";
 import { fetchWithToken } from "../../../shared/utilities";
 
-export function ModuleStudent(): ReactElement {
+interface ModuleStudentProps {
+  courseId: string
+}
+
+export function ModuleStudent({courseId}: ModuleStudentProps): ReactElement {
   const [modules, setModules] = useState<ModuleProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -14,11 +18,11 @@ export function ModuleStudent(): ReactElement {
     const fetchModules = async () => {
       try {
         const data = await fetchWithToken<ModuleProps[]>(
-          "https://localhost:7213/api/module"
+          `https://localhost:7213/api/module/${courseId}/modules`
         );
 
         const today = new Date();
-  const withStatus = data.map((m: ModuleProps) => {
+        const withStatus = data.map((m: ModuleProps) => {
           const start = new Date(m.startDate);
           const end = new Date(m.endDate);
 
@@ -38,7 +42,7 @@ export function ModuleStudent(): ReactElement {
       }
     };
     fetchModules();
-  }, []);
+  }, [courseId]);
 
   if (loading) return <p className="loading">Loading...</p>;
   if (error) return <p className="error">{error}</p>;
