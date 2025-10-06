@@ -29,6 +29,9 @@ interface JwtPayload {
 }
 
 
+
+// Själva AuthProvider-komponenten
+export function AuthProvider({ children }: IAuthProviderProps): ReactElement {
   // State: håller reda på om användaren är inloggad och vilken roll den har ("Teacher", "Student" eller null)
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role, setRole] = useState<"Teacher" | "Student" | null>(null);
@@ -59,7 +62,6 @@ interface JwtPayload {
     setIsLoggedIn(false);
   }
 
-
   // useEffect: körs varje gång tokens ändras (t.ex. vid login eller logout)
   // Om accessToken finns, decoda JWT och sätt roll samt inloggningsstatus
   // Om decoding misslyckas, logga fel och nollställ roll och inloggningsstatus
@@ -73,19 +75,18 @@ interface JwtPayload {
           ] ?? null;
         setRole(roleFromToken);
         setIsLoggedIn(true);
-  // Debug: visa decoded token i konsolen (för utveckling)
+        // Debug: visa decoded token i konsolen (för utveckling)
         console.log(decodedToken);
       } catch (err) {
         console.error("Failed to decode JWT", err);
         setRole(null);
-  setIsLoggedIn(!!tokens); // Om tokens finns, sätt inloggad ändå (fallback)
+        setIsLoggedIn(!!tokens); // Om tokens finns, sätt inloggad ändå (fallback)
       }
     } else {
       setRole(null);
       setIsLoggedIn(false);
     }
   }, [tokens]);
-
 
   // Värden som skickas ut via AuthContext till resten av applikationen
   const values: IAuthContext = { isLoggedIn, login, logout, role };
