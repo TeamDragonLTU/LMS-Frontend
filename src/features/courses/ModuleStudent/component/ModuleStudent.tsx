@@ -6,26 +6,28 @@ import "../css/style.css";
 import { fetchWithToken } from "../../../shared/utilities";
 import { FilePlus2 } from "lucide-react";
 
-export function ModuleStudent(): ReactElement {
+interface ModuleStudentProps {
+  courseId: string
+}
+
+export function ModuleStudent({courseId}: ModuleStudentProps): ReactElement {
   const [modules, setModules] = useState<ModuleProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const userRole = "Teacher";
 
+  useEffect(() => {
+    const fetchModules = async () => {
+      try {
+        const data = await fetchWithToken<ModuleProps[]>(
+          `https://localhost:7213/api/module/${courseId}/modules`
+        );
 
-  const fetchModules = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await fetchWithToken<ModuleProps[]>(
-        "https://localhost:7213/api/module"
-      );
-      const today = new Date();
-      const withStatus = data.map((m) => {
-        const start = new Date(m.startDate);
-        const end = new Date(m.endDate);
-        let status: "active" | "upcoming" | "past";
+        const today = new Date();
+        const withStatus = data.map((m: ModuleProps) => {
+          const start = new Date(m.startDate);
+          const end = new Date(m.endDate);
 
         if (today >= start && today <= end) status = "active";
         else if (today < start) status = "upcoming";
@@ -43,7 +45,7 @@ export function ModuleStudent(): ReactElement {
 
   useEffect(() => {
     fetchModules();
-  }, [fetchModules]);
+  }, [courseId]);
 
   if (loading) return <p className="loading">Loading...</p>;
   if (error) return <p className="error">{error}</p>;
