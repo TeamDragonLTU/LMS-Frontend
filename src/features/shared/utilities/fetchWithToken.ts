@@ -9,7 +9,7 @@ export async function fetchWithToken<T>(input: RequestInfo | URL, options?: Requ
 
   if (!tokens) {
     // No token => let guard handle redirect higher up
-    throw new CustomError(401, 'No tokens');
+  throw new CustomError('No tokens', 401);
   }
 
   // Renew if needed
@@ -19,7 +19,7 @@ export async function fetchWithToken<T>(input: RequestInfo | URL, options?: Requ
       setTokens(refreshed);
       tokens = refreshed;
     } catch {
-      throw new CustomError(401, 'Token refresh failed');
+  throw new CustomError('Token refresh failed', 401);
     }
   }
 

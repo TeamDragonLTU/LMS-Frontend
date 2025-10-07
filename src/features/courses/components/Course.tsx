@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 import ModuleStudent from "../ModuleStudent/component/ModuleStudent";
 import { useLoaderData, useRevalidator } from "react-router";
 import { ICourseLoader } from "../types";
@@ -34,7 +34,7 @@ export function Course(): ReactElement {
       </div>
 
       <section>
-        <ModuleStudent />
+        <ModuleStudent courseId={course.id} />
       </section>
 
       {showModal && (

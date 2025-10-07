@@ -6,40 +6,47 @@ import "../css/style.css";
 import { fetchWithToken } from "../../../shared/utilities";
 import { FilePlus2 } from "lucide-react";
 
-export function ModuleStudent(): ReactElement {
+interface ModuleStudentProps {
+  courseId: string;
+}
+
+export function ModuleStudent({ courseId }: ModuleStudentProps): ReactElement {
   const [modules, setModules] = useState<ModuleProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
-  const userRole = "Teacher";
+  const userRole = "Teacher"; 
 
 
   const fetchModules = useCallback(async () => {
     setLoading(true);
-    setError(null);
     try {
       const data = await fetchWithToken<ModuleProps[]>(
-        "https://localhost:7213/api/module"
+        `https://localhost:7213/api/module/${courseId}/modules`
       );
+
       const today = new Date();
-      const withStatus = data.map((m) => {
+      const withStatus = data.map((m: ModuleProps) => {
         const start = new Date(m.startDate);
         const end = new Date(m.endDate);
-        let status: "active" | "upcoming" | "past";
 
+        let status: "active" | "upcoming" | "past";
         if (today >= start && today <= end) status = "active";
         else if (today < start) status = "upcoming";
         else status = "past";
 
         return { ...m, status };
       });
+
       setModules(withStatus);
+      setError(null);
     } catch {
       setError("Cannot find module.");
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [courseId]); 
+
 
   useEffect(() => {
     fetchModules();
@@ -56,7 +63,7 @@ export function ModuleStudent(): ReactElement {
 
   return (
     <div>
-      {userRole === "Teacher" ? (
+      {userRole === "Teacher" && (
         <div className="module-btn">
           <button
             className="create-module-btn"
@@ -74,7 +81,7 @@ export function ModuleStudent(): ReactElement {
             userRole={userRole}
           />
         </div>
-      ) : null}
+      )}
       <div className="module-container">
         {sections.map(({ title, status }) => {
           const filteredModules = modules.filter((m) => m.status === status);

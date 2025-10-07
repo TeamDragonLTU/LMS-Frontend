@@ -47,9 +47,6 @@ export const EditCourseModal = ({
       onUpdated();
       onClose();
     } catch (error: any) {
-      console.log("ERROR", error);
-      console.log("error.status", error.errorCode);
-      console.log("error.errors", error.errors);
       setLoading(false);
 
       if (
@@ -100,7 +97,6 @@ export const EditCourseModal = ({
             />
           </label>
 
-          {/* mappa ut errors ur error*/}
           {errors && (
             <div className="error-container">
               {Object.entries(errors).map(([field, messages]) => (
