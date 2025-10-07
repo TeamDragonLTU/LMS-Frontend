@@ -80,6 +80,7 @@ export function ModuleStudent({ courseId }: ModuleStudentProps): ReactElement {
             }}
             userRole={userRole}
             existingModules={modules}
+  
           />
         </div>
       )}
@@ -91,7 +92,7 @@ export function ModuleStudent({ courseId }: ModuleStudentProps): ReactElement {
             <section key={status}>
               <h3 className="section-title">{title}</h3>
               {filteredModules.map((m) => (
-                <ModuleCard key={m.id} module={m} />
+                <ModuleCard key={m.id} module={m}  onModuleDeleted={fetchModules}/>
               ))}
             </section>
           );

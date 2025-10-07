@@ -4,14 +4,31 @@ import { ModuleProps } from "./type";
 import { useState } from "react";
 import ActivityStudent from "../../../courses/AktivityStudent/component/ActivityStudent";
 import "../css/style.css";
+import { fetchWithToken } from "../../../shared/utilities";
 
 interface ModuleCardProps {
   module: ModuleProps;
+  onModuleDeleted?: () => void;
 }
 
-export function ModuleCard({ module }: ModuleCardProps): ReactElement {
+export function ModuleCard({ module, onModuleDeleted }: ModuleCardProps): ReactElement {
   const[open, setOpen] = useState(false);
 
+  const handleDelete= async()=>{
+    if(window.confirm("Är du säker på att du vill ta bort denna modul?")){
+      try{
+        await fetchWithToken(`https://localhost:7213/api/module/${module.id}`,{
+          method:"DELETE",
+          headers: {
+            "Content-Type":"application/json"
+          }
+        });
+        if(onModuleDeleted) onModuleDeleted();
+      }catch(error){
+        console.error(error);
+      }
+    }
+  };
   const handleClick = () => {
     setOpen(!open);
   };
@@ -42,7 +59,7 @@ return (
         <ChevronRight className={open ? "rotated" : ""}/>
       </button>
     </div>
-    {open && (<div className="module-actions"><p className="list-subtitle">{module.description}</p><button className="edit-btn"><PencilLine /> Redigera</button> <button className="delete-btn"><Trash />Ta bort</button></div>)}
+    {open && (<div className="module-actions"><p className="list-subtitle">{module.description}</p><button className="edit-btn"><PencilLine /> Redigera</button> <button onClick={handleDelete} className="delete-btn"><Trash />Ta bort</button></div>)}
     {open && (
       <div className="module-dropdown">
         <ActivityStudent moduleId={module.id} />
@@ -51,5 +68,6 @@ return (
   </div>
 );
 }
+
 
 export default ModuleCard;
