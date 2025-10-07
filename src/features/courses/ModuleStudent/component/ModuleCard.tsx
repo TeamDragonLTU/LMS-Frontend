@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { BookOpenCheck, ChevronRight } from "lucide-react";
+import { BookOpenCheck, ChevronRight, PencilLine, Trash } from "lucide-react";
 import { ModuleProps } from "./type";
 import { useState } from "react";
 import ActivityStudent from "../../../courses/AktivityStudent/component/ActivityStudent";
@@ -42,6 +42,7 @@ return (
         <ChevronRight className={open ? "rotated" : ""}/>
       </button>
     </div>
+    {open && (<div className="module-actions"><button className="edit-btn"><PencilLine /> Redigera</button> <button className="delete-btn"><Trash />Ta bort</button></div>)}
     {open && (
       <div className="module-dropdown">
         <ActivityStudent moduleId={module.id} />
