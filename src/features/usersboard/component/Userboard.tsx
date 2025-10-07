@@ -203,33 +203,8 @@ export default function Userboard() {
           className="userboard-message"
           dangerouslySetInnerHTML={{ __html: message }}
         />
-      <div className="userboard-header">
-      <h1 className="lmslist-title">Kursdeltagare</h1>
-      {role === 'Teacher' && (
-        <>
-          {message && <div className="userboard-message" dangerouslySetInnerHTML={{ __html: message }} />}
-          <div className="userboard-toolbar">
-            <button className="userboard-btn-primary" onClick={() => setIsAddModalOpen(true)}>
-              Lägg till användare
-            </button>
-          </div>
-          {isAddModalOpen && (
-            <div className="userboard-modal">
-              <div className="userboard-modal-content">
-                <h2>Lägg till användare</h2>
-                <UserForm
-                  onSave={async (newUser) => {
-                    await handleAddUser(newUser);
-                  }}
-                  onCancel={() => setIsAddModalOpen(false)}
-                />
-              </div>
-            </div>
-          )}
-        </>
       )}
 
-      </div>
       <ul className="lmslist-list">
         {teachers.length > 0 && (
           <>
