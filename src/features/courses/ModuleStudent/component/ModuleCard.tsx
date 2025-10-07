@@ -14,21 +14,19 @@ interface ModuleCardProps {
 export function ModuleCard({ module, onModuleDeleted }: ModuleCardProps): ReactElement {
   const[open, setOpen] = useState(false);
 
-  const handleDelete= async()=>{
-    if(window.confirm("Är du säker på att du vill ta bort denna modul?")){
-      try{
-        await fetchWithToken(`https://localhost:7213/api/module/${module.id}`,{
-          method:"DELETE",
-          headers: {
-            "Content-Type":"application/json"
-          }
-        });
-        if(onModuleDeleted) onModuleDeleted();
-      }catch(error){
-        console.error(error);
-      }
+const handleDelete = async () => {
+  if (window.confirm("Vill du verkligen ta bort denna modul?")) {
+    try {
+      await fetchWithToken(`https://localhost:7213/api/module/${module.id}`, {
+        method: "DELETE",
+      }).catch(() => {}); 
+      if (onModuleDeleted) onModuleDeleted();
+    } catch {
+      alert("Kunde inte ta bort modulen.");
     }
-  };
+  }
+};
+
   const handleClick = () => {
     setOpen(!open);
   };
