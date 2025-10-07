@@ -28,7 +28,18 @@ export function CreateModuleModal({
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+  const resetForm = () => {
+  setSelectedCourse("");
+  setName("");
+  setStartDate("");
+  setEndDate("");
+  setDescription("");
+  setError(null);
+};
+const handleClose = () => {
+  resetForm();
+  onClose();
+};
   useEffect(() => {
     if (open) {
       fetchCourses();
@@ -56,7 +67,7 @@ export function CreateModuleModal({
     description: description.trim() || "Ingen beskrivning",
   };
   const newStart = new Date(startDate);
-const newEnd = new Date(endDate);
+  const newEnd = new Date(endDate);
 
 const overlap = existingModules.some(
   (mod) => {
@@ -81,7 +92,7 @@ if (overlap) {
         body: JSON.stringify(payload),
       });
       if (onModuleCreated) onModuleCreated();
-      onClose();
+      handleClose();
     } catch {
     setError("Något gick fel vid skapandet av modulen.");
     } finally {
@@ -153,7 +164,7 @@ if (overlap) {
           </label>
           {error && <p className="error">{error}</p>}
           <div className="modal-actions">
-            <button type="button" onClick={onClose} className="cancel-btn">
+            <button type="button" onClick={handleClose} className="cancel-btn">
               Avbryt
             </button>
             <button type="submit" disabled={loading} className="submit-btn">
