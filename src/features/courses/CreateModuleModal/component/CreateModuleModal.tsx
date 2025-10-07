@@ -12,12 +12,13 @@ interface CreateModuleModalProps {
   onClose: () => void;
   onModuleCreated?: () => void;
   userRole?: string;
+  existingModules: { startDate: string; endDate: string }[];
 }
 
 export function CreateModuleModal({
   open,
   onClose,
-  onModuleCreated, userRole="Student"
+  onModuleCreated, userRole="Student", existingModules
 }: CreateModuleModalProps): ReactElement | null {
   const [courses, setCourses] = useState<Course[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<string>("");
@@ -54,7 +55,24 @@ export function CreateModuleModal({
     endDate,
     description: description.trim() || "Ingen beskrivning",
   };
-  
+  const newStart = new Date(startDate);
+const newEnd = new Date(endDate);
+
+const overlap = existingModules.some(
+  (mod) => {
+    const modStart = new Date(mod.startDate);
+    const modEnd = new Date(mod.endDate);
+    return (
+      (newStart <= modEnd && newEnd >= modStart)
+    );
+  }
+);
+
+if (overlap) {
+  setError("Modulens datum överlappar med en annan modul.");
+  setLoading(false);
+  return;
+}
   console.log("Payload:", payload);
     try {
       await fetchWithToken("https://localhost:7213/api/module", {
