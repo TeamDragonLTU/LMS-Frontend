@@ -2,6 +2,7 @@ import React, { ReactElement, useState } from "react";
 import { ICourse } from "../types";
 import "../css/EditCourseModal.css";
 import { fetchWithToken } from "../../shared/utilities/fetchWithToken";
+import { ErrorDisplay } from "../../shared/components/ErrorDisplay";
 
 interface EditCourseModalProps {
   course: ICourse;
@@ -96,21 +97,7 @@ export const EditCourseModal = ({
               required
             />
           </label>
-
-          {errors && (
-            <div className="error-container">
-              {Object.entries(errors).map(([field, messages]) => (
-                <div key={field} className="field-errors">
-                  {messages.map((message) => (
-                    <p key={field} className="error-message">
-                      {message}
-                    </p>
-                  ))}
-                </div>
-              ))}
-            </div>
-          )}
-
+          <ErrorDisplay errors={errors} />          
           <div className="modal-actions">
             <button type="submit" disabled={loading || !hasChanges}>
               {loading ? "Sparar..." : "Spara"}
