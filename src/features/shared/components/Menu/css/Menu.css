@@ -1,35 +1,3 @@
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 230px;
-  height: 100vh;
-  border-right: 1px solid #e5e7eb; 
-  padding: 1rem 0;
-  display: flex;
-  flex-direction: column;
-  z-index: 1000;
-
-
-  background: #ffffff; /* ✅ white background */
-
-  /* hidden on mobile */
-  transform: translateX(-100%);
-  transition: transform 0.3s ease-in-out;
-}
-
-.sidebar.open {
-  transform: translateX(0);
-  padding: 3rem 0;
-}
-
-.nav {
-  display: flex;
-  flex-direction: column;
-  gap: .25rem;
-  margin-top: 1rem;
-}
-
 .nav__link {
   display: flex;
   align-items: center;
@@ -37,15 +5,47 @@
   padding: .625rem 1rem;
   border-radius: .5rem;
   text-decoration: none;
-  color: #00295b;            
-  font-size: 0.95rem;
+  color: #1e293b;
+  font-size: 1rem;
   font-weight: 500;
+  background: none;
+  transition: background 0.18s, color 0.18s;
 }
-
 .nav__link:hover {
-  background: #f3f4f6;       
-  color: #111827;
+  background: #e0e7ff;
+  color: #2563eb;
 }
+.nav__link.is-active {
+  background: #2563eb;
+  color: #fff;
+  border-right: 6px solid #2563eb;
+}
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 230px;
+  height: 100vh;
+      border-right: 1px solid #e5e7eb; 
+      padding: 1rem 0;
+      display: flex;
+      flex-direction: column;
+      z-index: 1100;
+      background: #ffffff;
+      transition: transform 0.3s ease-in-out;
+    }
+    .sidebar.open {
+      transform: translateX(0);
+      padding: 3rem 0;
+    }
+    @media (max-width: 767px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+    }
 
 .nav__link.is-active {
   background: #b1d0ff;     
@@ -77,10 +77,14 @@
 
 @media (min-width: 768px) {
   .sidebar {
-    position: static;
+    position: fixed;
+    top: 0;
+    left: 0;
     transform: translateX(0);
-     height: 100vh;
+    height: 100vh;
     background: rgb(255, 255, 255);
+    z-index: 1100;
+    display: flex;
   }
   .hamburger-btn, .backdrop {
     display: none;
