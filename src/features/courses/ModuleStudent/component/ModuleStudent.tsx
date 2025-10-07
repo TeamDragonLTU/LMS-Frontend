@@ -79,6 +79,7 @@ export function ModuleStudent({ courseId }: ModuleStudentProps): ReactElement {
               fetchModules(); 
             }}
             userRole={userRole}
+            existingModules={modules}
           />
         </div>
       )}
