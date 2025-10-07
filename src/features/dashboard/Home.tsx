@@ -1,4 +1,3 @@
-// import { Companies } from '../companies/components/Companies';
 // import { Courses } from '../courses/components/Courses';
 import { ThisWeeksActivities } from "./ThisWeeksActivities/component/ThisWeeksActivities";
 import { useLoaderData } from "react-router-dom";
