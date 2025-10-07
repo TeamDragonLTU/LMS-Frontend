@@ -42,7 +42,7 @@ return (
         <ChevronRight className={open ? "rotated" : ""}/>
       </button>
     </div>
-    {open && (<div className="module-actions"><button className="edit-btn"><PencilLine /> Redigera</button> <button className="delete-btn"><Trash />Ta bort</button></div>)}
+    {open && (<div className="module-actions"><p className="list-subtitle">{module.description}</p><button className="edit-btn"><PencilLine /> Redigera</button> <button className="delete-btn"><Trash />Ta bort</button></div>)}
     {open && (
       <div className="module-dropdown">
         <ActivityStudent moduleId={module.id} />
