@@ -36,14 +36,19 @@ export default function ActivityStudent({moduleId}:ActivityProps):ReactElement {
     fetchActivities();
   }, [moduleId]);
 
+    useEffect(() => {
+    fetchActivities();
+  }, [fetchActivities]);
 
-  const formatDate = (dateString: string) =>
-    new Date(dateString).toLocaleDateString("sv-SE", {
+const formatDateTime = (dateString: string) =>
+  new Date(dateString).toLocaleString("sv-SE", {
       year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
+  }).replace(',', '');
 
   if (loading) return <p className="loading">Laddar...</p>;
   if (error) return <p className="error">{error}</p>;
@@ -58,7 +63,7 @@ export default function ActivityStudent({moduleId}:ActivityProps):ReactElement {
               <h4 className="activity-name"><span className="activity-type">{activity.type}</span>{activity.name}</h4>
               {/*<p className="activity-description">{activity.description}</p>*/}
               <p className="activity-dates">
-               {formatDate(activity.startTime)} – {formatDate(activity.endTime)}
+               {formatDateTime(activity.startTime)} – {formatDateTime(activity.endTime)}
               </p>
               
             </li>
