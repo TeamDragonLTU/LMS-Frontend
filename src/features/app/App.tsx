@@ -7,12 +7,13 @@ export function App() {
     <>
       <Header />
       <main className="main-layout">
+        <Menu />
         <div className="menu">
-          <Menu />
+          {/* tom på mobil, används bara för desktop layout */}
         </div>
         <div className="outlet-container">
           <Outlet />
-        </div>  
+        </div>
       </main>
     </>
   );

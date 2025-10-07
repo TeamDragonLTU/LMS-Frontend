@@ -1,3 +1,32 @@
+/* Flex container för namn/e-post + roll-badge */
+.lmslist-user-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1.1rem;
+}
+/* Action buttons for userboard (Redigera/Ta bort) */
+.userboard-action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.2rem;
+}
+
+.userboard-action-buttons .btn-secondary,
+.userboard-action-buttons .btn-danger {
+  min-width: 90px;
+  font-weight: 500;
+  font-size: 0.97rem;
+  box-shadow: 0 1px 2px rgba(60,72,88,0.07);
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+}
+
+.userboard-action-buttons .btn-secondary:hover {
+  background: #b0b0b0;
+}
+.userboard-action-buttons .btn-danger:hover {
+  background: #b91c1c;
+}
 /*
  * Global list styles for user/course lists (formerly usersboard)
  */
@@ -18,10 +47,9 @@
 
 .lmslist-container {
   margin: 2rem auto;
-  max-width: 800px;
   background: #fafbfc;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(60,72,88,0.04);
+  box-shadow: 0 2px 8px rgba(60, 72, 88, 0.04);
   padding: 2.5rem 2rem 2rem 2rem;
 }
 
@@ -67,7 +95,7 @@
   margin: 0;
   background: #fff;
   border-radius: 0 0 10px 10px;
-  box-shadow: 0 1px 2px rgba(60,72,88,0.03);
+  box-shadow: 0 1px 2px rgba(60, 72, 88, 0.03);
 }
 
 .lmslist-list li {
@@ -101,22 +129,102 @@
   font-size: 0.98rem;
 }
 
-.lmslist-meta {
-  color: #8b909a;
-  font-size: 0.95rem;
-  margin-left: 1.5rem;
-  white-space: nowrap;
-}
-
 .lmslist-role-badge {
   background: #DBEAFE;
   color: #1E40AF;
   font-size: 0.85rem;
   border-radius: 8px;
   padding: 0.1rem 0.7rem;
-  margin-left: 0.7rem;
   font-weight: 500;
   white-space: nowrap;
   flex-shrink: 0;
+  margin-top: 0;
+  align-self: flex-start;
+  margin-left: 0.7rem;
+}
+
+.btn-primary {
+  background: #007bff;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background: #ccc;
+  color: black;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-danger {
+  background: #dc3545;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit_trash_icons {
+  background-color: DodgerBlue;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0; /* Removes outer space */
+  display: inline-flex; /* Ensures proper alignment */
+  background: none; /* Optional: Removes button background */
+}
+
+/* Modal overlay + content */
+.modal {
+  position: fixed;
+  inset: 0; /* top:0; left:0; right:0; bottom:0 */
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 18px;
+  border-radius: 8px;
+  min-width: 320px;
+  max-width: 540px;
+  width: 90%;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.modal-label {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.modal-input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 14px;
+}
   text-decoration: none;
 }

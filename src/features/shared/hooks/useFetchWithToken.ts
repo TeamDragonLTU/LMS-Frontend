@@ -28,7 +28,7 @@ export function useFetchWithToken<T>(
     const response: Response = await fetch(url, requestInit);
 
     if (response.ok === false) {
-      throw new CustomError(response.status, response.statusText);
+  throw new CustomError(response.statusText, response.status);
     }
 
     return (await response.json()) as T;

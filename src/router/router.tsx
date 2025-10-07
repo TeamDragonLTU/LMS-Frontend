@@ -6,12 +6,7 @@ import {
 import { App } from "../features/app";
 import { Login } from "../features/auth/components/Login";
 import { requireAuthLoader } from "../features/auth/loaders";
-
-import { Companies, Company } from "../features/companies/components";
-import { companiesLoader, companyLoader } from "../features/companies/loaders";
-
 import Userboard from "../features/usersboard/component/Userboard";
-
 import { Home } from "../features/dashboard/Home";
 import { homeLoader } from "../features/dashboard/homeLoader";
 import { Course } from "../features/courses/components/Course";
@@ -32,17 +27,9 @@ export const router = createBrowserRouter(
         <Route path="dashboard" element={<Home />} loader={homeLoader} />
         <Route path="users" element={<Userboard />} />
 
-        {/* Companies */}
-        <Route element={<Companies />} index loader={companiesLoader} />
-        <Route
-          element={<Company />}
-          loader={({ params }) => companyLoader(params.id)}
-          path="companies/:id"
-        />
-
-  {/* Courses */}
-  <Route element={<Courses />} path="course" />
-  <Route element={<Course />} loader={courseLoader} path="course/:id" />
+        {/* Courses */}
+        <Route element={<Courses />} path="course" />
+        <Route element={<Course />} loader={courseLoader} path="course/:id" />
 
         {/* Veckans aktiviteter direkt route */}
         <Route

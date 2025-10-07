@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
-import { getTokens } from '../utilities/tokens';
-import { decodeRoleFromJwt } from '../utilities/decodeRoleFromJwt';
+
+import { useEffect, useState } from "react";
+import { getTokens } from "../utilities/tokens";
+import { decodeRoleFromJwt } from "../utilities/decodeRoleFromJwt";
 
 export function useRole(): string | null {
   const [role, setRole] = useState<string | null>(null);

@@ -14,7 +14,7 @@ export async function loginReq(username: string, password: string): Promise<ITok
   });
 
   if (response.ok === false) {
-    throw new CustomError(response.status, 'Could not login');
+  throw new CustomError('Could not login', response.status);
   }
 
   return (await response.json()) as ITokens;
@@ -35,7 +35,7 @@ export async function refreshTokens(accessToken: string, refreshToken: string): 
   });
 
   if (response.ok === false) {
-    throw new CustomError(response.status, 'Something went wrong with refresh token');
+  throw new CustomError('Something went wrong with refresh token', response.status);
   }
 
   return (await response.json()) as ITokens;
