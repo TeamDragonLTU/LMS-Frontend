@@ -16,7 +16,7 @@ h1 {
 }
 
 .book-icon {
-  color: rgba(0, 47, 255, 0.75);
+  color: #4063FF;
   width: 32px;
   height: 32px;
 }
@@ -41,9 +41,8 @@ h1 {
 }
 
 .right-header-container {
-  color: gray;
+  color: #4B5563;
   font-size: 1rem;
-  color: #666;
 }
 
 .logout-container,
@@ -58,6 +57,7 @@ h1 {
 
 .logout-container {
   cursor: pointer;
+  margin-left: 1rem;
 }
 
 }

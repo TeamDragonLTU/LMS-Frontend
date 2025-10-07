@@ -35,11 +35,16 @@ fieldset {
 .icon {
   height: 3rem;
   width: 3rem;
-  color: #2563eb;
+  color: #4063FF;
   margin: 0 auto 2rem auto;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.icon svg {
+  width: 4rem;
+  height: 4rem;
 }
 
 .header {
@@ -66,6 +71,7 @@ button {
 }
 
 input {
+  width: 100%;
   padding: 0.5rem 1rem;
   border: 1px solid #d1d5db;
   border-radius: 0.5rem;

@@ -87,6 +87,7 @@ export default function Userboard() {
 
   return (
     <div className="lmslist-container">
+      <div className="userboard-header">
       <h1 className="lmslist-title">Kursdeltagare</h1>
       {role === 'Teacher' && (
         <>
@@ -111,6 +112,7 @@ export default function Userboard() {
           )}
         </>
       )}
+      </div>
       <ul className="lmslist-list">
         {/* Lärare */}
         {teachers.length > 0 && [

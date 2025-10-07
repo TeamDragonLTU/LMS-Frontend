@@ -37,20 +37,20 @@
   padding: .625rem 1rem;
   border-radius: .5rem;
   text-decoration: none;
-  color: #00295b;            
+  color: #424C5B;            
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: 450;
 }
 
 .nav__link:hover {
-  background: #f3f4f6;       
+  background: #EFF6FF;       
   color: #111827;
 }
 
 .nav__link.is-active {
-  background: #b1d0ff;     
-  color: #00295b;
-  border-right: 6px solid #00295b;           
+  background: #EFF6FF;     
+  color: #4063FF;
+  border-right: 5px solid #4063FF;           
 }
 
 .hamburger-btn {

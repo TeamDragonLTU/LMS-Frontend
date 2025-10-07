@@ -24,7 +24,7 @@ export function ModuleCard({ module }: ModuleCardProps): ReactElement {
 
 return (
   <div className="module-card-container">
-    <div className="module-card">
+    <div className={`module-card ${module.status}`}>
       <div className="module-info">
         <div className="module-icon"><BookOpenCheck /></div>
         <div>
