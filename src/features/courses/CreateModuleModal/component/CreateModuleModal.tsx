@@ -1,7 +1,7 @@
 import { ReactElement, useState, useEffect } from "react";
 import "../css/style.css";
 import { fetchWithToken } from "../../../shared/utilities";
-import { ModuleProps } from "../../ModuleStudent/component/type";
+import { Module } from "../../../shared/interfaces";
 
 interface Course {
   id: string;
@@ -14,7 +14,8 @@ interface CreateModuleModalProps {
   onModuleCreated?: () => void;
   userRole?: string;
   existingModules: { id: string; startDate: string; endDate: string }[];
-  editingModule?: ModuleProps | null;
+  editingModule?: Module | null;
+  courseStartDate: string
 }
 
 export function CreateModuleModal({
@@ -24,15 +25,21 @@ export function CreateModuleModal({
   userRole = "Student",
   existingModules,
   editingModule,
+  courseStartDate
 }: CreateModuleModalProps): ReactElement | null {
+  const minDate = courseStartDate?.split('T')[0] || '';
   const [courses, setCourses] = useState<Course[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<string>("");
   const [name, setName] = useState("");
-  const [startDate, setStartDate] = useState("");
+  const [startDate, setStartDate] = useState(minDate);
   const [endDate, setEndDate] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  
+  console.log('minDate', minDate);
+  
 
   const resetForm = () => {
     setSelectedCourse("");
@@ -178,6 +185,7 @@ export function CreateModuleModal({
               required
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
+              min={minDate}
             />
           </label>
           <label>
@@ -187,6 +195,7 @@ export function CreateModuleModal({
               required
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
+              min={startDate}
             />
           </label>
           <label>

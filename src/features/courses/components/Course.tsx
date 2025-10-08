@@ -34,7 +34,7 @@ export function Course(): ReactElement {
       </div>
 
       <section>
-        <ModuleStudent courseId={course.id} />
+        <ModuleStudent courseId={course.id} courseStartDate={course.startDate}/>
       </section>
 
       {showModal && (
