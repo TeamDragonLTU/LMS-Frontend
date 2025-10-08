@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import "../css/style.css";
 import { fetchWithToken } from "../../../shared/utilities";
 import CreateActivityModal from "../../ActivityModals/CreateActivityModal";
-import { FilePlus2 } from "lucide-react";
+import { FilePlus2, Trash } from "lucide-react";
 
 interface Activity {
   id: string;
@@ -46,6 +46,27 @@ export default function ActivityStudent({
     fetchActivities();
   }, [fetchActivities]);
 
+  const handleDelete = async (activityId: string) => {
+  if (window.confirm("Vill du verkligen ta bort denna aktivitet?")) {
+    try {
+      await fetchWithToken(`https://localhost:7213/api/activity/${activityId}`, {
+        method: "DELETE",
+      }).catch((err) => {
+        if (
+          err instanceof SyntaxError &&
+          err.message.includes("Unexpected end of JSON input")
+        ) {
+          return;
+        }
+        throw err;
+      });
+      fetchActivities();
+    } catch {
+      alert("Kunde inte ta bort aktiviteten.");
+    }
+  }
+};
+
   const formatDateTime = (dateString: string) =>
     new Date(dateString)
       .toLocaleString("sv-SE", {
@@ -60,13 +81,16 @@ export default function ActivityStudent({
 
   const renderActivities = () => {
     return (
-      <ul className="activity-list">
+      <>
         {activities.map((activity) => (
           <li key={activity.id} className="activity-item">
+            <div className="activity-item-h-ctn">
             <h4 className="activity-name">
               <span className="activity-type">{activity.type}</span>
               {activity.name}
             </h4>
+            <Trash size={14} color="#c53030" onClick={() => handleDelete(activity.id)}/>
+            </div>
             {/*<p className="activity-description">{activity.description}</p>*/}
             <p className="activity-dates">
               {formatDateTime(activity.startTime)} –{" "}
@@ -74,7 +98,7 @@ export default function ActivityStudent({
             </p>
           </li>
         ))}
-      </ul>
+      </>
     );
   };
 
