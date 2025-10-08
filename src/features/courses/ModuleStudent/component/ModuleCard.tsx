@@ -16,7 +16,8 @@ export function ModuleCard({
   module,
   onModuleDeleted,
   onEdit,
-}: ModuleCardProps): ReactElement {
+  role,
+}: ModuleCardProps & { role?: string | null }): ReactElement {
   const [open, setOpen] = useState(false);
   const moduleTimeframeDates = {
     startDate: module.startDate,
@@ -56,7 +57,7 @@ export function ModuleCard({
 
   return (
     <div className="module-card-container">
-      <div className="module-card">
+      <div className="module-card" onClick={handleClick} style={{ cursor: "pointer" }}>
         <div className="module-info">
           <div className="module-icon">
             <BookOpenCheck />
@@ -69,7 +70,7 @@ export function ModuleCard({
           </div>
         </div>
         <button
-          onClick={handleClick}
+          onClick={(e) => { e.stopPropagation(); handleClick(); }}
           className="module-arrow-btn"
           aria-label={`Open ${module.name}`}
         >
@@ -79,13 +80,17 @@ export function ModuleCard({
       {open && (
         <div className="module-actions">
           <p className="list-subtitle">{module.description}</p>
-          <button className="edit-btn" onClick={() => onEdit(module)}>
-            <PencilLine /> Redigera
-          </button>
-          <button onClick={handleDelete} className="delete-btn">
-            <Trash />
-            Ta bort
-          </button>
+          {role === "Teacher" && (
+            <>
+              <button className="edit-btn" onClick={() => onEdit(module)}>
+                <PencilLine /> Redigera
+              </button>
+              <button onClick={handleDelete} className="delete-btn">
+                <Trash />
+                Ta bort
+              </button>
+            </>
+          )}
         </div>
       )}
       {open && (
@@ -93,6 +98,7 @@ export function ModuleCard({
           <ActivityStudent
             moduleId={module.id}
             moduleTimeframeDates={moduleTimeframeDates}
+            role={role}
           />
         </div>
       )}
