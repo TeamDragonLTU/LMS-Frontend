@@ -81,7 +81,7 @@ export function ModuleStudent({
               setModalOpen(true);
             }}
           >
-            <FilePlus2 size={18} style={{ marginRight: "2px" }} /> Lägg till
+            <FilePlus2 size={16} style={{ marginRight: "2px" }} /> Lägg till
             modul
           </button>
           <CreateModuleModal
@@ -104,7 +104,7 @@ export function ModuleStudent({
           if (!filteredModules.length) return null;
           return (
             <section key={status} className="module-section">
-              <h3 className="section-title">{title}</h3>
+              <h2 className="section-title">{title}</h2>
               {filteredModules.map((m) => (
                 <ModuleCard
                   key={m.id}

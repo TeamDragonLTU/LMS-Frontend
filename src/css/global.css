@@ -1,9 +1,12 @@
-.g-container {
-  padding-inline: 4rem;
-}
-
 .error-message {
   color: red;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 5px 0 18px 0;
+  color: #374151;
 }
 
 h3 {
@@ -14,11 +17,12 @@ h3 {
 }
 
 button {
-  width: 100%;
+  width: fit-content;
   height: 2.5rem;
   background-color: #2563eb;
   color: #ffffff;
-  font-weight: 700;
+  font-weight: 500;
+  font-size: 14px;
   padding: 0.5rem 1rem;
   display: flex;
   align-items: center;

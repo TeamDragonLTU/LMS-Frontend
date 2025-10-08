@@ -19,7 +19,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.modal-content h2 {
+.modal-content h1 {
   margin-bottom: 1.5rem;
   font-size: 1.4rem;
   font-weight: 600;
@@ -61,9 +61,9 @@
 
 .modal-actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-evenly;
   gap: 1.5rem;
-  margin-top: 1rem;
+  margin-top: .7rem;
 }
 
 .modal-actions button {
@@ -96,4 +96,8 @@
 .modal-actions button[type="submit"][disabled] {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.modal-delete-user-p {
+    margin-bottom: 2rem;
 }

@@ -60,7 +60,7 @@ export const CreateCourseModal = ({
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Skapa Kurs</h2>
+        <h1>Skapa Kurs</h1>
         <form onSubmit={handleSubmit}>
           <label>
             Namn:

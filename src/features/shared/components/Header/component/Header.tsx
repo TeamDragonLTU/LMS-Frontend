@@ -15,7 +15,7 @@ export function Header(): ReactElement {
   };
 
   return (
-    <header className="g-container" id="header">
+    <header id="header">
       <div className="left-header-container">
         <BookOpen className="book-icon" />
         <h1>Lexicon LMS</h1>

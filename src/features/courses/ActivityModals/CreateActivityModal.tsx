@@ -117,7 +117,7 @@ export function CreateActivityModal({
   return !isTeacher ? null : (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Lägg till aktivitet</h2>
+        <h1 className="modal-h1">Lägg till aktivitet</h1>
         <form onSubmit={handleSubmit}>
           <label>
             Välj aktivitetstyp *

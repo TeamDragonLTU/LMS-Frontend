@@ -149,7 +149,7 @@ export function CreateModuleModal({
   return !isTeacher ? null : (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>{editingModule ? "Redigera modul" : "Lägg till modul"}</h2>
+        <h1>{editingModule ? "Redigera modul" : "Lägg till modul"}</h1>
         <form onSubmit={handleSubmit}>
           <label>
             Välj kurs *

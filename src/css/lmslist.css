@@ -60,6 +60,10 @@
   color: #222b45;
 }
 
+.lmslist-title.course-participants {
+  margin-bottom: 2.5rem;
+}
+
 .lmslist-subtitle {
   color: #6b7280;
   font-size: 1.1rem;

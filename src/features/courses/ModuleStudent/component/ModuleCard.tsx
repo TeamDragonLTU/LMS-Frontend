@@ -83,10 +83,10 @@ export function ModuleCard({
           {role === "Teacher" && (
             <>
               <button className="edit-btn" onClick={() => onEdit(module)}>
-                <PencilLine /> Redigera
+                <PencilLine size={16} style={{ marginRight: "2px" }} /> Redigera
               </button>
               <button onClick={handleDelete} className="delete-btn">
-                <Trash />
+                <Trash size={16} style={{ marginRight: "2px" }}/>
                 Ta bort
               </button>
             </>

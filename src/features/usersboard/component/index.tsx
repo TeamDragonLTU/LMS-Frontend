@@ -45,7 +45,7 @@ const UsersPage: React.FC = () => {
       {isAddModalOpen && (
         <div className="modal">
           <div className="modal-content">
-            <h2>Lägg till användare</h2>
+            <h1>Lägg till användare</h1>
             <UserForm
               onSave={async (newUser: RegisterUserRequest | User) => {
                 await handleAddUser(newUser as RegisterUserRequest);

@@ -67,7 +67,7 @@ export function Login(): ReactElement {
                 {error}
               </div>
             )}
-            <button type="submit" className="button">
+            <button type="submit" className="login-button">
               <LogInIcon />
               Logga in
             </button>

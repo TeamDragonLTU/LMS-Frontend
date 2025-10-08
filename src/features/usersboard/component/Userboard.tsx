@@ -7,6 +7,7 @@ import { IUserDto } from "../types";
 import { fetchWithToken } from "../../shared/utilities/fetchWithToken";
 import { useRole } from "../../auth/hooks/useRole";
 import { BASE_URL } from "../../shared/constants";
+import { PencilLine, Plus, Trash } from "lucide-react";
 export default function Userboard() {
   const [classmates, setClassmates] = useState<IUserDto[]>([]);
   const [loading, setLoading] = useState(true);
@@ -192,28 +193,24 @@ export default function Userboard() {
     };
   return (
     <div className="lmslist-container">
-      <h1 className="lmslist-title" style={{ marginBottom: "1.5rem" }}>
-        Kursdeltagare
-      </h1>
-
+      <h1 className="lmslist-title course-participants">Kursdeltagare</h1>
       <div className="userboard-searchbar-row">
-        <h2 className="userboard-searchbar-label">Sök deltagare</h2>
-        <input
-          id="search-participant"
-          name="searchParticipant"
-          type="text"
-          className="userboard-searchbar-input"
-          placeholder="Sök deltagare..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        <section className="userboard-searchbar-search">
+          <h2 className="userboard-searchbar-label">Sök deltagare:</h2>
+          <input
+            id="search-participant"
+            name="searchParticipant"
+            type="text"
+            className="userboard-searchbar-input"
+            placeholder="Sök..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </section>
         {role === "Teacher" && (
-          <button
-            type="button"
-            className="userboard-add-btn"
-            onClick={() => setShowAddModal(true)}
-          >
-            + Lägg till deltagare
+          <button type="button" onClick={() => setShowAddModal(true)}>
+            <Plus size={16} style={{ marginRight: "2px" }} /> Lägg till
+            deltagare
           </button>
         )}
       </div>
@@ -244,22 +241,24 @@ export default function Userboard() {
                   <div className="userboard-action-buttons">
                     <button
                       type="button"
-                      className="btn-secondary"
+                      className="edit-btn"
                       onClick={() => {
                         setEditingUser(user);
                         setShowEditModal(true);
                       }}
                     >
+                      <PencilLine size={16} style={{ marginRight: "2px" }} />
                       Redigera
                     </button>
                     <button
                       type="button"
-                      className="btn-danger"
+                      className="delete-btn"
                       onClick={() => {
                         setDeletingUser(user);
                         setShowDeleteModal(true);
                       }}
                     >
+                      <Trash size={16} style={{ marginRight: "2px" }} />
                       Ta bort
                     </button>
                   </div>
@@ -287,22 +286,24 @@ export default function Userboard() {
                   <div className="userboard-action-buttons">
                     <button
                       type="button"
-                      className="btn-secondary"
+                      className="edit-btn"
                       onClick={() => {
                         setEditingUser(user);
                         setShowEditModal(true);
                       }}
                     >
+                      <PencilLine size={16} style={{ marginRight: "2px" }} />
                       Redigera
                     </button>
                     <button
                       type="button"
-                      className="btn-danger"
+                      className="delete-btn"
                       onClick={() => {
                         setDeletingUser(user);
                         setShowDeleteModal(true);
                       }}
                     >
+                      <Trash size={16} style={{ marginRight: "2px" }} />
                       Ta bort
                     </button>
                   </div>
@@ -320,7 +321,7 @@ export default function Userboard() {
           onClick={backdropClose(() => setShowAddModal(false))}
         >
           <div className="modal-content">
-            <h2>Lägg till deltagare</h2>
+            <h1>Lägg till deltagare</h1>
             <form onSubmit={handleUpdateUser}>
               <label>
                 Förnamn:
@@ -401,7 +402,7 @@ export default function Userboard() {
           onClick={backdropClose(() => setShowEditModal(false))}
         >
           <div className="modal-content">
-            <h2>Redigera användare</h2>
+            <h1>Redigera användare</h1>
             <form onSubmit={handleUpdateUser}>
               <label>
                 Användarnamn:
@@ -449,21 +450,21 @@ export default function Userboard() {
       {/* --- Delete Modal --- */}
       {showDeleteModal && deletingUser && (
         <div
-          className="modal"
+          className="modal-overlay"
           onClick={backdropClose(() => setShowDeleteModal(false))}
         >
           <div className="modal-content">
-            <h2>Ta bort användare</h2>
-            <p>
+            <h1>Ta bort användare</h1>
+            <p className="modal-delete-user-p">
               Är du säker på att du vill ta bort{" "}
               <strong>{deletingUser.userName}</strong>?
             </p>
             <div className="modal-actions">
-              <button type="button" onClick={handleConfirmDelete}>
-                Ja, ta bort
-              </button>
               <button type="button" onClick={() => setShowDeleteModal(false)}>
                 Avbryt
+              </button>
+              <button type="submit" onClick={handleConfirmDelete}>
+                Ja, ta bort
               </button>
             </div>
           </div>

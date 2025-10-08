@@ -8,8 +8,6 @@
 .create-course-btn {
     width: 9rem;
     height: 2.5rem;
-    font-weight: 400;
-    font-size: 14px;
 }
 
 .create-course-btn:hover {
