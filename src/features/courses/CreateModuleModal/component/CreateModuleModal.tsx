@@ -1,6 +1,7 @@
 import { ReactElement, useState, useEffect } from "react";
 import "../css/style.css";
 import { fetchWithToken } from "../../../shared/utilities";
+import { ModuleProps } from "../../ModuleStudent/component/type";
 
 interface Course {
   id: string;
@@ -12,13 +13,17 @@ interface CreateModuleModalProps {
   onClose: () => void;
   onModuleCreated?: () => void;
   userRole?: string;
-  existingModules: { startDate: string; endDate: string }[];
+  existingModules: { id: string; startDate: string; endDate: string }[];
+  editingModule?: ModuleProps | null;
 }
 
 export function CreateModuleModal({
   open,
   onClose,
-  onModuleCreated, userRole="Student", existingModules
+  onModuleCreated,
+  userRole = "Student",
+  existingModules,
+  editingModule,
 }: CreateModuleModalProps): ReactElement | null {
   const [courses, setCourses] = useState<Course[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<string>("");
@@ -28,23 +33,38 @@ export function CreateModuleModal({
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
   const resetForm = () => {
-  setSelectedCourse("");
-  setName("");
-  setStartDate("");
-  setEndDate("");
-  setDescription("");
-  setError(null);
-};
-const handleClose = () => {
-  resetForm();
-  onClose();
-};
+    setSelectedCourse("");
+    setName("");
+    setStartDate("");
+    setEndDate("");
+    setDescription("");
+    setError(null);
+  };
+
+  const handleClose = () => {
+    resetForm();
+    onClose();
+  };
+
   useEffect(() => {
     if (open) {
       fetchCourses();
     }
   }, [open]);
+
+  useEffect(() => {
+    if (editingModule) {
+      // setSelectedCourse(editingModule.courseId); // Uncomment if courseId is available
+      setName(editingModule.name);
+      setStartDate(editingModule.startDate.slice(0, 10));
+      setEndDate(editingModule.endDate.slice(0, 10));
+      setDescription(editingModule.description);
+    } else {
+      resetForm();
+    }
+  }, [editingModule, open]);
 
   const fetchCourses = async () => {
     try {
@@ -59,54 +79,70 @@ const handleClose = () => {
     e.preventDefault();
     setLoading(true);
     setError(null);
+
     const payload = {
-    courseId: selectedCourse,
-    name,
-    startDate,
-    endDate,
-    description: description.trim() || "Ingen beskrivning",
-  };
-  const newStart = new Date(startDate);
-  const newEnd = new Date(endDate);
+      courseId: selectedCourse,
+      name,
+      startDate,
+      endDate,
+      description: description.trim() || "Ingen beskrivning",
+    };
 
-const overlap = existingModules.some(
-  (mod) => {
-    const modStart = new Date(mod.startDate);
-    const modEnd = new Date(mod.endDate);
-    return (
-      (newStart <= modEnd && newEnd >= modStart)
-    );
-  }
-);
+    const newStart = new Date(startDate);
+    const newEnd = new Date(endDate);
 
-if (overlap) {
-  setError("Modulens datum överlappar med en annan modul.");
-  setLoading(false);
-  return;
-}
-  console.log("Payload:", payload);
+    // Overlap check: ignore self if editing!
+    const overlap = existingModules.some((mod) => {
+      if (editingModule && mod.id === editingModule.id) {
+        return false;
+      }
+      const modStart = new Date(mod.startDate);
+      const modEnd = new Date(mod.endDate);
+      return newStart <= modEnd && newEnd >= modStart;
+    });
+
+    if (overlap) {
+      setError("Modulens datum överlappar med en annan modul.");
+      setLoading(false);
+      return;
+    }
+
     try {
-      await fetchWithToken("https://localhost:7213/api/module", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      if (editingModule) {
+        await fetchWithToken(`https://localhost:7213/api/module/${editingModule.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+      } else {
+        await fetchWithToken("https://localhost:7213/api/module", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+      }
       if (onModuleCreated) onModuleCreated();
       handleClose();
-    } catch {
-    setError("Något gick fel vid skapandet av modulen.");
+    } catch (err: any) {
+      // Ignore errors caused by empty response (204 No Content)
+      if (err.message && err.message.includes("Unexpected end of JSON input")) {
+        if (onModuleCreated) onModuleCreated();
+        handleClose();
+      } else {
+        setError("Något gick fel vid skapandet av modulen.");
+      }
     } finally {
       setLoading(false);
     }
   };
 
   if (!open) return null;
- const isTeacher = userRole === "Teacher";
+  const isTeacher = userRole === "Teacher";
 
-  return !isTeacher ? null :(
+  return !isTeacher ? null : (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Lägg till modul</h2>
+        <h2>{editingModule ? "Redigera modul" : "Lägg till modul"}</h2>
         <form onSubmit={handleSubmit} className="modal-form">
           <label>
             Välj kurs *
@@ -114,6 +150,7 @@ if (overlap) {
               required
               value={selectedCourse}
               onChange={(e) => setSelectedCourse(e.target.value)}
+              disabled={!!editingModule}
             >
               <option value="">Välj kurs</option>
               {courses.map((course) => (
@@ -168,7 +205,7 @@ if (overlap) {
               Avbryt
             </button>
             <button type="submit" disabled={loading} className="submit-btn">
-              Lägg till
+              {editingModule ? "Spara ändringar" : "Lägg till"}
             </button>
           </div>
         </form>
@@ -176,4 +213,5 @@ if (overlap) {
     </div>
   );
 }
+
 export default CreateModuleModal;

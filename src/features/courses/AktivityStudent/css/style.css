@@ -1,16 +1,6 @@
 .activity-list-container {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  padding: 1.5rem;
   margin-bottom: 1.5rem;
-}
-
-.section-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: #2d3748;
+    margin-inline: 2rem;
 }
 
 .activity-list {
@@ -23,11 +13,11 @@
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
-  background: #f7fafc;
   border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.093);
   padding: 1rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  margin-bottom: .7rem;
+  background: #fff;
 }
 
 .activity-name {
@@ -35,6 +25,7 @@
   font-weight: 500;
   color: #1F2937;
   margin: 0;
+  display: flex;
 }
 
 .activity-description {
@@ -54,10 +45,25 @@
   color: #1E40AF;
   background-color: #DBEAFE;
   border-radius: 0.8rem;
-  padding:0.2rem 0.6rem;
+  padding: 0.16rem 0.63rem 0.21rem 0.61rem;
   font-weight: 500;
   margin-right: 0.5rem;
-  vertical-align: middle;
+}
+
+.create-activity-btn {
+  width: 100%;
+  background-color: #f7fafc;
+  color: #6b7280;
+  font-weight: 400;
+  font-size: 1rem;
+  border: 2px dashed #d1d5db;
+  padding: 1.2rem;
+  margin-block: .8rem 1.5rem;
+}
+
+.create-activity-btn:hover {
+  color: #374151;
+  border: 2px dashed #9ca3af;
 }
 
 .loading,
@@ -65,6 +71,6 @@
 .no-activities {
   color: #a0aec0;
   font-size: 1rem;
-  margin: 1rem 0;
+  margin: -.2rem 0 1rem 0;
 }
 
