@@ -17,6 +17,7 @@ export default function Userboard() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [editingUser, setEditingUser] = useState<IUserDto | null>(null);
   const [deletingUser, setDeletingUser] = useState<IUserDto | null>(null);
+  const [courseId, setCourseId] = useState<string | null>(null);
   const [newUser, setNewUser] = useState({
     firstName: "",
     lastName: "",
@@ -24,6 +25,7 @@ export default function Userboard() {
     password: "",
     userName: "",
     role: "Student",
+    courseId: "",
   });
   const role = useRole();
 
@@ -42,6 +44,21 @@ export default function Userboard() {
       .finally(() => setLoading(false));
   };
 
+  useEffect(() => {
+    const loadCourse = async () => {
+      try {
+        const data = (await fetchWithToken(`${BASE_URL}/course/my`)) as {
+          id: string;
+        };
+        setCourseId(data.id);
+      } catch (err) {
+        console.error("Failed to load course:", err);
+      }
+    };
+
+    loadCourse();
+  }, []);
+
   // --- ADD USER ---
   const handleAddUser = async () => {
     try {
@@ -57,6 +74,7 @@ export default function Userboard() {
             ""
           ),
           Role: newUser.role,
+          CourseId: courseId,
         }),
       });
       if (res.status === 201) {
@@ -69,6 +87,7 @@ export default function Userboard() {
           email: "",
           userName: "",
           role: "Student",
+          courseId: "",
         });
         fetchClassmates();
         return;
