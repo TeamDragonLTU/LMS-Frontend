@@ -5,6 +5,7 @@ import { ICourseLoader } from "../types";
 import "../../../css/lmslist.css";
 import "../css/Courses.css";
 import { Pencil } from "lucide-react";
+import { useAuthContext } from "../../auth/hooks/useAuthContext";
 import { EditCourseModal } from "./EditCourseModal";
 
 export function Course(): ReactElement {
@@ -12,6 +13,7 @@ export function Course(): ReactElement {
   const [showModal, setShowModal] = useState(false);
   const { revalidate } = useRevalidator();
 
+  const { role } = useAuthContext();
   return (
     <main className="lmslist-container">
       <div className="teacher-course-header-container">
@@ -22,19 +24,21 @@ export function Course(): ReactElement {
             Startdatum: {new Date(course.startDate).toLocaleDateString()}
           </p>
         </div>
-        <button
-          onClick={() => {
-            setShowModal(true);
-          }}
-          className="edit-course-button"
-        >
-          <Pencil size={18} style={{ marginRight: "4px" }} />
-          Redigera kurs
-        </button>
+        {role === "Teacher" && (
+          <button
+            onClick={() => {
+              setShowModal(true);
+            }}
+            className="edit-course-button"
+          >
+            <Pencil size={18} style={{ marginRight: "4px" }} />
+            Redigera kurs
+          </button>
+        )}
       </div>
 
       <section>
-        <ModuleStudent courseId={course.id} courseStartDate={course.startDate}/>
+        <ModuleStudent courseId={course.id} courseStartDate={course.startDate} role={role}/>
       </section>
 
       {showModal && (

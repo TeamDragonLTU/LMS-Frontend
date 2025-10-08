@@ -9,18 +9,19 @@ import { Module } from "../../../shared/interfaces";
 interface ModuleStudentProps {
   courseId: string;
   courseStartDate: string;
+  role?: string | null;
 }
 
 export function ModuleStudent({
   courseId,
   courseStartDate,
+  role
 }: ModuleStudentProps): ReactElement {
   const [modules, setModules] = useState<Module[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingModule, setEditingModule] = useState<Module | null>(null);
-  const userRole = "Teacher";
 
   const handleEdit = (module: Module) => {
     setEditingModule(module);
@@ -71,7 +72,7 @@ export function ModuleStudent({
 
   return (
     <div>
-      {userRole === "Teacher" && (
+      {role === "Teacher" && (
         <div className="module-btn">
           <button
             className="create-module-btn"
@@ -90,7 +91,7 @@ export function ModuleStudent({
               setModalOpen(false);
               fetchModules();
             }}
-            userRole={userRole}
+            userRole={role}
             existingModules={modules}
             editingModule={editingModule}
             courseStartDate={courseStartDate}
@@ -110,6 +111,7 @@ export function ModuleStudent({
                   module={m}
                   onModuleDeleted={fetchModules}
                   onEdit={handleEdit}
+                  role={role}
                 />
               ))}
             </section>

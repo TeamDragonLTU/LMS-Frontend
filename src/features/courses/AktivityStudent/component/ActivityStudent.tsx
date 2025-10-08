@@ -6,21 +6,20 @@ import CreateActivityModal from "../../ActivityModals/CreateActivityModal";
 import { FilePlus2, Trash } from "lucide-react";
 import { Activity } from "../../../shared/interfaces";
 
+
 interface ActivityStudentProps {
   moduleId: string;
   moduleTimeframeDates: { startDate: string; endDate: string };
+  role?: string | null;
 }
-
-export default function ActivityStudent({
-  moduleId,
-  moduleTimeframeDates,
-}: ActivityStudentProps): ReactElement {
+export default function ActivityStudent(props: ActivityStudentProps): ReactElement {
+  const { moduleId, moduleTimeframeDates, role } = props;
   const [activities, setActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const [modalOpen, setModalOpen] = useState(false);
-  const userRole = "Teacher"; // WIP
+  const userRole = role;
   const { startDate, endDate } = moduleTimeframeDates;
 
   const fetchActivities = useCallback(async () => {
@@ -81,11 +80,13 @@ export default function ActivityStudent({
         {activities.map((activity) => (
           <li key={activity.id} className="activity-item">
             <div className="activity-item-h-ctn">
-            <h4 className="activity-name">
-              <span className="activity-type">{activity.type}</span>
-              {activity.name}
-            </h4>
-            <Trash size={14} color="#c53030" onClick={() => handleDelete(activity.id)}/>
+              <h4 className="activity-name">
+                <span className="activity-type">{activity.type}</span>
+                {activity.name}
+              </h4>
+              {userRole === "Teacher" && (
+                <Trash size={14} color="#c53030" onClick={() => handleDelete(activity.id)} />
+              )}
             </div>
             {/*<p className="activity-description">{activity.description}</p>*/}
             <p className="activity-dates">
@@ -112,7 +113,7 @@ export default function ActivityStudent({
         <ul className="activity-list">
           {activities.length === 0 ? renderNoActivities() : renderActivities()}
         </ul>
-        {userRole === "Teacher" ? (
+  {userRole === "Teacher" ? (
           <div>
             <button
               className="create-activity-btn"

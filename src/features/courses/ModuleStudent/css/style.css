@@ -40,8 +40,12 @@
   cursor: pointer;
 }
 
+.module-card.active {
+  background: #EFF6FF; 
+}
+
 .module-card:hover {
-  background: #f3f4f6;
+  background: #DBEAFE;
 }
 
 .module-info {
@@ -52,13 +56,13 @@
 
 .module-icon {
   font-size: 20px;
-  color: #2b6cb0;
+  color: #2563EB;
 }
 
 .module-title {
   font-size: 1.1rem;
     font-weight: 500;
-    color: #2b6cb0;
+    color:#1F2937;
     margin: 0;
 }
 
@@ -70,7 +74,7 @@
 
 .module-arrow-btn {
   background: none;
-  color: #2b6cb0;
+  color: #9CA3AF;
   border: none;
   cursor: pointer;
   display: flex;
@@ -156,3 +160,5 @@
  flex-grow: 1;
  margin: 8px;
 }
+
+
