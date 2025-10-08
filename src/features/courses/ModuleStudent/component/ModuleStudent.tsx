@@ -15,8 +15,13 @@ export function ModuleStudent({ courseId }: ModuleStudentProps): ReactElement {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [editingModule, setEditingModule] = useState<ModuleProps | null>(null);
   const userRole = "Teacher"; 
 
+  const handleEdit = (module: ModuleProps) => {
+    setEditingModule(module);
+    setModalOpen(true); 
+  };
 
   const fetchModules = useCallback(async () => {
     setLoading(true);
@@ -47,7 +52,6 @@ export function ModuleStudent({ courseId }: ModuleStudentProps): ReactElement {
     }
   }, [courseId]); 
 
-
   useEffect(() => {
     fetchModules();
   }, [fetchModules]);
@@ -67,7 +71,10 @@ export function ModuleStudent({ courseId }: ModuleStudentProps): ReactElement {
         <div className="module-btn">
           <button
             className="create-module-btn"
-            onClick={() => setModalOpen(true)}
+            onClick={() => {
+              setEditingModule(null);
+              setModalOpen(true);
+            }}
           >
             <FilePlus2 size={18} style={{ marginRight: "2px" }} /> Lägg till modul
           </button>
@@ -80,6 +87,7 @@ export function ModuleStudent({ courseId }: ModuleStudentProps): ReactElement {
             }}
             userRole={userRole}
             existingModules={modules}
+            editingModule={editingModule}
           />
         </div>
       )}
@@ -91,7 +99,12 @@ export function ModuleStudent({ courseId }: ModuleStudentProps): ReactElement {
             <section key={status} className="module-section">
               <h3 className="section-title">{title}</h3>
               {filteredModules.map((m) => (
-                <ModuleCard key={m.id} module={m} />
+                <ModuleCard
+                  key={m.id}
+                  module={m}
+                  onModuleDeleted={fetchModules}
+                  onEdit={handleEdit}
+                />
               ))}
             </section>
           );

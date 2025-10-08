@@ -121,3 +121,38 @@
   justify-content: flex-end;
   align-items: center;
 }
+.module-actions{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.edit-btn {
+  background-color: #2563eb;
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  margin: 8px;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  max-width: 8rem;
+}
+.delete-btn {
+  background-color: #c53030;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin: 8px;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  max-width: 8rem;
+}
+.list-subtitle {
+ color: #6b7280;
+ font-size: 1.1rem;
+ flex-grow: 1;
+ margin: 8px;
+}

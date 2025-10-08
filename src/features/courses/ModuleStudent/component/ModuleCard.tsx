@@ -1,16 +1,40 @@
 import { ReactElement } from "react";
-import { BookOpenCheck, ChevronRight } from "lucide-react";
+import { BookOpenCheck, ChevronRight, PencilLine, Trash } from "lucide-react";
 import { ModuleProps } from "./type";
 import { useState } from "react";
 import ActivityStudent from "../../../courses/AktivityStudent/component/ActivityStudent";
 import "../css/style.css";
+import { fetchWithToken } from "../../../shared/utilities";
 
 interface ModuleCardProps {
   module: ModuleProps;
+  onModuleDeleted?: () => void;
+  onEdit: (module: ModuleProps) => void;
 }
 
-export function ModuleCard({ module }: ModuleCardProps): ReactElement {
-  const[open, setOpen] = useState(false);
+export function ModuleCard({ module, onModuleDeleted, onEdit }: ModuleCardProps): ReactElement {
+  const [open, setOpen] = useState(false);
+
+const handleDelete = async () => {
+  if (window.confirm("Vill du verkligen ta bort denna modul?")) {
+    try {
+      await fetchWithToken(`https://localhost:7213/api/module/${module.id}`, {
+        method: "DELETE",
+      }).catch((err) => {
+        if (
+          err instanceof SyntaxError &&
+          err.message.includes("Unexpected end of JSON input")
+        ) {
+          return;
+        }
+        throw err;
+      });
+      if (onModuleDeleted) onModuleDeleted();
+    } catch {
+      alert("Kunde inte ta bort modulen.");
+    }
+  }
+};
 
   const handleClick = () => {
     setOpen(!open);
@@ -22,33 +46,44 @@ export function ModuleCard({ module }: ModuleCardProps): ReactElement {
       day: "numeric",
     });
 
-return (
-  <div className="module-card-container">
-    <div className="module-card">
-      <div className="module-info">
-        <div className="module-icon"><BookOpenCheck /></div>
-        <div>
-          <p className="module-title">{module.name}</p>
-          <p className="module-dates">
-            {formatDate(module.startDate)} – {formatDate(module.endDate)}
-          </p>
+  return (
+    <div className="module-card-container">
+      <div className="module-card">
+        <div className="module-info">
+          <div className="module-icon"><BookOpenCheck /></div>
+          <div>
+            <p className="module-title">{module.name}</p>
+            <p className="module-dates">
+              {formatDate(module.startDate)} – {formatDate(module.endDate)}
+            </p>
+          </div>
         </div>
+        <button
+          onClick={handleClick}
+          className="module-arrow-btn"
+          aria-label={`Open ${module.name}`}
+        >
+          <ChevronRight className={open ? "rotated" : ""}/>
+        </button>
       </div>
-      <button
-        onClick={handleClick}
-        className="module-arrow-btn"
-        aria-label={`Open ${module.name}`}
-      >
-        <ChevronRight className={open ? "rotated" : ""}/>
-      </button>
+      {open && (
+        <div className="module-actions">
+          <p className="list-subtitle">{module.description}</p>
+          <button className="edit-btn" onClick={() => onEdit(module)}>
+            <PencilLine /> Redigera
+          </button>
+          <button onClick={handleDelete} className="delete-btn">
+            <Trash />Ta bort
+          </button>
+        </div>
+      )}
+      {open && (
+        <div className="module-dropdown">
+          <ActivityStudent moduleId={module.id} />
+        </div>
+      )}
     </div>
-    {open && (
-      <div className="module-dropdown">
-        <ActivityStudent moduleId={module.id} />
-      </div>
-    )}
-  </div>
-);
+  );
 }
 
 export default ModuleCard;
