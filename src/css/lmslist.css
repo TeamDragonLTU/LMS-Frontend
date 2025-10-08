@@ -130,8 +130,8 @@
 }
 
 .lmslist-role-badge {
-  background: #e3eafc;
-  color: #2563eb;
+  background: #DBEAFE;
+  color: #1E40AF;
   font-size: 0.85rem;
   border-radius: 8px;
   padding: 0.1rem 0.7rem;
@@ -141,6 +141,7 @@
   margin-top: 0;
   align-self: flex-start;
   margin-left: 0.7rem;
+  text-decoration: none;
 }
 
 .btn-primary {
@@ -225,4 +226,6 @@
   justify-content: flex-end;
   gap: 8px;
   margin-top: 14px;
+}
+  text-decoration: none;
 }

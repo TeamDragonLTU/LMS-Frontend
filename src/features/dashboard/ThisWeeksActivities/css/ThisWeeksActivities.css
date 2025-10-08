@@ -1,7 +1,3 @@
-.twa-section-container {
-  font-family: sans-serif;
-}
-
 .twa-header-container {
   display: flex;
   align-items: center;
@@ -21,8 +17,8 @@
   align-items: center;
   gap: 0.3rem;
   font-size: 0.9rem;
-  color: #2563eb;
-  background: #eff6ff;
+  color: #1E40AF;
+  background: #DBEAFE;
   padding: 0.6rem 0.6rem;
   border-radius: 1rem;
 }
