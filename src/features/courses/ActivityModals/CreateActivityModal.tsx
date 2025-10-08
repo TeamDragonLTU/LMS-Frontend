@@ -6,6 +6,8 @@ import { useCreateActivity } from "../../shared/hooks/useCreateActivity";
 
 interface CreateActivityModalProps {
   moduleId: string;
+  minDate: string;
+  maxDate: string;
   existingActivities: { startTime: string; endTime: string }[];
   open: boolean;
   onClose: () => void;
@@ -15,6 +17,8 @@ interface CreateActivityModalProps {
 
 export function CreateActivityModal({
   moduleId,
+  minDate,
+  maxDate,
   existingActivities,
   open,
   onClose,
@@ -31,7 +35,7 @@ export function CreateActivityModal({
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [startTime, setStartTime] = useState("");
+  const [startTime, setStartTime] = useState(minDate);
   const [endTime, setEndTime] = useState("");
   const [activityTypeId, setActivityTypeId] = useState("");
   const [overlapError, setOverlapError] = useState<string | null>(null);
@@ -102,8 +106,7 @@ export function CreateActivityModal({
   const newStart = new Date(startTime);
   const newEnd = new Date(endTime);
 
-  console.log('existingActivities', existingActivities);
-  
+  console.log("existingActivities", existingActivities);
 
   const overlap = existingActivities.some((activity) => {
     const activityStart = new Date(activity.startTime);
@@ -148,6 +151,8 @@ export function CreateActivityModal({
               type="datetime-local"
               value={startTime}
               onChange={handleOnChange(setStartTime, true)}
+              min={minDate}
+              max={maxDate}
               required
             />
           </label>
@@ -157,6 +162,8 @@ export function CreateActivityModal({
               type="datetime-local"
               value={endTime}
               onChange={handleOnChange(setEndTime, true)}
+              min={startTime}
+              max={maxDate}
               required
             />
           </label>

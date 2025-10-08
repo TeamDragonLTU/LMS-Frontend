@@ -4,21 +4,16 @@ import "../css/style.css";
 import { fetchWithToken } from "../../../shared/utilities";
 import CreateActivityModal from "../../ActivityModals/CreateActivityModal";
 import { FilePlus2 } from "lucide-react";
+import { Activity } from "../../../shared/interfaces";
 
-interface Activity {
-  id: string;
-  name: string;
-  description: string;
-  startTime: string;
-  endTime: string;
-  type: string;
-}
 interface ActivityStudentProps {
   moduleId: string;
+  moduleTimeframeDates: { startDate: string; endDate: string };
 }
 
 export default function ActivityStudent({
   moduleId,
+  moduleTimeframeDates,
 }: ActivityStudentProps): ReactElement {
   const [activities, setActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(true);
@@ -26,6 +21,7 @@ export default function ActivityStudent({
 
   const [modalOpen, setModalOpen] = useState(false);
   const userRole = "Teacher"; // WIP
+  const { startDate, endDate } = moduleTimeframeDates;
 
   const fetchActivities = useCallback(async () => {
     setLoading(true);
@@ -102,6 +98,8 @@ export default function ActivityStudent({
             </button>
             <CreateActivityModal
               moduleId={moduleId}
+              minDate={startDate}
+              maxDate={endDate}
               existingActivities={activities}
               open={modalOpen}
               onClose={() => setModalOpen(false)}
