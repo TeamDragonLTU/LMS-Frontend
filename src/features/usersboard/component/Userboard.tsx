@@ -6,7 +6,6 @@ import { IUserDto } from "../types";
 import { fetchWithToken } from "../../shared/utilities/fetchWithToken";
 import { useRole } from "../../auth/hooks/useRole";
 import { BASE_URL } from "../../shared/constants";
-import { Course } from "../../courses/components/Course";
 export default function Userboard() {
   const [classmates, setClassmates] = useState<IUserDto[]>([]);
   const [loading, setLoading] = useState(true);
@@ -233,7 +232,9 @@ export default function Userboard() {
               <li key={user.id ? `teacher-${user.id}` : `teacher-${index}`}>
                 <div className="lmslist-user-row">
                   <div className="lmslist-info">
-                    <span className="lmslist-name">{user.userName}</span>
+                    <span className="lmslist-name">
+                      {user.email.split("@")[0]}
+                    </span>
                     <span className="lmslist-email">{user.email}</span>
                   </div>
                   <span className="lmslist-role-badge">Lärare</span>
@@ -274,7 +275,9 @@ export default function Userboard() {
               <li key={user.id ? `student-${user.id}` : `student-${index}`}>
                 <div className="lmslist-user-row">
                   <div className="lmslist-info">
-                    <span className="lmslist-name">{user.userName}</span>
+                    <span className="lmslist-name">
+                      {user.email.split("@")[0]}
+                    </span>
                     <span className="lmslist-email">{user.email}</span>
                   </div>
                   <span className="lmslist-role-badge">Student</span>

@@ -1,6 +1,10 @@
 .module-container {
-  padding: 20px;
+  padding: 0 .5rem .5rem .5rem;
   border-radius: 8px;
+}
+
+.module-section {
+  margin-bottom: 25px;
 }
 
 .course-title {
@@ -18,7 +22,7 @@
 .section-title {
   font-size: 28px;
   font-weight: 600;
-  margin: 16px 0 16px;
+  margin: 5px 0 18px 0;
   color: #374151;
 }
 
@@ -95,20 +99,60 @@
   color: #dc2626;
   font-weight: bold;
 }
+
 .module-dropdown {
   background: #f7fafc;
   border-radius: 8px;
   margin-top: 0.5rem;
   box-shadow: 0 1px 4px rgba(0,0,0,0.04);
 }
+
 .create-module-btn{
   width: auto;
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
+
+.create-module-btn:hover {
+  background-color: #1e40af;
+}
+
 .module-btn {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+.module-actions{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
   margin-bottom: 0.5rem;
-  margin-right: 20px;
+}
+.edit-btn {
+  background-color: #2563eb;
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  margin: 8px;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  max-width: 8rem;
+}
+.delete-btn {
+  background-color: #c53030;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin: 8px;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  max-width: 8rem;
+}
+.list-subtitle {
+ color: #6b7280;
+ font-size: 1.1rem;
+ flex-grow: 1;
+ margin: 8px;
 }

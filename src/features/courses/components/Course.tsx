@@ -28,13 +28,13 @@ export function Course(): ReactElement {
           }}
           className="edit-course-button"
         >
-          <Pencil size={16} style={{ marginRight: "8px" }} />
+          <Pencil size={18} style={{ marginRight: "4px" }} />
           Redigera kurs
         </button>
       </div>
 
       <section>
-        <ModuleStudent courseId={course.id} />
+        <ModuleStudent courseId={course.id} courseStartDate={course.startDate}/>
       </section>
 
       {showModal && (

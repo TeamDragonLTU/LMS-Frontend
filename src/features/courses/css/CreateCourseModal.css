@@ -1,0 +1,17 @@
+.courses-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.create-course-btn {
+    width: 9rem;
+    height: 2.5rem;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.create-course-btn:hover {
+  background-color: #1d4ed8;
+}

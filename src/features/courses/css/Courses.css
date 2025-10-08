@@ -1,6 +1,5 @@
 .edit-course-button {
-  width: 10rem;
-  height: 3rem;
+  width: fit-content;
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 

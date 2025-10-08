@@ -1,30 +1,25 @@
 import React, { ReactElement, useState } from "react";
-import { ICourse } from "../types";
-import "../css/EditCourseModal.css";
+import "../css/CreateCourseModal.css";
 import { fetchWithToken } from "../../shared/utilities/fetchWithToken";
 import { ErrorDisplay } from "../../shared/components/ErrorDisplay";
 
-interface EditCourseModalProps {
-  course: ICourse;
+interface CreateCourseModalProps {
   onClose: () => void;
-  onUpdated: () => void;
+  onCreated: () => void;
 }
 
-export const EditCourseModal = ({
-  course,
+export const CreateCourseModal = ({
   onClose,
-  onUpdated,
-}: EditCourseModalProps): ReactElement => {
-  const [name, setName] = useState(course.name);
-  const [description, setDescription] = useState(course.description);
-  const [startDate, setStartDate] = useState(course.startDate.substring(0, 10));
+  onCreated,
+}: CreateCourseModalProps): ReactElement => {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [startDate, setStartDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string[]> | null>(null);
 
-  const hasChanges =
-    name !== course.name ||
-    description !== course.description ||
-    startDate !== course.startDate.substring(0, 10);
+  const isFormValid =
+    name.trim() !== "" && description.trim() !== "" && startDate !== "";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,41 +27,39 @@ export const EditCourseModal = ({
     setErrors(null);
 
     try {
-      await fetchWithToken<void>(
-        `https://localhost:7213/api/course/${course.id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name,
-            description,
-            startDate: new Date(startDate).toISOString(),
-          }),
-        }
-      );
+      await fetchWithToken<void>("https://localhost:7213/api/course", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name.trim(),
+          description: description.trim(),
+          startDate: new Date(startDate).toISOString(),
+        }),
+      });
 
-      onUpdated();
+      onCreated();
       onClose();
     } catch (error: any) {
+      console.log("ERROR", error);
       setLoading(false);
 
       if (
         error?.message &&
         error.message.includes("Unexpected end of JSON input")
       ) {
-        onUpdated();
+        onCreated();
         onClose();
         return;
       }
 
-      setErrors(error?.errors || "Något gick fel.");
+      setErrors(error?.errors || { general: ["Något gick fel."] });
     }
   };
 
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Redigera Kurs</h2>
+        <h2>Skapa Kurs</h2>
         <form onSubmit={handleSubmit}>
           <label>
             Namn:
@@ -97,10 +90,10 @@ export const EditCourseModal = ({
               required
             />
           </label>
-          <ErrorDisplay errors={errors} />          
+          <ErrorDisplay errors={errors} /> 
           <div className="modal-actions">
-            <button type="submit" disabled={loading || !hasChanges}>
-              {loading ? "Sparar..." : "Spara"}
+            <button type="submit" disabled={loading || !isFormValid}>
+              {loading ? "Skapar..." : "Skapa"}
             </button>
             <button type="button" onClick={onClose}>
               Avbryt

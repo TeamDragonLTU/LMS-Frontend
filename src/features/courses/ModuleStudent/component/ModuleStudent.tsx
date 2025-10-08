@@ -1,32 +1,41 @@
 import { ReactElement, useEffect, useState, useCallback } from "react";
 import ModuleCard from "./ModuleCard";
 import CreateModuleModal from "../../CreateModuleModal/component/CreateModuleModal";
-import { ModuleProps } from "./type";
 import "../css/style.css";
 import { fetchWithToken } from "../../../shared/utilities";
 import { FilePlus2 } from "lucide-react";
+import { Module } from "../../../shared/interfaces";
 
 interface ModuleStudentProps {
   courseId: string;
+  courseStartDate: string;
 }
 
-export function ModuleStudent({ courseId }: ModuleStudentProps): ReactElement {
-  const [modules, setModules] = useState<ModuleProps[]>([]);
+export function ModuleStudent({
+  courseId,
+  courseStartDate,
+}: ModuleStudentProps): ReactElement {
+  const [modules, setModules] = useState<Module[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
-  const userRole = "Teacher"; 
+  const [editingModule, setEditingModule] = useState<Module | null>(null);
+  const userRole = "Teacher";
 
+  const handleEdit = (module: Module) => {
+    setEditingModule(module);
+    setModalOpen(true);
+  };
 
   const fetchModules = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await fetchWithToken<ModuleProps[]>(
+      const data = await fetchWithToken<Module[]>(
         `https://localhost:7213/api/module/${courseId}/modules`
       );
 
       const today = new Date();
-      const withStatus = data.map((m: ModuleProps) => {
+      const withStatus = data.map((m: Module) => {
         const start = new Date(m.startDate);
         const end = new Date(m.endDate);
 
@@ -45,8 +54,7 @@ export function ModuleStudent({ courseId }: ModuleStudentProps): ReactElement {
     } finally {
       setLoading(false);
     }
-  }, [courseId]); 
-
+  }, [courseId]);
 
   useEffect(() => {
     fetchModules();
@@ -55,7 +63,7 @@ export function ModuleStudent({ courseId }: ModuleStudentProps): ReactElement {
   if (loading) return <p className="loading">Loading...</p>;
   if (error) return <p className="error">{error}</p>;
 
-  const sections: { title: string; status: ModuleProps["status"] }[] = [
+  const sections: { title: string; status: Module["status"] }[] = [
     { title: "Aktiv modul", status: "active" },
     { title: "Kommande moduler", status: "upcoming" },
     { title: "Tidigare moduler", status: "past" },
@@ -67,18 +75,25 @@ export function ModuleStudent({ courseId }: ModuleStudentProps): ReactElement {
         <div className="module-btn">
           <button
             className="create-module-btn"
-            onClick={() => setModalOpen(true)}
+            onClick={() => {
+              setEditingModule(null);
+              setModalOpen(true);
+            }}
           >
-            <FilePlus2 /> Lägg en modul
+            <FilePlus2 size={18} style={{ marginRight: "2px" }} /> Lägg till
+            modul
           </button>
           <CreateModuleModal
             open={modalOpen}
             onClose={() => setModalOpen(false)}
             onModuleCreated={() => {
               setModalOpen(false);
-              fetchModules(); 
+              fetchModules();
             }}
             userRole={userRole}
+            existingModules={modules}
+            editingModule={editingModule}
+            courseStartDate={courseStartDate}
           />
         </div>
       )}
@@ -87,10 +102,15 @@ export function ModuleStudent({ courseId }: ModuleStudentProps): ReactElement {
           const filteredModules = modules.filter((m) => m.status === status);
           if (!filteredModules.length) return null;
           return (
-            <section key={status}>
+            <section key={status} className="module-section">
               <h3 className="section-title">{title}</h3>
               {filteredModules.map((m) => (
-                <ModuleCard key={m.id} module={m} />
+                <ModuleCard
+                  key={m.id}
+                  module={m}
+                  onModuleDeleted={fetchModules}
+                  onEdit={handleEdit}
+                />
               ))}
             </section>
           );
