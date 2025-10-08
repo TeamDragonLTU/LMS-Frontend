@@ -20,6 +20,13 @@
   background: #fff;
 }
 
+.activity-item-h-ctn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: .6rem;
+}
+
 .activity-name {
   font-size: 1.1rem;
   font-weight: 500;
