@@ -1,6 +1,7 @@
 import React, { ReactElement, useState } from "react";
 import "../css/CreateCourseModal.css";
 import { fetchWithToken } from "../../shared/utilities/fetchWithToken";
+import { ErrorDisplay } from "../../shared/components/ErrorDisplay";
 
 interface CreateCourseModalProps {
   onClose: () => void;
@@ -89,22 +90,7 @@ export const CreateCourseModal = ({
               required
             />
           </label>
-
-          {/* error messages */}
-          {errors && (
-            <div className="error-container">
-              {Object.entries(errors).map(([field, messages]) => (
-                <div key={field} className="field-errors">
-                  {messages.map((message, i) => (
-                    <p key={`${field}-${i}`} className="error-message">
-                      {message}
-                    </p>
-                  ))}
-                </div>
-              ))}
-            </div>
-          )}
-
+          <ErrorDisplay errors={errors} /> 
           <div className="modal-actions">
             <button type="submit" disabled={loading || !isFormValid}>
               {loading ? "Skapar..." : "Skapa"}

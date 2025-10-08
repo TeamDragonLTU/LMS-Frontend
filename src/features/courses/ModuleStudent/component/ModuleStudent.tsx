@@ -76,7 +76,7 @@ export function ModuleStudent({ courseId }: ModuleStudentProps): ReactElement {
               setModalOpen(true);
             }}
           >
-            <FilePlus2 /> Lägg en modul
+            <FilePlus2 size={18} style={{ marginRight: "2px" }} /> Lägg till modul
           </button>
           <CreateModuleModal
             open={modalOpen}
@@ -96,7 +96,7 @@ export function ModuleStudent({ courseId }: ModuleStudentProps): ReactElement {
           const filteredModules = modules.filter((m) => m.status === status);
           if (!filteredModules.length) return null;
           return (
-            <section key={status}>
+            <section key={status} className="module-section">
               <h3 className="section-title">{title}</h3>
               {filteredModules.map((m) => (
                 <ModuleCard

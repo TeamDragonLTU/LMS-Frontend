@@ -1,6 +1,10 @@
 .module-container {
-  padding: 20px;
+  padding: 0 .5rem .5rem .5rem;
   border-radius: 8px;
+}
+
+.module-section {
+  margin-bottom: 25px;
 }
 
 .course-title {
@@ -18,7 +22,7 @@
 .section-title {
   font-size: 28px;
   font-weight: 600;
-  margin: 16px 0 16px;
+  margin: 5px 0 18px 0;
   color: #374151;
 }
 
@@ -95,22 +99,27 @@
   color: #dc2626;
   font-weight: bold;
 }
+
 .module-dropdown {
   background: #f7fafc;
   border-radius: 8px;
   margin-top: 0.5rem;
   box-shadow: 0 1px 4px rgba(0,0,0,0.04);
 }
+
 .create-module-btn{
   width: auto;
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
+
+.create-module-btn:hover {
+  background-color: #1e40af;
+}
+
 .module-btn {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-bottom: 0.5rem;
-  margin-right: 20px;
 }
 .module-actions{
   display: flex;
