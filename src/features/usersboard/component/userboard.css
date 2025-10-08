@@ -130,30 +130,3 @@
 .btn-secondary:hover {
   background: #d1d5db;
 }
-
-/* Modals */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  min-width: 400px;
-}
-
-.modal-actions {
-  margin-top: 15px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}

@@ -1,7 +1,7 @@
 import { ReactElement, useState, useEffect } from "react";
-import "../css/style.css";
 import { fetchWithToken } from "../../../shared/utilities";
 import { Module } from "../../../shared/interfaces";
+import "../../../../css/modals.css"
 
 interface Course {
   id: string;
@@ -150,7 +150,7 @@ export function CreateModuleModal({
     <div className="modal-overlay">
       <div className="modal-content">
         <h2>{editingModule ? "Redigera modul" : "Lägg till modul"}</h2>
-        <form onSubmit={handleSubmit} className="modal-form">
+        <form onSubmit={handleSubmit}>
           <label>
             Välj kurs *
             <select
@@ -208,12 +208,12 @@ export function CreateModuleModal({
               onBlur={(e) => setDescription(e.target.value.trim())}
             />
           </label>
-          {error && <p className="error">{error}</p>}
+          {error && <p className="error-message">{error}</p>}
           <div className="modal-actions">
-            <button type="button" onClick={handleClose} className="cancel-btn">
+            <button type="button" onClick={handleClose}>
               Avbryt
             </button>
-            <button type="submit" disabled={loading} className="submit-btn">
+            <button type="submit" disabled={loading}>
               {editingModule ? "Spara ändringar" : "Lägg till"}
             </button>
           </div>

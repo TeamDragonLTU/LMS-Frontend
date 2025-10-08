@@ -33,29 +33,7 @@ input {
   padding: 0.5rem 1rem;
   border: 1px solid #d1d5db;
   border-radius: 0.5rem;
-  margin-bottom: 1rem;
   width: 100%;
   box-sizing: border-box;
 }
 
-
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 8px;
-  max-width: 400px;
-  min-width: 40%;
-  max-height: calc(100vh - 2rem);
-  overflow-y: auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
