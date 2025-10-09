@@ -71,10 +71,7 @@ export default function Userboard() {
         body: JSON.stringify({
           Email: newUser.email,
           Password: newUser.password,
-          UserName: `${newUser.firstName}.${newUser.lastName}`.replace(
-            /\s+/g,
-            ""
-          ),
+          UserName: newUser.email,
           Role: newUser.role,
           CourseId: courseId,
         }),
