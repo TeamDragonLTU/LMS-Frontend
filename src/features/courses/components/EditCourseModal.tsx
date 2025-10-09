@@ -1,8 +1,8 @@
 import React, { ReactElement, useState } from "react";
 import { ICourse } from "../types";
-import "../css/EditCourseModal.css";
 import { fetchWithToken } from "../../shared/utilities/fetchWithToken";
 import { ErrorDisplay } from "../../shared/components/ErrorDisplay";
+import "../../../css/modals.css"
 
 interface EditCourseModalProps {
   course: ICourse;
@@ -66,7 +66,7 @@ export const EditCourseModal = ({
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Redigera Kurs</h2>
+        <h1>Redigera Kurs</h1>
         <form onSubmit={handleSubmit}>
           <label>
             Namn:
@@ -97,13 +97,13 @@ export const EditCourseModal = ({
               required
             />
           </label>
-          <ErrorDisplay errors={errors} />          
+          <ErrorDisplay errors={errors} />
           <div className="modal-actions">
-            <button type="submit" disabled={loading || !hasChanges}>
-              {loading ? "Sparar..." : "Spara"}
-            </button>
             <button type="button" onClick={onClose}>
               Avbryt
+            </button>
+            <button type="submit" disabled={loading || !hasChanges}>
+              {loading ? "Sparar..." : "Spara"}
             </button>
           </div>
         </form>

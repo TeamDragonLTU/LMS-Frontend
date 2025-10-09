@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import "../../../css/lmslist.css";
+import "../../../css/modals.css";
 import "./userboard.css";
 import { IUserDto } from "../types";
 import { fetchWithToken } from "../../shared/utilities/fetchWithToken";
 import { useRole } from "../../auth/hooks/useRole";
 import { BASE_URL } from "../../shared/constants";
+import { PencilLine, Plus, Trash } from "lucide-react";
 export default function Userboard() {
   const [classmates, setClassmates] = useState<IUserDto[]>([]);
   const [loading, setLoading] = useState(true);
@@ -191,28 +193,24 @@ export default function Userboard() {
     };
   return (
     <div className="lmslist-container">
-      <h1 className="lmslist-title" style={{ marginBottom: "1.5rem" }}>
-        Kursdeltagare
-      </h1>
-
+      <h1 className="lmslist-title course-participants">Kursdeltagare</h1>
       <div className="userboard-searchbar-row">
-        <h2 className="userboard-searchbar-label">Sök deltagare</h2>
-        <input
-          id="search-participant"
-          name="searchParticipant"
-          type="text"
-          className="userboard-searchbar-input"
-          placeholder="Sök deltagare..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        <section className="userboard-searchbar-search">
+          <h2 className="userboard-searchbar-label">Sök deltagare:</h2>
+          <input
+            id="search-participant"
+            name="searchParticipant"
+            type="text"
+            className="userboard-searchbar-input"
+            placeholder="Sök..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </section>
         {role === "Teacher" && (
-          <button
-            type="button"
-            className="userboard-add-btn"
-            onClick={() => setShowAddModal(true)}
-          >
-            + Lägg till deltagare
+          <button type="button" onClick={() => setShowAddModal(true)}>
+            <Plus size={16} style={{ marginRight: "2px" }} /> Lägg till
+            deltagare
           </button>
         )}
       </div>
@@ -243,22 +241,24 @@ export default function Userboard() {
                   <div className="userboard-action-buttons">
                     <button
                       type="button"
-                      className="btn-secondary"
+                      className="edit-btn"
                       onClick={() => {
                         setEditingUser(user);
                         setShowEditModal(true);
                       }}
                     >
+                      <PencilLine size={16} style={{ marginRight: "2px" }} />
                       Redigera
                     </button>
                     <button
                       type="button"
-                      className="btn-danger"
+                      className="delete-btn"
                       onClick={() => {
                         setDeletingUser(user);
                         setShowDeleteModal(true);
                       }}
                     >
+                      <Trash size={16} style={{ marginRight: "2px" }} />
                       Ta bort
                     </button>
                   </div>
@@ -286,22 +286,24 @@ export default function Userboard() {
                   <div className="userboard-action-buttons">
                     <button
                       type="button"
-                      className="btn-secondary"
+                      className="edit-btn"
                       onClick={() => {
                         setEditingUser(user);
                         setShowEditModal(true);
                       }}
                     >
+                      <PencilLine size={16} style={{ marginRight: "2px" }} />
                       Redigera
                     </button>
                     <button
                       type="button"
-                      className="btn-danger"
+                      className="delete-btn"
                       onClick={() => {
                         setDeletingUser(user);
                         setShowDeleteModal(true);
                       }}
                     >
+                      <Trash size={16} style={{ marginRight: "2px" }} />
                       Ta bort
                     </button>
                   </div>
@@ -315,79 +317,80 @@ export default function Userboard() {
       {/* --- Add Modal --- */}
       {showAddModal && (
         <div
-          className="modal"
+          className="modal-overlay"
           onClick={backdropClose(() => setShowAddModal(false))}
         >
           <div className="modal-content">
-            <h2>Lägg till användare</h2>
-
-            <label className="modal-label">Förnamn</label>
-            <input
-              className="modal-input"
-              type="text"
-              placeholder="Förnamn"
-              value={newUser.firstName}
-              onChange={(e) =>
-                setNewUser({ ...newUser, firstName: e.target.value })
-              }
-            />
-
-            <label className="modal-label">Efternamn</label>
-            <input
-              className="modal-input"
-              type="text"
-              placeholder="Efternamn"
-              value={newUser.lastName}
-              onChange={(e) =>
-                setNewUser({ ...newUser, lastName: e.target.value })
-              }
-            />
-
-            <label className="modal-label">E-post</label>
-            <input
-              className="modal-input"
-              type="email"
-              placeholder="E-post"
-              value={newUser.email}
-              onChange={(e) =>
-                setNewUser({ ...newUser, email: e.target.value })
-              }
-            />
-
-            <label className="modal-label">Lösenord</label>
-            <input
-              className="modal-input"
-              type="password"
-              placeholder="Lösenord"
-              value={newUser.password}
-              onChange={(e) =>
-                setNewUser({ ...newUser, password: e.target.value })
-              }
-            />
-
-            <label className="modal-label">Roll</label>
-            <select
-              className="modal-input"
-              value={newUser.role}
-              onChange={(e) =>
-                setNewUser({
-                  ...newUser,
-                  role: e.target.value as "Student" | "Teacher",
-                })
-              }
-            >
-              <option value="Student">Student</option>
-              <option value="Teacher">Lärare</option>
-            </select>
-
-            <div className="modal-actions">
-              <button type="button" onClick={handleAddUser}>
-                Spara
-              </button>
-              <button type="button" onClick={() => setShowAddModal(false)}>
-                Avbryt
-              </button>
-            </div>
+            <h1>Lägg till deltagare</h1>
+            <form onSubmit={handleUpdateUser}>
+              <label>
+                Förnamn:
+                <input
+                  type="text"
+                  placeholder="Förnamn"
+                  value={newUser.firstName}
+                  onChange={(e) =>
+                    setNewUser({ ...newUser, firstName: e.target.value })
+                  }
+                />
+              </label>
+              <label>
+                Efternamn:
+                <input
+                  type="text"
+                  placeholder="Efternamn"
+                  value={newUser.lastName}
+                  onChange={(e) =>
+                    setNewUser({ ...newUser, lastName: e.target.value })
+                  }
+                />
+              </label>
+              <label>
+                E-post:
+                <input
+                  type="email"
+                  placeholder="E-post"
+                  value={newUser.email}
+                  onChange={(e) =>
+                    setNewUser({ ...newUser, email: e.target.value })
+                  }
+                />
+              </label>
+              <label>
+                Lösenord:
+                <input
+                  type="password"
+                  placeholder="Lösenord"
+                  value={newUser.password}
+                  onChange={(e) =>
+                    setNewUser({ ...newUser, password: e.target.value })
+                  }
+                />
+              </label>
+              <label>
+                Roll:
+                <select
+                  value={newUser.role}
+                  onChange={(e) =>
+                    setNewUser({
+                      ...newUser,
+                      role: e.target.value as "Student" | "Teacher",
+                    })
+                  }
+                >
+                  <option value="Student">Student</option>
+                  <option value="Teacher">Lärare</option>
+                </select>
+              </label>
+              <div className="modal-actions">
+                <button type="button" onClick={() => setShowAddModal(false)}>
+                  Avbryt
+                </button>
+                <button type="submit" onClick={handleAddUser}>
+                  Spara
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}
@@ -395,52 +398,51 @@ export default function Userboard() {
       {/* --- Edit Modal --- */}
       {showEditModal && editingUser && (
         <div
-          className="modal"
+          className="modal-overlay"
           onClick={backdropClose(() => setShowEditModal(false))}
         >
           <div className="modal-content">
-            <h2>Redigera användare</h2>
-
-            <label className="modal-label">Användarnamn</label>
-            <input
-              className="modal-input"
-              type="text"
-              value={editingUser.userName}
-              onChange={(e) =>
-                setEditingUser({ ...editingUser, userName: e.target.value })
-              }
-            />
-
-            <label className="modal-label">E-post</label>
-            <input
-              className="modal-input"
-              type="email"
-              value={editingUser.email}
-              onChange={(e) =>
-                setEditingUser({ ...editingUser, email: e.target.value })
-              }
-            />
-
-            <label className="modal-label">Roll</label>
-            <select
-              className="modal-input"
-              value={editingUser.role}
-              onChange={(e) =>
-                setEditingUser({ ...editingUser, role: e.target.value })
-              }
-            >
-              <option value="Student">Student</option>
-              <option value="Teacher">Lärare</option>
-            </select>
-
-            <div className="modal-actions">
-              <button type="button" onClick={handleUpdateUser}>
-                Uppdatera
-              </button>
-              <button type="button" onClick={() => setShowEditModal(false)}>
-                Avbryt
-              </button>
-            </div>
+            <h1>Redigera användare</h1>
+            <form onSubmit={handleUpdateUser}>
+              <label>
+                Användarnamn:
+                <input
+                  type="text"
+                  value={editingUser.userName}
+                  onChange={(e) =>
+                    setEditingUser({ ...editingUser, userName: e.target.value })
+                  }
+                />
+              </label>
+              <label>
+                E-post:
+                <input
+                  type="email"
+                  value={editingUser.email}
+                  onChange={(e) =>
+                    setEditingUser({ ...editingUser, email: e.target.value })
+                  }
+                />
+              </label>
+              <label>
+                Roll:
+                <select
+                  value={editingUser.role}
+                  onChange={(e) =>
+                    setEditingUser({ ...editingUser, role: e.target.value })
+                  }
+                >
+                  <option value="Student">Student</option>
+                  <option value="Teacher">Lärare</option>
+                </select>
+              </label>
+              <div className="modal-actions">
+                <button type="button" onClick={() => setShowEditModal(false)}>
+                  Avbryt
+                </button>
+                <button type="submit">Uppdatera</button>
+              </div>
+            </form>
           </div>
         </div>
       )}
@@ -448,21 +450,21 @@ export default function Userboard() {
       {/* --- Delete Modal --- */}
       {showDeleteModal && deletingUser && (
         <div
-          className="modal"
+          className="modal-overlay"
           onClick={backdropClose(() => setShowDeleteModal(false))}
         >
           <div className="modal-content">
-            <h2>Ta bort användare</h2>
-            <p>
+            <h1>Ta bort användare</h1>
+            <p className="modal-delete-user-p">
               Är du säker på att du vill ta bort{" "}
               <strong>{deletingUser.userName}</strong>?
             </p>
             <div className="modal-actions">
-              <button type="button" onClick={handleConfirmDelete}>
-                Ja, ta bort
-              </button>
               <button type="button" onClick={() => setShowDeleteModal(false)}>
                 Avbryt
+              </button>
+              <button type="submit" onClick={handleConfirmDelete}>
+                Ja, ta bort
               </button>
             </div>
           </div>

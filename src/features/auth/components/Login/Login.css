@@ -27,7 +27,7 @@
 }
 
 fieldset {
-  max-width: 500px;
+  max-width: 21rem;
   width: 75%;
   padding: 20px;
   margin: 0 20px;
@@ -42,7 +42,6 @@ fieldset {
   align-items: center;
   gap: 0.5rem;
   flex-direction: column;
-  max-width: 28rem;
   width: 100%;
   padding: 2rem 1.5rem;
   background-color: #f7fafc;
@@ -86,4 +85,9 @@ fieldset {
 .loginfieldset {
   width: 100%;
   box-sizing: border-box;
+}
+
+.login-button {
+  width: 100%;
+  margin-block: 1rem;
 }

@@ -1,4 +1,5 @@
 import React, { ReactElement, useState } from "react";
+import "../../../css/modals.css"
 import "../css/CreateCourseModal.css";
 import { fetchWithToken } from "../../shared/utilities/fetchWithToken";
 import { ErrorDisplay } from "../../shared/components/ErrorDisplay";
@@ -59,7 +60,7 @@ export const CreateCourseModal = ({
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Skapa Kurs</h2>
+        <h1>Skapa Kurs</h1>
         <form onSubmit={handleSubmit}>
           <label>
             Namn:
@@ -90,13 +91,13 @@ export const CreateCourseModal = ({
               required
             />
           </label>
-          <ErrorDisplay errors={errors} /> 
+          <ErrorDisplay errors={errors} />
           <div className="modal-actions">
-            <button type="submit" disabled={loading || !isFormValid}>
-              {loading ? "Skapar..." : "Skapa"}
-            </button>
             <button type="button" onClick={onClose}>
               Avbryt
+            </button>
+            <button type="submit" disabled={loading || !isFormValid}>
+              {loading ? "Skapar..." : "Skapa"}
             </button>
           </div>
         </form>

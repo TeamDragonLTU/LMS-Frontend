@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import "../CreateModuleModal/css/style.css";
+import "./../../../css/modals.css"
 import { useFetchActivityTypes } from "../../shared/hooks/useActivityTypes";
 import { ErrorDisplay } from "../../shared/components/ErrorDisplay";
 import { useCreateActivity } from "../../shared/hooks/useCreateActivity";
@@ -117,8 +117,8 @@ export function CreateActivityModal({
   return !isTeacher ? null : (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Lägg till aktivitet</h2>
-        <form onSubmit={handleSubmit} className="modal-form">
+        <h1 className="modal-h1">Lägg till aktivitet</h1>
+        <form onSubmit={handleSubmit}>
           <label>
             Välj aktivitetstyp *
             <select
@@ -182,13 +182,12 @@ export function CreateActivityModal({
             <ErrorDisplay errors={errors} />
           </section>
           <div className="modal-actions">
-            <button type="button" onClick={handleClose} className="cancel-btn">
+            <button type="button" onClick={handleClose}>
               Avbryt
             </button>
             <button
               type="submit"
               disabled={loading || !isFormValid() || !!overlapError || !!errors}
-              className="submit-btn"
             >
               Lägg till
             </button>

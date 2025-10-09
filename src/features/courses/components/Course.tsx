@@ -18,7 +18,7 @@ export function Course(): ReactElement {
     <main className="lmslist-container">
       <div className="teacher-course-header-container">
         <div className="teacher-course-header-text-content">
-          <h2 className="lmslist-title">{course.name}</h2>
+          <h1 className="lmslist-title">{course.name}</h1>
           <p className="lmslist-subtitle">{course.description}</p>
           <p className="course-startdate">
             Startdatum: {new Date(course.startDate).toLocaleDateString()}
@@ -31,7 +31,7 @@ export function Course(): ReactElement {
             }}
             className="edit-course-button"
           >
-            <Pencil size={18} style={{ marginRight: "4px" }} />
+            <Pencil size={16} style={{ marginRight: "4px" }} />
             Redigera kurs
           </button>
         )}
